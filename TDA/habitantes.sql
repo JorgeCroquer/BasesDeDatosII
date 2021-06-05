@@ -1,0 +1,9 @@
+--CODIGO DE LA CREACION DEL TDA HABITANTES
+
+
+CREATE OR REPLACE TYPE HABITANTES AS OBJECT(
+    cant_total PLS_INTEGER,
+    cant_infectados PLS_INTEGER,
+    cant_recuperados PLS_INTEGER,
+    cant_fallecidos PLS_INTEGER,
+)
