@@ -113,4 +113,3 @@ CREATE TABLE VAC_EFEC(
         REFERENCES VACUNA(id_vac)
 );
 
-
