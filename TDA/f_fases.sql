@@ -6,6 +6,7 @@ CREATE OR REPLACE TYPE F_FASES AS OBJECT(
     fecha_f4 DATE,
     STATIC FUNCTION validarFecha(fecha VARCHAR2) RETURN DATE,
     STATIC FUNCTION generarFecha(fecha1 VARCHAR2, fecha2 VARCHAR2) RETURN DATE
+    STATIC FUNCTION faseActual() RETURN VARCHAR2;
 );
 
 CREATE OR REPLACE TYPE BODY F_FASES AS
@@ -29,4 +30,23 @@ CREATE OR REPLACE TYPE BODY F_FASES AS
                 TO_CHAR(TO_DATE(fecha1,'dd/mm/yyyy'), 'J'),
                 TO_CHAR(TO_DATE(fecha2,'dd/mm/yyyy'), 'J'))), 'J');   
         END;
+
+    --Esta función retorna la fase actual en la que se encuentra la vacuna
+    --Esta vendría siendo la última de la que se tenga registro de fecha
+    STATIC FUNCTION faseActual() RETURN VARCHAR2 IS
+        BEGIN
+            IF (fecha_aprobacion IS NOT NULL) THEN
+                RETURN 'N/A'
+            ElSE IF(fecha_f4 IS NOT NULL) THEN
+                RETURN 'Fase 4';
+            ELSE IF (fecha_f3 IS NOT NULL) THEN
+                RETURN 'Fase 3';
+            ELSE IF (fecha_f2 IS NOT NULL) THEN
+                RETURN 'Fase 2';
+            ELSE IF (fecha_f1 IS NOT NULL) THEN
+                RETURN 'Fase 1';
+            ELSE
+                RETURN 'No se ha creado la vacuna'
+            END IF;
+        END; 
 END;
