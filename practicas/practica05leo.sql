@@ -25,7 +25,6 @@ ultima_dis dosis_disponibles%rowtype;
 data_found_dis integer := 0; --Bandera para saber si se encontró registro en disponibilidad
 data_found_inv integer := 0; --Bandera para saber si se encontró registro en inventario
 BEGIN
-     dbms_output.put_line('Soy el trigger');
     --Buscamos el último suministro a inventario
     SELECT *
     INTO ultimo_inv 
