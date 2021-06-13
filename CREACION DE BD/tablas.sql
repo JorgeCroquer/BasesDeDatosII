@@ -12,8 +12,9 @@ CREATE TABLE GRUPO_ETARIO(
 );
 
 CREATE TABLE PAIS_GE( --FALTA EL TDA HABITANTES
-    grupo_etario PLS_INTEGER,
-    pais PLS_INTEGER,
+    grupo_etario PLS_INTEGER NOT NULL,
+    pais PLS_INTEGER NOT NULL,
+
     CONSTRAINT fk_ge
         FOREIGN KEY (grupo_etario)
         REFERENCES GRUPO_ETARIO(id_ge),
@@ -22,6 +23,18 @@ CREATE TABLE PAIS_GE( --FALTA EL TDA HABITANTES
         REFERENCES PAIS(id_pai),
     CONSTRAINT pk_pais_ge
         PRIMARY KEY (grupo_etario, pais)
+);
+
+CREATE TABLE H_HABITANTES(--FALTA EL TDA HABITANTES
+    fecha_h DATE NOT NULL,
+    pais_h PLS_INTEGER NOT NULL,
+    grupo_etario_h PLS_INTEGER NOT NULL,
+
+    CONSTRAINT fk_pais_ge_h_hab
+        FOREIGN KEY (pais_h,grupo_etario_h)
+        REFERENCES PAIS_GE(pais,grupo_etario),
+    CONSTRAINT pk_h_habitantes
+        PRIMARY KEY (fecha_h,pais_h,grupo_etario_h)
 );
 
 CREATE TABLE ESTATUS(
@@ -48,6 +61,21 @@ CREATE TABLE VACUNA( --FALTA EL TDA F_FASES
 
 );
 
+CREATE TABLE RESTRICCIONES(
+    pais_res PLS_INTEGER NOT NULL,
+    vacuna_res PLS_INTEGER NOT NULL,   
+    tipo_res VARCHAR2(10) NOT NULL,
+    descripcion_res VARCHAR2(250),
+    CONSTRAINT fk_pais_res
+        FOREIGN KEY (pais_res)
+        REFERENCES (id_pai),
+    CONSTRAINT fk_vacuna_res
+        FOREIGN KEY (vacuna_res)
+        REFERENCES VACUNA(id_vac),
+    CONSTRAINT pk_restricciones
+        PRIMARY KEY (pais_res,vacuna_res)
+);
+
 CREATE TABLE CENTRO_VAC(--FALTA EL TDA UBICACION
     id_cen PLS_INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_cen VARCHAR2(50) NOT NULL,
@@ -56,6 +84,35 @@ CREATE TABLE CENTRO_VAC(--FALTA EL TDA UBICACION
     CONSTRAINT fk_pais_cv
         FOREIGN KEY (pais_cv)
         REFERENCES PAIS(id_pai)
+);
+
+CREATE TABLE INVENTARIO_VAC(
+    centro_vac_inv PLS_INTEGER NOT NULL,
+    vacuna_inv PLS_INTEGER NOT NULL,
+    cantidad_pri_inv PLS_INTEGER NOT NULL,
+    cantidad_seg_inv PLS_INTEGER,
+    CONSTRAINT fk_centro_vac_inv_vac
+        FOREIGN KEY (centro_vac_inv)
+        REFERENCES CENTRO_VAC(id_cen),
+    CONSTRAINT fk_vacuna_inv_vac
+        FOREIGN KEY (vacuna_inv)
+        REFERENCES VACUNA(id_vac),
+    CONSTRAINT pk_inv_vac
+        PRIMARY KEY (centro_vac_inv,vacuna_inv)
+);
+
+CREATE TABLE SUMINISTROS(
+    fecha_sum DATE NOT NULL,
+    centro_vac_sum PLS_INTEGER NOT NULL,   
+    cant_jeringas_sum PLS_INTEGER NOT NULL,
+    cant_par_guantes_sum PLS_INTEGER NOT NULL,
+    cant_alcohol_sum PLS_INTEGER NOT NULL,
+    cant_algodon_sum PLS_INTEGER NOT NULL,
+    CONSTRAINT fk_centro_vac_sum
+        FOREIGN KEY (centro_vac_sum)
+        REFERENCES CENTRO_VAC(id_cen),
+    CONSTRAINT pk_sum
+        PRIMARY KEY (fecha_sum,centro_vac_sum)
 );
 
 CREATE TABLE JORNADA_VAC(
@@ -111,5 +168,85 @@ CREATE TABLE VAC_EFEC(
     CONSTRAINT fk_vacuna_ve
         FOREIGN KEY (vacuna_ve)
         REFERENCES VACUNA(id_vac)
+);
+
+CREATE TABLE EVENTOS_ALEATORIOS(
+    id_eve PLS_INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+    nombre_eve VARCHAR2(50) NOT NULL,
+    tipo_eve CHAR NOT NULL,
+    descripcion_eve VARCHAR2(250) NOT NULL,
+    efecto_eve VARCHAR2(20) NOT NULL,
+    probabilidad_eve NUMBER NOT NULL,
+    rango_efecto_eve PLS_INTEGER,
+    direc_eve CHAR,
+    --posible_eve 
+    fecha_ocurrencia_eve DATE,
+    pais_eve PLS_INTEGER,
+    CONSTRAINT fk_pais_eventos_aleatorios
+        FOREIGN KEY (pais_eve)
+        REFERENCES PAIS(id_pai),
+    CONSTRAINT tipo_evento_aleatorio
+        CHECK (tipo_eve IN ('C', 'E')), --comun/especifico
+    CONSTRAINT direc_evento_aleatorio
+        CHECK (direc_eve IN ('S', 'B')), --subir/bajar
+    CONSTRAINT efecto_evento_aleatorio
+        CHECK (efecto_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA'))
+);
+
+CREATE TABLE DISTRIBUIDORA(
+    id_dist  PLS_INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+    nombre_dist VARCHAR2(25) NOT NULL
+);
+
+CREATE TABLE VACUNA_DISTRIBUIDORA(
+    cantidad_vd PLS_INTEGER NOT NULL,
+    vacuna_vd PLS_INTEGER NOT NULL,
+    distribuidora_vd PLS_INTEGER NOT NULL,
+    CONSTRAINT fk_vd_distribuidora
+        FOREIGN KEY (distribuidora_vd)
+        REFERENCES DISTRIBUIDORA(id_dist),
+    CONSTRAINT fk_vd_vacuna
+        FOREIGN KEY (vacuna_vd)
+        REFERENCES VACUNA(id_vac),
+    CONSTRAINT pk_vac_dist
+        PRIMARY KEY (vacuna_vd,distribuidora_vd)
+);
+
+CREATE TABLE ORDEN(
+    id_ord  PLS_INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+    pais_ord PLS_INTEGER NOT NULL,
+    monto_ord PLS_INTEGER NOT NULL,
+    estatus_ord VARCHAR2(25) NOT NULL, --espera, demorada, entregada, en transito, preparada para despacho, pago pendiente
+    f_estimada_ord DATE NOT NULL,
+    f_entrega_ord DATE, 
+    CONSTRAINT fk_pais_orden
+        FOREIGN KEY (pais_ord)
+        REFERENCES PAIS(id_pai),
+    CONSTRAINT estatus_ordenes
+        CHECK (estatus_ord IN ('EN ESPERA', 'DEMORADA','ENTREGADA','EN TRANSITO','PREPARADA PARA DESPACHO','PAGO PENDIENTE'))
+);
+
+CREATE TABLE PAGO(
+    id_pag  PLS_INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
+    fecha_pag DATE NOT NULL,
+    monto_pag PLS_INTEGER NOT NULL,
+    n_orden_pag PLS_INTEGER NOT NULL,
+    CONSTRAINT fk_pago_n_orden
+        FOREIGN KEY (n_orden_pag)
+        REFERENCES PAIS(id_ord)
+);
+
+CREATE TABLE DISTRIBUCION(
+    cantidad_dis PLS_INTEGER NOT NULL,
+    n_orden_dis PLS_INTEGER NOT NULL,
+    vacuna_dis PLS_INTEGER NOT NULL,
+    CONSTRAINT fk_numero_orden
+        FOREIGN KEY (n_orden_dis)
+        REFERENCES ORDEN(id_ord),
+    CONSTRAINT fk_vacuna_distribucion
+        FOREIGN KEY (vacuna_dis)
+        REFERENCES VACUNA(id_vac),
+    CONSTRAINT pk_vac_dist
+        PRIMARY KEY (vacuna_dis,n_orden_dis)
 );
 
