@@ -2,8 +2,8 @@
 
 
 CREATE OR REPLACE TYPE HABITANTES AS OBJECT(
-    cant_total PLS_INTEGER,
-    cant_infectados PLS_INTEGER,
-    cant_recuperados PLS_INTEGER,
-    cant_fallecidos PLS_INTEGER,
+    cant_total NUMBER,
+    cant_infectados NUMBER,
+    cant_recuperados NUMBER,
+    cant_fallecidos NUMBER,
 )
