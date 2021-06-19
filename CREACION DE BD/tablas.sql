@@ -1,6 +1,14 @@
 CREATE TABLE PAIS(  --FALTA DETALLE
     id_pai NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY ,
-    nombre varchar(25) NOT NULL
+    nombre_pai varchar(25) NOT NULL,
+    meta_vac_pai NUMBER NOT NULL,
+    covax_pai CHAR NOT NULL,
+    tasa_repro_pai NUMBER NOT NULL,
+    riqueza_pai NUMBER NOT NULL,
+    CONSTRAINT bool_covax
+        CHECK (covax_vac IN ('Y', 'N')),
+    CONSTRAINT limites_riqueza
+        CHECK (riqueza_pai > 1 AND riqueza_pai < 5)
 );
 
 CREATE TABLE GRUPO_ETARIO(
@@ -43,7 +51,7 @@ CREATE TABLE ESTATUS(
     descripcion_est VARCHAR(250)
 );
 
-CREATE TABLE VACUNA( --FALTA EL TDA F_FASES
+CREATE TABLE VACUNA( 
     id_vac NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_vac VARCHAR2(15) NOT NULL,
     estatus_vac NUMBER NOT NULL,
@@ -53,6 +61,7 @@ CREATE TABLE VACUNA( --FALTA EL TDA F_FASES
     temperatura_vac NUMBER NOT NULL,
     instrucciones_vac VARCHAR2(250) NOT NULL,
     suministro_vac NUMBER NOT NULL,
+    fechas F_FASES NOT NULL,
     CONSTRAINT fk_estatus
         FOREIGN KEY (estatus_vac)
         REFERENCES ESTATUS(id_est),
@@ -76,11 +85,12 @@ CREATE TABLE RESTRICCIONES(
         PRIMARY KEY (pais_res,vacuna_res)
 );
 
-CREATE TABLE CENTRO_VAC(--FALTA EL TDA UBICACION
+CREATE TABLE CENTRO_VAC(
     id_cen NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_cen VARCHAR2(50) NOT NULL,
     capacidad_cen NUMBER NOT NULL,
     pais_cv NUMBER NOT NULL,
+    ubicacion UBICACION NOT NULL,
     CONSTRAINT fk_pais_cv
         FOREIGN KEY (pais_cv)
         REFERENCES PAIS(id_pai)
