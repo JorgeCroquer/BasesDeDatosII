@@ -66,12 +66,31 @@ BEGIN
    WHERE nombre_pai LIKE NVL(nombre_pais_p, nombre_pai);
 END;
 
---Reporte 4 subreporte 1
+--Reporte 4 - subreporte 1
 
-CREATE OR REPLACE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, porcentage_p number) IS
+CREATE OR REPLACE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, porcentage_p number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, p.nombre_pai
-   FROM pais
-   WHERE nombre_pai LIKE NVL(nombre_pais_p, nombre_pai);
+   FOR SELECT  cant_hab.cant_total, nombre_ge, edad_inferior_ge,edad_superior_ge
+   FROM pais_ge pg
+   JOIN grupo_etario ge ON pg.grupo_etario = id_ge
+   JOIN pais ON pg.pais = id_pai
+   WHERE id_pai = pais_p
+END;
+
+--Reporte 4 - subreporte 2
+
+CREATE OR REPLACE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number, porcentage_p number) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT  ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+                                       FROM pais_ge pg
+                                       JOIN grupo_etario ge ON pg.grupo_etario = id_ge
+                                       JOIN pais ON pg.pais = id_pai
+                                       WHERE id_pai = pais_p))*100), 
+   nombre_ge, edad_inferior_ge,edad_superior_ge
+   FROM pais_ge pg
+   JOIN grupo_etario ge ON pg.grupo_etario = id_ge
+   JOIN pais ON pg.pais = id_pai
+   WHERE id_pai = pais_p
 END;
