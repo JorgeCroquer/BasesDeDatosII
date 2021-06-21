@@ -23,7 +23,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_2(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, fecha_inicio date, fecha_fin date, vacuna_p) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, p.nombre_pai, SUM(p.cant_hab.cant_total), covax_pai
+   FOR SELECT bandera_pai, nombre_pai, SUM(p.cant_hab.cant_total), covax_pai
    FROM pais
    JOIN pais_ge ON fk_pais_ge = id_pai
    JOIN inventario_vacunas on fk_centro_inv = id_cen
@@ -34,21 +34,44 @@ BEGIN
 END;
 
 -- Reporte2 - subreporte 1
-
-CREATE OR REPLACE PROCEDURE reporte_2_subreporte_1(rep_cursor OUT sys_refcursor, vacuna_p varchar, pais_p number) IS
+-- El tema de las fechas seria algo como "entre estas dos fechas venezuela adquirió esta cantidad de vacunas"
+CREATE OR REPLACE PROCEDURE reporte_2_subreporte_1(rep_cursor OUT sys_refcursor, fecha_inicio date, fecha_fin date, pais_p number) IS
 BEGIN
    --nombre de la vacuna, cantidad total de vacunas de ese tipo, (cantidad de este tipo/cantidad total )*100
-   OPEN rep_cursor
-   FOR SELECT nombre_vac, SUM(cantidad_pri_inv), 
-   (SUM(cantidad_pri_inv)/(SELECT SUM(cantidad_pri_inv)
-                            FROM pais
-                            JOIN centros_vac on fk_pais_cen = id_pai 
-                            JOIN inventario_vacunas on fk_centro_inv = id_cen
-                            WHERE id_pai = p.id_pai))*100 
-   FROM pais p
-   JOIN centros_vac on fk_pais_cen = id_pai 
-   JOIN inventario_vacunas on fk_centro_inv = id_cen
-   JOIN vacuna v on fk_vacuna_inv = id_vac
+   OPEN repo_cursor
+   FOR SELECT nombre_vac, sum(cantidad_dis), (sum(cantidad_dis)/(SELECT sum(cantidad_dis)
+                                                                  FROM orden 
+                                                                  JOIN distribucion ON n_orden_dis = id_ord
+                                                                  JOIN pais ON pais_ord = id_pai
+                                                                  WHERE id_pai = pais_p
+                                                                  AND f_realizacion_ord >= NVL(fecha_inicio, f_realizacion_ord)
+                                                                  AND f_entrega_ord <= NVL(fecha_fin, fecha_entrega_ord))*100)
+   FROM orden 
+   JOIN distribucion ON n_orden_dis = id_ord
+   JOIN vacuna ON vacuna_dis = id_vac
+   JOIN pais ON pais_ord = id_pai
    WHERE id_pai = pais_p
-   GROUP BY 1 
+   AND f_realizacion_ord >= NVL(fecha_inicio, f_realizacion_ord)
+   AND f_entrega_ord <= NVL(fecha_fin, fecha_entrega_ord)
+   GROUP BY 1;
+END;
+
+--Reporte 4
+
+CREATE OR REPLACE PROCEDURE reporte_4(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, porcentage_p number) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT bandera_pai, p.nombre_pai
+   FROM pais
+   WHERE nombre_pai LIKE NVL(nombre_pais_p, nombre_pai);
+END;
+
+--Reporte 4 subreporte 1
+
+CREATE OR REPLACE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, porcentage_p number) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT bandera_pai, p.nombre_pai
+   FROM pais
+   WHERE nombre_pai LIKE NVL(nombre_pais_p, nombre_pai);
 END;
