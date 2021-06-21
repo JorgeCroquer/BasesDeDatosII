@@ -228,6 +228,7 @@ CREATE TABLE ORDEN(
     pais_ord NUMBER NOT NULL,
     monto_ord NUMBER NOT NULL,
     estatus_ord VARCHAR2(25) NOT NULL, --espera, demorada, entregada, en transito, preparada para despacho, pago pendiente
+    f_realizacion_ord DATE NOT NULL,
     f_estimada_ord DATE NOT NULL,
     f_entrega_ord DATE, 
     CONSTRAINT fk_pais_orden

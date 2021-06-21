@@ -15,7 +15,7 @@ BEGIN
     FROM vacuna
     JOIN estatus ON pk_estatus_vac = id_est
     WHERE nombre_vac  LIKE  NVL(nombre_vacuna_p, nombre_vac);
-    AND aprobf_vac.fecha_aprobacion >= NVL(fecha_aprobacion, aprobf_vac.fecha_aprobacion ); 
+    AND aprobf_vac.fecha_aprobacion >= NVL(fecha_aprobacion, aprobf_vac.fecha_aprobacion); 
 END;
 
 -- Reporte2
@@ -23,7 +23,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_2(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, fecha_inicio date, fecha_fin date, vacuna_p) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT pintar(bandera_pai), p.nombre_pai, SUM(p.cant_hab.cant_total), covax_pai
+   FOR SELECT bandera_pai, p.nombre_pai, SUM(p.cant_hab.cant_total), covax_pai
    FROM pais
    JOIN pais_ge ON fk_pais_ge = id_pai
    JOIN inventario_vacunas on fk_centro_inv = id_cen
