@@ -57,40 +57,55 @@ BEGIN
 END;
 
 --Reporte 4
-
-CREATE OR REPLACE PROCEDURE reporte_4(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, porcentage_p number) IS
+--Aquí se va a parametrizar por los porcentajes de los grupos etarios
+-- id's Ancianos = 1, adultos = 2, jovenes =3, niños = 4
+CREATE OR REPLACE PROCEDURE reporte_4(rep_cursor OUT sys_refcursor, 
+nombre_pais_p varchar, 
+ancianos_p number,
+adultos_p number,
+jovenes_p number,
+niños_p number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, p.nombre_pai
-   FROM pais
-   WHERE nombre_pai LIKE NVL(nombre_pais_p, nombre_pai);
+   FOR SELECT bandera_pai, nombre_pai 
+   FROM pais_ge pg
+   JOIN grupo_etario ON pg.grupo_etario = id_ge
+   JOIN pais ON pg.pais = id_pai
+   WHERE nombre_pai LIKE nvl(nombre_pais_p, nombre_pai)
+   AND id_ge = 1 AND nvl(ancianos_p, 0 )<= ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+                                       FROM pais_ge
+                                       WHERE pais = pg.pais))*100)
+   OR id_ge = 2 AND nvl(adultos_p, 0 )<= ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+                                       FROM pais_ge
+                                       WHERE pais = pg.pais))*100)
+   OR id_ge = 3 AND nvl(jovenes_p, 0 )<=  ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+                                       FROM pais_ge
+                                       WHERE pais = pg.pais))*100)
+   OR id_ge = 4 AND nvl(niños_p, 0 )<=  ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+                                       FROM pais_ge
+                                       WHERE pais = pg.pais))*100)                                         
 END;
 
 --Reporte 4 - subreporte 1
-
-CREATE OR REPLACE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, porcentage_p number) IS
+CREATE OR REPLACE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT  cant_hab.cant_total, nombre_ge, edad_inferior_ge,edad_superior_ge
    FROM pais_ge pg
    JOIN grupo_etario ge ON pg.grupo_etario = id_ge
-   JOIN pais ON pg.pais = id_pai
-   WHERE id_pai = pais_p
+   WHERE pg.pais = pais_p
 END;
 
 --Reporte 4 - subreporte 2
 
-CREATE OR REPLACE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number, porcentage_p number) IS
+CREATE OR REPLACE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number ) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT  ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
-                                       FROM pais_ge pg
-                                       JOIN grupo_etario ge ON pg.grupo_etario = id_ge
-                                       JOIN pais ON pg.pais = id_pai
-                                       WHERE id_pai = pais_p))*100), 
+                                       FROM pais_ge
+                                       WHERE pais = pg.pais))*100), 
    nombre_ge, edad_inferior_ge,edad_superior_ge
    FROM pais_ge pg
-   JOIN grupo_etario ge ON pg.grupo_etario = id_ge
-   JOIN pais ON pg.pais = id_pai
-   WHERE id_pai = pais_p
+   JOIN grupo_etario ON pg.grupo_etario = id_ge
+   WHERE pais_p = pg.pais;
 END;
