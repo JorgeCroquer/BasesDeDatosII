@@ -1,5 +1,4 @@
 CREATE OR REPLACE TYPE F_FASES AS OBJECT(
-    fecha_aprobacion DATE,
     fecha_f1 DATE,
     fecha_f2 DATE,
     fecha_f3 DATE,
