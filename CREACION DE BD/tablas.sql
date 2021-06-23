@@ -20,10 +20,11 @@ CREATE TABLE GRUPO_ETARIO(
     mortalidad NUMBER NOT NULL
 );
 
-CREATE TABLE PAIS_GE( --FALTA EL TDA HABITANTES
+CREATE TABLE PAIS_GE(
+    cant_hab_paisge HABITANTES NOT NULL,
     grupo_etario NUMBER NOT NULL,
     pais NUMBER NOT NULL,
-
+    
     CONSTRAINT fk_ge
         FOREIGN KEY (grupo_etario)
         REFERENCES GRUPO_ETARIO(id_ge),

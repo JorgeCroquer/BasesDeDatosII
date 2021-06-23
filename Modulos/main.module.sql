@@ -1,5 +1,7 @@
 CREATE OR REPLACE PROCEDURE SIMULACION IS
-    
+    terminado BOOLEAN := FALSE;
+
+
     --Definimos una fecha aleatoria entre el 6 y 12 de marzo para el inicio de la simulacion
     fecha_actual DATE := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(
                             TO_CHAR(TO_DATE('06/03/2020','dd/mm/yyyy'), 'J'),
@@ -74,4 +76,23 @@ BEGIN
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
     );
+
+
+    --Bucle principal
+    WHILE NOT terminado
+    LOOP
+        -- ciclo de 12 semanas
+        FOR i IN 1..12
+        LOOP
+        --Sumamos 7 dias (1 semana) a la fecha actual
+        fecha_actual := fecha_actual + 7;
+
+
+
+        END LOOP;
+
+        
+        terminado := TRUE; --Esto es por ahora, hay que programar el criterio de salida
+    END LOOP;
+
 END;
