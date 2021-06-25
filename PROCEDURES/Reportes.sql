@@ -61,7 +61,9 @@ END;
 --Si un pais tiene varias ordenes a covax saldrán varias filas de ese pais, relacionada a cada orden
 --Si hay varios pagos relacionados a la orden se totalizan los valores y en fecha aparece la fecha del último pago
 --Covax es el distribuidor 1;
-CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p varchar) IS
+--Hay que agregar en el reporteador que en este caso todos los paises van a poder disponer de 50% de vacunas
+
+CREATE OR REPLACE PROCEDURE reporte_3(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p varchar) IS
 BEGIN
     OPEN rep_cursor
     FOR SELECT bandera_pai, nombre_pai, estatus_ord, f_estimada_ord, max(fecha_pag), sum(monto_pag) as Monto_pagado, (sum(monto_pag)/monto_ord)*100 as porcentaje_pagado, (monto_ord - sum(monto_pag)) as monto_restante, (100 - (sum(monto_pag)/monto_ord)*100) as porcentaje_restante 
@@ -76,7 +78,7 @@ BEGIN
 END;
 
 --Reporte 3 - subreporte 1
-CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, orden_p number) IS
+CREATE OR REPLACE PROCEDURE reporte_3_subreporte_1(rep_cursor OUT sys_refcursor, orden_p number) IS
 BEGIN
     OPEN rep_cursor
     FOR SELECT nombre_vac, (cantidad_dis/(SELECT SUM(cantidad_dis)
@@ -91,7 +93,7 @@ BEGIN
 END;
 
 --Reporte 3 - subreporte 2
-CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p number) IS
+CREATE OR REPLACE PROCEDURE reporte_3_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number) IS
 BEGIN
     OPEN rep_cursor
     FOR SELECT tipo_res, nombre_vac, nvl(descripcion_res,'')
@@ -156,7 +158,7 @@ END;
 
 --Reporte 5 
 
-CREATE OR REPLACE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
+CREATE OR REPLACE PROCEDURE reporte_5(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT  bandera_pai, nombre_pai, nombre_vac, SUM(cant_hab.cantidad_total) as cantidad_total, SUM(cantidad_pri_jv) as cantidad_vacunados, TRUNC(SUM(cant_hab.cantidad_total)/SUM(cantidad_pri_jv))*100,2) as porcentaje_vacunado
@@ -166,6 +168,74 @@ BEGIN
    JOIN vacuna ON vacuna_jv = id_vac
    WHERE nombre_pai LIKE NVL(pais_p, nombre_pai)
    AND nombre_vac LIKE NVL(vacuna_p, nombre_vac)
-   AND 5 >= vacunados_p
    GROUP BY 1,2,3
+   HAVING 6 >= NVL(vacunados_p,0);
+END;
+
+--Reporte 6 
+
+CREATE OR REPLACE PROCEDURE reporte_6(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, fecha_inicio date, fecha_fin date ) IS
+BEGIN
+   OPEN rep_cursor
+   -- ((vacunados en la fecha fin - vacunados en la fecha inicio) / cantidad de habitantes)*100
+   FOR SELECT  bandera_pai, nombre_pai,NVL(fecha_inicio,MIN(fecha_jv)), NVL(fecha_fin,MAX(fecha_jv)), 
+   ((SUM(cantidad_pri_jv) - (SELECT SUM(cantidad_pri_jv)
+                              FROM pais
+                              JOIN pais_ge ON pais = id_pai
+                              JOIN jornada_vac ON grupo_etario_jv = grupo_etario_jv AND pais_jv = pais
+                              WHERE id_pai = p.id_pai
+                              AND fecha_jv = NVL(fecha_inicio,MIN(fecha_jv));
+                              )) /(SELECT SUM(cant_hab.cant_total)
+                                 FROM pais_ge
+                                 WHERE pais = p.id_pai))*100 as porcentaje_vacunado
+   FROM pais p
+   JOIN pais_ge ON pais = id_pai
+   JOIN jornada_vac ON grupo_etario_jv = grupo_etario_jv AND pais_jv = pais
+   WHERE fecha_jv = NVL(fecha_fin,MAX(fecha_jv));
+   WHERE nombre_pai LIKE NVL(pais_p, nombre_pai)
+   GROUP BY 1,2;
+   HAVING 3 >= NVL(vacunados_p,0);
+END;
+
+--Reporte 7
+
+CREATE OR REPLACE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT bandera_pai, nombre_pai, nombre_cen, --ubicacion_cen.dirTostring(), ubicacion_cen.showMap()
+   FROM pais
+   JOIN centros_vac ON id_pai = pais_cv
+   WHERE nombre_pai LIKE NVL(pais_p, nombre_pai);
+END;
+
+--Reporte 7 - subreporte 1
+CREATE OR REPLACE PROCEDURE reporte_7_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT nombre_ge, edad_inferior_ge, edad_superior_ge, SUM(cantidad_pri_jv)
+   FROM pais
+   JOIN centros_vac ON id_pai = pais_cv
+   JOIN pais_ge ge ON ge.pais = id_pai
+   JOIN jornada_vacunas ON grupo_etario_jv = ge.grupo_etario AND pais_jv = ge.pais
+   JOIN grupo_etario ON ge.grupo_etario = id_ge
+   WHERE id_pai = pais_p
+   AND id_cen = centro_p
+   GROUP BY 1,2,3
+   HAVING fecha_jv = MAX(fecha_jv);
+END;
+
+--Reporte 7 - subreporte 2
+CREATE OR REPLACE PROCEDURE reporte_7_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT nombre_ge, edad_inferior_ge, edad_superior_ge, (SUM(cantidad_pri_jv)/ge.cant_hab.cant_total)*100 as porcentaje_vacunado
+   FROM pais
+   JOIN centros_vac ON id_pai = pais_cv
+   JOIN pais_ge ge ON ge.pais = id_pai
+   JOIN jornada_vacunas ON grupo_etario_jv = ge.grupo_etario AND pais_jv = ge.pais
+   JOIN grupo_etario ON ge.grupo_etario = id_ge
+   WHERE id_pai = pais_p
+   AND id_cen = centro_p
+   GROUP BY 1,2,3
+   HAVING fecha_jv = MAX(fecha_jv);
 END;
