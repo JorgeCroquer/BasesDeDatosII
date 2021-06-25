@@ -58,19 +58,47 @@ END;
 
 --Reporte 3
 --Informacion sobre ordenes a covax
-
+--Si un pais tiene varias ordenes a covax saldrán varias filas de ese pais, relacionada a cada orden
 CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p number) IS
 BEGIN
     OPEN rep_cursor
-    FOR SELECT bandera_pai, nombre_pai,
+    FOR SELECT bandera_pai, nombre_pai, estatus_ord, f_estimada_ord, sum(monto_pag) as Monto_pagado, (sum(monto_pag)/monto_ord)*100 as porcentaje_pagado, (monto_ord - sum(monto_pag)) as monto_restante, (100 - (sum(monto_pag)/monto_ord)*100) as porcentaje_restante 
     FROM pais
     JOIN orden ON pais_ord = id_pai
     JOIN pago ON n_orden_pag = id_ord
     JOIN distribuidora ON distribuidora_ord = id_dist
     WHERE covax_pai = 'y'; --El pais debe pertenecer a covax
     AND nombre_pai LIKE NVL(pais_p, nombre_pai)
-    AND estatus_ord LIKE NVL(estatus_p, estatus_ord);
+    AND estatus_ord LIKE NVL(estatus_p, estatus_ord)
+    GROUP BY 1,2,3,4;
 END;
+
+--Reporte 3 - subreporte 1
+CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, orden_p number) IS
+BEGIN
+    OPEN rep_cursor
+    FOR SELECT nombre_vac, (cantidad_dis/(SELECT SUM(cantidad_dis)
+                                          FROM distribucion
+                                          WHERE n_orden_dis = o.id_ord;   
+                                          )
+    )*100 as porcentaje_incluido
+    FROM orden o
+    JOIN distribucion on n_orden_dis =  o.id_ord  
+    JOIN vacuna on vacuna_dis = id_vac
+    WHERE o.id_ord = orden_p; --Que esté relacionado con la orden de la que se llama
+END;
+
+--Reporte 3 - subreporte 2
+CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p number) IS
+BEGIN
+    OPEN rep_cursor
+    FOR SELECT tipo_res, nombre_vac, nvl(descripcion_res,'')
+    FROM resticciones
+    JOIN vacuna on vacuna_res = id_vac
+    WHERE pais_res = pais_p -- Que esté relacionada con el pais del que se llama
+END;
+
+
 
 --Reporte 4
 --Aquí se va a parametrizar por los porcentajes de los grupos etarios

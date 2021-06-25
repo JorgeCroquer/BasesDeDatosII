@@ -87,7 +87,9 @@ CREATE TABLE RESTRICCIONES(
         FOREIGN KEY (vacuna_res)
         REFERENCES VACUNA(id_vac),
     CONSTRAINT pk_restricciones
-        PRIMARY KEY (pais_res,vacuna_res)
+        PRIMARY KEY (pais_res,vacuna_res),
+    CONSTRAINT check_tipo_res
+        CHECK (tipo_res IN ('Restringida','Parcialmente_restringida'))
 );
 
 CREATE TABLE CENTRO_VAC(
