@@ -60,15 +60,16 @@ END;
 --Informacion sobre ordenes a covax
 --Si un pais tiene varias ordenes a covax saldrán varias filas de ese pais, relacionada a cada orden
 --Si hay varios pagos relacionados a la orden se totalizan los valores y en fecha aparece la fecha del último pago
-CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p number) IS
+--Covax es el distribuidor 1;
+CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p varchar) IS
 BEGIN
     OPEN rep_cursor
     FOR SELECT bandera_pai, nombre_pai, estatus_ord, f_estimada_ord, max(fecha_pag), sum(monto_pag) as Monto_pagado, (sum(monto_pag)/monto_ord)*100 as porcentaje_pagado, (monto_ord - sum(monto_pag)) as monto_restante, (100 - (sum(monto_pag)/monto_ord)*100) as porcentaje_restante 
     FROM pais
     JOIN orden ON pais_ord = id_pai
     JOIN pago ON n_orden_pag = id_ord
-    JOIN distribuidora ON distribuidora_ord = id_dist
     WHERE covax_pai = 'y'; --El pais debe pertenecer a covax
+    WHERE distribuidora_ord =  1; --La distribuidora de la orden debe ser covax
     AND nombre_pai LIKE NVL(pais_p, nombre_pai)
     AND estatus_ord LIKE NVL(estatus_p, estatus_ord)
     GROUP BY 1,2,3,4;
@@ -151,4 +152,20 @@ BEGIN
    FROM pais_ge pg
    JOIN grupo_etario ON pg.grupo_etario = id_ge
    WHERE pais_p = pg.pais;
+END;
+
+--Reporte 5 
+
+CREATE OR REPLACE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT  bandera_pai, nombre_pai, nombre_vac, SUM(cant_hab.cantidad_total) as cantidad_total, SUM(cantidad_pri_jv) as cantidad_vacunados, TRUNC(SUM(cant_hab.cantidad_total)/SUM(cantidad_pri_jv))*100,2) as porcentaje_vacunado
+   FROM pais
+   JOIN pais_ge ON pais = id_pai
+   JOIN jornada_vac ON grupo_etario_jv = grupo_etario_jv AND pais_jv = pais
+   JOIN vacuna ON vacuna_jv = id_vac
+   WHERE nombre_pai LIKE NVL(pais_p, nombre_pai)
+   AND nombre_vac LIKE NVL(vacuna_p, nombre_vac)
+   AND 5 >= vacunados_p
+   GROUP BY 1,2,3
 END;
