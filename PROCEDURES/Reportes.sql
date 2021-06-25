@@ -56,6 +56,22 @@ BEGIN
    GROUP BY 1;
 END;
 
+--Reporte 3
+--Informacion sobre ordenes a covax
+
+CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p number) IS
+BEGIN
+    OPEN rep_cursor
+    FOR SELECT bandera_pai, nombre_pai,
+    FROM pais
+    JOIN orden ON pais_ord = id_pai
+    JOIN pago ON n_orden_pag = id_ord
+    JOIN distribuidora ON distribuidora_ord = id_dist
+    WHERE covax_pai = 'y'; --El pais debe pertenecer a covax
+    AND nombre_pai LIKE NVL(pais_p, nombre_pai)
+    AND estatus_ord LIKE NVL(estatus_p, estatus_ord);
+END;
+
 --Reporte 4
 --Aquí se va a parametrizar por los porcentajes de los grupos etarios
 -- id's Ancianos = 1, adultos = 2, jovenes =3, niños = 4
