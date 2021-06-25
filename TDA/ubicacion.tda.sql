@@ -2,11 +2,11 @@
 CREATE OR REPLACE TYPE UBICACION AS OBJECT(
     latitud COORDENADA,
     longitud COORDENADA,
+    direccion_textual varchar(200)
     MEMBER FUNCTION getLatitud RETURN COORDENADA,
     MEMBER FUNCTION getLongitud RETURN COORDENADA,
     MEMBER FUNCTION printCoordenadas RETURN VARCHAR2
 );
-
 
 --BODY
 CREATE OR REPLACE TYPE BODY UBICACION AS
@@ -23,7 +23,6 @@ CREATE OR REPLACE TYPE BODY UBICACION AS
             RETURN '('||Latitud.printCoordenadas || '; ' || Longitud.printCoordenadas || ')';
         END;
 END;
-
 
 
 --EJEMPLOS DE PRUEBA

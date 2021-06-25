@@ -23,7 +23,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_2(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, fecha_inicio date, fecha_fin date, vacuna_p) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, nombre_pai, SUM(p.cant_hab.cant_total), covax_pai
+   FOR SELECT bandera_pai, nombre_pai, SUM(p.cantidad_hab_paisge.cant_total), covax_pai
    FROM pais
    JOIN pais_ge ON fk_pais_ge = id_pai
    JOIN inventario_vacunas on fk_centro_inv = id_cen
@@ -118,16 +118,16 @@ BEGIN
    JOIN grupo_etario ON pg.grupo_etario = id_ge
    JOIN pais ON pg.pais = id_pai
    WHERE nombre_pai LIKE nvl(nombre_pais_p, nombre_pai)
-   AND id_ge = 1 AND nvl(ancianos_p, 0 )<= ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+   AND id_ge = 1 AND nvl(ancianos_p, 0 )<= ((cantidad_hab_paisge.cant_total/(SELECT SUM(cantidad_hab_paisge.cant_total)
                                        FROM pais_ge
                                        WHERE pais = pg.pais))*100)
-   OR id_ge = 2 AND nvl(adultos_p, 0 )<= ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+   OR id_ge = 2 AND nvl(adultos_p, 0 )<= ((cantidad_hab_paisge.cant_total/(SELECT SUM(cantidad_hab_paisge.cant_total)
                                        FROM pais_ge
                                        WHERE pais = pg.pais))*100)
-   OR id_ge = 3 AND nvl(jovenes_p, 0 )<=  ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+   OR id_ge = 3 AND nvl(jovenes_p, 0 )<=  ((cantidad_hab_paisge.cant_total/(SELECT SUM(cantidad_hab_paisge.cant_total)
                                        FROM pais_ge
                                        WHERE pais = pg.pais))*100)
-   OR id_ge = 4 AND nvl(niños_p, 0 )<=  ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+   OR id_ge = 4 AND nvl(niños_p, 0 )<=  ((cantidad_hab_paisge.cant_total/(SELECT SUM(cantidad_hab_paisge.cant_total)
                                        FROM pais_ge
                                        WHERE pais = pg.pais))*100)                                         
 END;
@@ -136,7 +136,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT  cant_hab.cant_total, nombre_ge, edad_inferior_ge,edad_superior_ge
+   FOR SELECT  cantidad_hab_paisge.cant_total, nombre_ge, edad_inferior_ge,edad_superior_ge
    FROM pais_ge pg
    JOIN grupo_etario ge ON pg.grupo_etario = id_ge
    WHERE pg.pais = pais_p
@@ -147,7 +147,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number ) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT  ((cant_hab.cant_total/(SELECT SUM(cant_hab.cant_total)
+   FOR SELECT  ((cantidad_hab_paisge.cant_total/(SELECT SUM(cantidad_hab_paisge.cant_total)
                                        FROM pais_ge
                                        WHERE pais = pg.pais))*100), 
    nombre_ge, edad_inferior_ge,edad_superior_ge
@@ -161,7 +161,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_5(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT  bandera_pai, nombre_pai, nombre_vac, SUM(cant_hab.cantidad_total) as cantidad_total, SUM(cantidad_pri_jv) as cantidad_vacunados, TRUNC(SUM(cant_hab.cantidad_total)/SUM(cantidad_pri_jv))*100,2) as porcentaje_vacunado
+   FOR SELECT  bandera_pai, nombre_pai, nombre_vac, SUM(cantidad_hab_paisge.cantidad_total) as cantidad_total, SUM(cantidad_pri_jv) as cantidad_vacunados, TRUNC(SUM(cantidad_hab_paisge.cantidad_total)/SUM(cantidad_pri_jv))*100,2) as porcentaje_vacunado
    FROM pais
    JOIN pais_ge ON pais = id_pai
    JOIN jornada_vac ON grupo_etario_jv = grupo_etario_jv AND pais_jv = pais
@@ -185,7 +185,7 @@ BEGIN
                               JOIN jornada_vac ON grupo_etario_jv = grupo_etario_jv AND pais_jv = pais
                               WHERE id_pai = p.id_pai
                               AND fecha_jv = NVL(fecha_inicio,MIN(fecha_jv));
-                              )) /(SELECT SUM(cant_hab.cant_total)
+                              )) /(SELECT SUM(cantidad_hab_paisge.cant_total)
                                  FROM pais_ge
                                  WHERE pais = p.id_pai))*100 as porcentaje_vacunado
    FROM pais p
@@ -228,7 +228,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_7_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT nombre_ge, edad_inferior_ge, edad_superior_ge, (SUM(cantidad_pri_jv)/ge.cant_hab.cant_total)*100 as porcentaje_vacunado
+   FOR SELECT nombre_ge, edad_inferior_ge, edad_superior_ge, (SUM(cantidad_pri_jv)/ge.cantidad_hab_paisge.cant_total)*100 as porcentaje_vacunado
    FROM pais
    JOIN centros_vac ON id_pai = pais_cv
    JOIN pais_ge ge ON ge.pais = id_pai
