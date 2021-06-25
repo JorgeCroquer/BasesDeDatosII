@@ -2,14 +2,17 @@ CREATE TABLE PAIS(  --FALTA DETALLE
     id_pai NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     bandera_pai BLOB DEFAULT EMPTY_BLOB(),
     nombre_pai varchar(25) NOT NULL,
+    continente_pai varchar(3) NOT NULL,
     meta_vac_pai NUMBER NOT NULL,
     covax_pai CHAR NOT NULL,
     tasa_repro_pai NUMBER NOT NULL,
     riqueza_pai NUMBER NOT NULL,
+    CONSTRAINT continentes
+        CHECK (continente_pai IN ('AME','EUR','OCE','ASI','AFR')), -- AMERICA / EUROPA / OCEANIA / ASIA / AFRICA
     CONSTRAINT bool_covax
-        CHECK (covax_vac IN ('Y', 'N')),
+        CHECK (covax_pai IN ('Y', 'N')), --SI/NO
     CONSTRAINT limites_riqueza
-        CHECK (riqueza_pai > 1 AND riqueza_pai < 5)
+        CHECK (riqueza_pai > 1 AND riqueza_pai < 5)  -- 1 "+POBRE"/ 5 "+RICO"
 );
 
 CREATE TABLE GRUPO_ETARIO(
