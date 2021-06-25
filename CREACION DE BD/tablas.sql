@@ -2,14 +2,17 @@ CREATE TABLE PAIS(  --FALTA DETALLE
     id_pai NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     bandera_pai BLOB DEFAULT EMPTY_BLOB(),
     nombre_pai varchar(25) NOT NULL,
+    continente_pai varchar(3) NOT NULL,
     meta_vac_pai NUMBER NOT NULL,
     covax_pai CHAR NOT NULL,
     tasa_repro_pai NUMBER NOT NULL,
     riqueza_pai NUMBER NOT NULL,
+    CONSTRAINT continentes
+        CHECK (continente_pai IN ('AME','EUR','OCE','ASI','AFR')), -- AMERICA / EUROPA / OCEANIA / ASIA / AFRICA
     CONSTRAINT bool_covax
-        CHECK (covax_vac IN ('Y', 'N')),
+        CHECK (covax_pai IN ('Y', 'N')), --SI/NO
     CONSTRAINT limites_riqueza
-        CHECK (riqueza_pai > 1 AND riqueza_pai < 5)
+        CHECK (riqueza_pai > 1 AND riqueza_pai < 5)  -- 1 "+POBRE"/ 5 "+RICO"
 );
 
 CREATE TABLE GRUPO_ETARIO(
@@ -85,7 +88,9 @@ CREATE TABLE RESTRICCIONES(
         FOREIGN KEY (vacuna_res)
         REFERENCES VACUNA(id_vac),
     CONSTRAINT pk_restricciones
-        PRIMARY KEY (pais_res,vacuna_res)
+        PRIMARY KEY (pais_res,vacuna_res),
+    CONSTRAINT check_tipo_res
+        CHECK (tipo_res IN ('Restringida','Parcialmente_restringida'))
 );
 
 CREATE TABLE CENTRO_VAC(
@@ -228,11 +233,15 @@ CREATE TABLE VACUNA_DISTRIBUIDORA(
 CREATE TABLE ORDEN(
     id_ord  NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     pais_ord NUMBER NOT NULL,
+    distribuidora_ord NUMBER NOT NULL,
     monto_ord NUMBER NOT NULL,
     estatus_ord VARCHAR2(25) NOT NULL, --espera, demorada, entregada, en transito, preparada para despacho, pago pendiente
     f_realizacion_ord DATE NOT NULL,
     f_estimada_ord DATE NOT NULL,
-    f_entrega_ord DATE, 
+    f_entrega_ord DATE,
+    CONSTRAINT fk_distribuidora_orden
+        FOREIGN KEY (distribuidora_ord)
+        REFERENCES DISTRIBUIDORA(id_dist),
     CONSTRAINT fk_pais_orden
         FOREIGN KEY (pais_ord)
         REFERENCES PAIS(id_pai),
