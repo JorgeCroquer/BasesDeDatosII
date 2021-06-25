@@ -1,4 +1,7 @@
 CREATE OR REPLACE PROCEDURE SIMULACION IS
+
+
+    --Definicion de variables
     terminado BOOLEAN := FALSE;
 
 
@@ -16,6 +19,13 @@ CREATE OR REPLACE PROCEDURE SIMULACION IS
     fechas_aztrazeneca F_FASES;
     fechas_JANDJ F_FASES;
     fechas_janssen F_FASES;
+
+    
+    
+    
+    
+    --Procedures locales
+
 BEGIN
     DBMS_OUTPUT.PUT_LINE('SIMULACION COVID-19');
     

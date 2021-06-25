@@ -35,10 +35,11 @@ CREATE TABLE PAIS_GE(
         PRIMARY KEY (grupo_etario, pais)
 );
 
-CREATE TABLE H_HABITANTES(--FALTA EL TDA HABITANTES
+CREATE TABLE H_HABITANTES(
     fecha_h DATE NOT NULL,
     pais_h NUMBER NOT NULL,
     grupo_etario_h NUMBER NOT NULL,
+    hab HABITANTES NOT NULL,
 
     CONSTRAINT fk_pais_ge_h_hab
         FOREIGN KEY (pais_h,grupo_etario_h)
