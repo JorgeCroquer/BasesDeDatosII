@@ -2,7 +2,7 @@ create or replace NONEDITIONABLE PROCEDURE contagios(fecha_actual DATE) IS
     infectados_actuales NUMBER;
     nuevos_infectados NUMBER;
     nuevos_muertos NUMBER;
-
+    nuevos_recuperados NUMBER;
     CURSOR paises IS --Guarda cada registro de PAIS_GE
             SELECT pai.id_pai, pai.tasa_repro_pai, paige.cant_hab_paisge, paige.grupo_etario, ge.mortalidad 
             FROM PAIS pai JOIN PAIS_GE paige ON pai.id_pai = paige.pais
@@ -16,15 +16,17 @@ BEGIN
 
     FOR pais IN paises
     LOOP
-
+        DBMS_OUTPUT.PUT_LINE('pais -> ' || pais.id_pai);
+        DBMS_OUTPUT.PUT_LINE('grupo etario -> ' || pais.grupo_etario);
 
         infectados_actuales := pais.cant_hab_paisge.cant_infectados
                                 -(pais.cant_hab_paisge.cant_recuperados+pais.cant_hab_paisge.cant_fallecidos); 
 
-
+        DBMS_OUTPUT.PUT_LINE('infectados actuales -> ' || infectados_actuales);
+        DBMS_OUTPUT.PUT_LINE('tasa R -> ' || pais.tasa_repro_pai);
         nuevos_infectados := infectados_actuales*pais.tasa_repro_pai;
 
-
+        DBMS_OUTPUT.PUT_LINE('nuevos infectados -> ' || nuevos_infectados);
 
         UPDATE PAIS_GE p SET p.cant_hab_paisge.cant_infectados = p.cant_hab_paisge.cant_infectados + TRUNC(nuevos_infectados)
         WHERE p.grupo_etario = pais.grupo_etario AND pais.id_pai = p.pais;
@@ -47,11 +49,14 @@ BEGIN
             SELECT ge.mortalidad INTO mortalidad
             FROM GRUPO_ETARIO ge 
             WHERE ge.id_ge = pais.grupo_etario;
-
-
-            nuevos_muertos := infectados_actuales*mortalidad;
-
-            UPDATE PAIS_GE pge SET pge.cant_hab_paisge.cant_fallecidos = pge.cant_hab_paisge.cant_fallecidos + TRUNC(nuevos_muertos)
+                
+           infectados_actuales := mortales.hab.cant_infectados-(mortales.hab.cant_recuperados+mortales.hab.cant_fallecidos);
+        
+        DBMS_OUTPUT.PUT_LINE('mortalidad -> ' || mortalidad);
+            nuevos_muertos := TRUNC(infectados_actuales*mortalidad);
+            nuevos_recuperados := infectados_actuales-nuevos_muertos;
+        DBMS_OUTPUT.PUT_LINE('nuevos muertos -> ' || nuevos_muertos);
+            UPDATE PAIS_GE pge SET pge.cant_hab_paisge.cant_fallecidos = pge.cant_hab_paisge.cant_fallecidos + nuevos_muertos, pge.cant_hab_paisge.cant_recuperados = nuevos_recuperados
             WHERE pge.grupo_etario = pais.grupo_etario AND pais.id_pai = pge.pais;
         END IF;
 

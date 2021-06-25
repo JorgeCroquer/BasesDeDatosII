@@ -94,10 +94,14 @@ BEGIN
         -- ciclo de 12 semanas
         FOR i IN 1..12
         LOOP
-        --Sumamos 7 dias (1 semana) a la fecha actual
-        fecha_actual := fecha_actual + 7;
+        
+            contagios(fecha_actual);
+            
+            
+            --Sumamos 7 dias (1 semana) a la fecha actual
+            fecha_actual := fecha_actual + 7;
 
-
+            
 
         END LOOP;
 
