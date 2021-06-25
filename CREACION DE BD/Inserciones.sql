@@ -20,31 +20,90 @@ INSERT INTO ESTATUS VALUES(DEFAULT,'FASE IV', 'Se crece la población en la que 
 
 
 --Grupo etario
-INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'niños',0, 13,0.001);
-INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'jovenes',14, 26,0.02);
-INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Adultos',27, 55,0.08);
-INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Ancianos',56,NULL,0.20);
+INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Niños', 0, 14, 0.001);
+INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Jovenes', 15, 26, 0.02);
+INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Adultos', 27, 60, 0.08);
+INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Ancianos', 61, NULL, 0.20);
 
 
 --Pais (FALTAN)
-INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Venezuela', 70, 'Y', 3, 1);
-EXECUTE guarda_banderas('venezuela.png', 1);
-INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Argentina', 85, 'Y', 2.8, 2);
-EXECUTE guarda_banderas('argentina.png',2);
-INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Estados Unidos', 70, 'Y', 2.3, 5);
-EXECUTE guarda_banderas('eeuu.png',3);
+
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Alemania','EUR', 90, 'Y', 1.47, 5);
+EXECUTE guarda_banderas('alemania.png',1);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Arabia Saudita','ASI', 80, 'Y', 2.43, 5);
+EXECUTE guarda_banderas('arabia saudita.png',2);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Argentina','AME', 80, 'Y', 2.21, 2);
+EXECUTE guarda_banderas('argentina.png',3);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Australia','OCE', 85, 'Y', 1.72, 5);
+EXECUTE guarda_banderas('australia.png',4);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Brasil','AME', 85, 'Y', 1.68, 4);
+EXECUTE guarda_banderas('brasil.png',5);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Camerun','AFR', 70, 'Y', 4.32, 1);
+EXECUTE guarda_banderas('camerun.png',6);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Canadá','AME', 85, 'Y', 1.48, 5);
+EXECUTE guarda_banderas('canada.png',7);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'China','ASI', 90, 'Y', 1.36, 5);
+EXECUTE guarda_banderas('china.png',8);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Corea del Sur','ASI', 95, 'Y', 0.95, 5);
+EXECUTE guarda_banderas('corea del sur.png',9);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Cuba','AME', 70, 'Y', 1.57, 1);
+EXECUTE guarda_banderas('cuba.png',10);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Egipto','AFR', 75, 'Y', 3.07, 3);
+EXECUTE guarda_banderas('egipto.png',11);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'El Salvador','AME', 80, 'Y', 1.77, 2);
+EXECUTE guarda_banderas('el salvador.png',12);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'España','EUR', 85, 'Y', 1.24, 4);
+EXECUTE guarda_banderas('españa.png',13);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Estados Unidos','AME', 90, 'Y', 1.71, 5);
+EXECUTE guarda_banderas('eeuu.png',14);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Francia','EUR', 85, 'Y', 1.84, 5);
+EXECUTE guarda_banderas('francia.png',15);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Haití','AME', 70, 'Y', 2.46, 1);
+EXECUTE guarda_banderas('haiti.png',16);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'India','ASI', 90, 'Y', 2.08, 5);
+EXECUTE guarda_banderas('india.png',17);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Islandia','EUR', 95, 'Y', 1.79, 5);
+EXECUTE guarda_banderas('islandia.png',18);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Israel','EUR', 90, 'Y', 3, 5);
+EXECUTE guarda_banderas('israel.png',19);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Italia','EUR', 90, 'Y', 1.23, 4);
+EXECUTE guarda_banderas('italia.png',20);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Japon','ASI', 95, 'Y', 1.39, 5);
+EXECUTE guarda_banderas('japon.png',21);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Mexico','AME', 80, 'Y', 2.04, 3);
+EXECUTE guarda_banderas('mexico.png',22);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Nigeria','AFR', 70, 'Y', 5.11, 2);
+EXECUTE guarda_banderas('nigeria.png',23);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Nueva Zelanda','OCE', 90, 'Y', 1.67, 5);
+EXECUTE guarda_banderas('nueva zelanda.png',24);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Portugal','EUR', 85, 'Y', 1.17, 4);
+EXECUTE guarda_banderas('portugal.png',25);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Reino Unido','EUR', 95, 'Y', 1.65, 5);
+EXECUTE guarda_banderas('reino unido.png',26);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Rusia','EUR', 90, 'Y', 1.48, 5);
+EXECUTE guarda_banderas('rusia.png',27);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Sudáfrica','AFR', 80, 'Y', 2.3, 3);
+EXECUTE guarda_banderas('sudafrica.png',28);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Suecia','EUR', 95, 'Y', 1.64, 5);
+EXECUTE guarda_banderas('suecia.png',29);
+INSERT INTO pais VALUES (DEFAULT, DEFAULT, 'Venezuela','AME', 70, 'Y', 2.2, 1);
+EXECUTE guarda_banderas('venezuela.png', 30);
+
 
 
 --pais_ge
-INSERT INTO PAIS_GE VALUES (HABITANTES(8500000,0,0,0),1,1); --Venezuela niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),2,1); --Venezuela jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(13000000,0,0,0),3,1); --Venezuela adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),4,1); --Venezuela ancianos
-INSERT INTO PAIS_GE VALUES (HABITANTES(11000000,0,0,0),1,2); -- Argentina niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(6800000,0,0,0),2,2); -- Argentina jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(17600000,0,0,0),3,2); -- Argentina adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(9300000,0,0,0),4,2); -- Argentina ancianos
-INSERT INTO PAIS_GE VALUES (HABITANTES(61300000,0,0,0),1,3); -- EEUU niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(43100000,0,0,0),2,3); -- EEUU jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(129300000,0,0,0),3,3); -- EEUU adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(95400000,0,0,0),4,3); -- EEUU ancionos
+
+INSERT INTO PAIS_GE VALUES (HABITANTES(11000000,0,0,0),1,3); -- Argentina niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(6800000,0,0,0),2,3); -- Argentina jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(17600000,0,0,0),3,3); -- Argentina adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(9300000,0,0,0),4,3); -- Argentina ancianos
+
+INSERT INTO PAIS_GE VALUES (HABITANTES(61300000,0,0,0),1,14); -- EEUU niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(43100000,0,0,0),2,14); -- EEUU jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(129300000,0,0,0),3,14); -- EEUU adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(95400000,0,0,0),4,14); -- EEUU ancionos
+
+INSERT INTO PAIS_GE VALUES (HABITANTES(8500000,0,0,0),1,30); --Venezuela niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),2,30); --Venezuela jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(13000000,0,0,0),3,30); --Venezuela adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),4,30); --Venezuela ancianos
