@@ -59,10 +59,11 @@ END;
 --Reporte 3
 --Informacion sobre ordenes a covax
 --Si un pais tiene varias ordenes a covax saldrán varias filas de ese pais, relacionada a cada orden
+--Si hay varios pagos relacionados a la orden se totalizan los valores y en fecha aparece la fecha del último pago
 CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p number) IS
 BEGIN
     OPEN rep_cursor
-    FOR SELECT bandera_pai, nombre_pai, estatus_ord, f_estimada_ord, sum(monto_pag) as Monto_pagado, (sum(monto_pag)/monto_ord)*100 as porcentaje_pagado, (monto_ord - sum(monto_pag)) as monto_restante, (100 - (sum(monto_pag)/monto_ord)*100) as porcentaje_restante 
+    FOR SELECT bandera_pai, nombre_pai, estatus_ord, f_estimada_ord, max(fecha_pag), sum(monto_pag) as Monto_pagado, (sum(monto_pag)/monto_ord)*100 as porcentaje_pagado, (monto_ord - sum(monto_pag)) as monto_restante, (100 - (sum(monto_pag)/monto_ord)*100) as porcentaje_restante 
     FROM pais
     JOIN orden ON pais_ord = id_pai
     JOIN pago ON n_orden_pag = id_ord
@@ -97,8 +98,6 @@ BEGIN
     JOIN vacuna on vacuna_res = id_vac
     WHERE pais_res = pais_p -- Que esté relacionada con el pais del que se llama
 END;
-
-
 
 --Reporte 4
 --Aquí se va a parametrizar por los porcentajes de los grupos etarios
