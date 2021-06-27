@@ -34,9 +34,7 @@ CREATE OR REPLACE TYPE BODY F_FASES AS
     --Esta vendría siendo la última de la que se tenga registro de fecha
     MEMBER FUNCTION faseActual RETURN VARCHAR2 IS
         BEGIN
-            IF (fecha_aprobacion IS NOT NULL) THEN
-                RETURN 'N/A';
-            ElSIF(fecha_f4 IS NOT NULL) THEN
+            IF (fecha_f4 IS NOT NULL) THEN
                 RETURN 'Fase 4';
             ELSIF (fecha_f3 IS NOT NULL) THEN
                 RETURN 'Fase 3';
