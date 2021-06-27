@@ -24,18 +24,18 @@ CREATE TABLE GRUPO_ETARIO(
 );
 
 CREATE TABLE PAIS_GE(
-    cant_hab_paisge HABITANTES NOT NULL,
-    grupo_etario NUMBER NOT NULL,
-    pais NUMBER NOT NULL,
+    cant_hab_pge HABITANTES NOT NULL,
+    grupo_etario_pge NUMBER NOT NULL,
+    pais_pge NUMBER NOT NULL,
     
     CONSTRAINT fk_ge
-        FOREIGN KEY (grupo_etario)
+        FOREIGN KEY (grupo_etario_pge)
         REFERENCES GRUPO_ETARIO(id_ge),
     CONSTRAINT fk_pais_pge
-        FOREIGN KEY (pais)
+        FOREIGN KEY (pais_pge)
         REFERENCES PAIS(id_pai),
     CONSTRAINT pk_pais_ge
-        PRIMARY KEY (grupo_etario, pais)
+        PRIMARY KEY (grupo_etario_pge, pais_pge)
 );
 
 CREATE TABLE H_HABITANTES(
