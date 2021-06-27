@@ -24,13 +24,17 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_2(rep_cursor OUT sys_refcursor, nombre_pais_p varchar, fecha_inicio date, fecha_fin date, vacuna_p varchar) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, nombre_pai, SUM(p.cantidad_hab_paisge.cant_total), covax_pai
-   FROM pais
-   JOIN pais_ge ge ON pais_pge = id_pai
-   JOIN inventario_vacunas on fk_centro_inv = id_cen
-   JOIN vacuna on fk_vacuna_inv = id_vac
+   FOR SELECT bandera_pai, nombre_pai, SUM(pge.cant_hab_pge.cant_total), covax_pai
+   FROM pais p
+   JOIN pais_ge pge ON pais_pge = id_pai
    WHERE nombre_pai like nvl(nombre_pais_p, nombre_pai)
-   AND nombre_vac = nvl(vacuna_p, nombre_vac)
+   AND vacuna_p IN (SELECT distinct(nombre_vac)
+                     FROM pais
+                     JOIN orden ON pais_ord = id_pai
+                     JOIN distribucion ON n_orden_dis = id_ord
+                     JOIN vacuna ON vacuna_dis = id_vac
+                     WHERE id_pai = p.id_pai
+                     )
    GROUP BY 1,2,4;
 END;
 

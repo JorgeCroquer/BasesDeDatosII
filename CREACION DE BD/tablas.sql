@@ -149,7 +149,7 @@ CREATE TABLE JORNADA_VAC(
         REFERENCES VACUNA(id_vac),
     CONSTRAINT fk_pais_ge_jv
         FOREIGN KEY (grupo_etario_jv,pais_jv)
-        REFERENCES PAIS_GE(grupo_etario, pais),
+        REFERENCES PAIS_GE(grupo_etario_pge, pais_pge),
     CONSTRAINT pk_jv
         PRIMARY KEY (fecha_jv,pais_jv,grupo_etario_jv,centro_vac_jv,vacuna_jv)
 );
