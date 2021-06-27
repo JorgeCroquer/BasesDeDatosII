@@ -24,18 +24,17 @@ CREATE TABLE GRUPO_ETARIO(
 );
 
 CREATE TABLE PAIS_GE(
-    cant_hab_paisge HABITANTES NOT NULL,
-    grupo_etario NUMBER NOT NULL,
     pais NUMBER NOT NULL,
-    
+    grupo_etario NUMBER NOT NULL,
+    cant_hab_paisge HABITANTES NOT NULL,
+    CONSTRAINT fk_pais_pge
+        FOREIGN KEY (pais)
+        REFERENCES PAIS(id_pai),    
     CONSTRAINT fk_ge
         FOREIGN KEY (grupo_etario)
         REFERENCES GRUPO_ETARIO(id_ge),
-    CONSTRAINT fk_pais_pge
-        FOREIGN KEY (pais)
-        REFERENCES PAIS(id_pai),
     CONSTRAINT pk_pais_ge
-        PRIMARY KEY (grupo_etario, pais)
+        PRIMARY KEY (pais,grupo_etario)
 );
 
 CREATE TABLE H_HABITANTES(
@@ -60,6 +59,7 @@ CREATE TABLE ESTATUS(
 CREATE TABLE VACUNA( 
     id_vac NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_vac VARCHAR2(15) NOT NULL,
+    --laboratorio_vac NUMBER NULL;
     estatus_vac NUMBER NOT NULL,
     efectividad_vac NUMBER,
     dosis_vac NUMBER NOT NULL,
@@ -67,7 +67,10 @@ CREATE TABLE VACUNA(
     temperatura_vac NUMBER NOT NULL,
     instrucciones_vac VARCHAR2(250) NOT NULL,
     suministro_vac NUMBER NOT NULL,
-    fechas F_FASES NOT NULL,
+    fechas_vac F_FASES NOT NULL,
+   -- CONSTRAINT fk_laboratorio
+   --     FOREIGN KEY (laboratorio_vac)
+   --     REFERENCES DISTRIBUIDORA(id_dist),
     CONSTRAINT fk_estatus
         FOREIGN KEY (estatus_vac)
         REFERENCES ESTATUS(id_est),
@@ -217,15 +220,15 @@ CREATE TABLE DISTRIBUIDORA(
 );
 
 CREATE TABLE VACUNA_DISTRIBUIDORA(
-    cantidad_vd NUMBER NOT NULL,
     vacuna_vd NUMBER NOT NULL,
     distribuidora_vd NUMBER NOT NULL,
-    CONSTRAINT fk_vd_distribuidora
-        FOREIGN KEY (distribuidora_vd)
-        REFERENCES DISTRIBUIDORA(id_dist),
+    cantidad_vd NUMBER NOT NULL,
     CONSTRAINT fk_vd_vacuna
         FOREIGN KEY (vacuna_vd)
         REFERENCES VACUNA(id_vac),
+    CONSTRAINT fk_vd_distribuidora
+        FOREIGN KEY (distribuidora_vd)
+        REFERENCES DISTRIBUIDORA(id_dist),
     CONSTRAINT pk_vac_dist
         PRIMARY KEY (vacuna_vd,distribuidora_vd)
 );
