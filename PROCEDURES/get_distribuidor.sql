@@ -1,0 +1,9 @@
+CREATE OR REPLACE FUNCTION get_distribuidor(id_vac NUMBER) RETURN CURSOR IS
+
+     DECLARE 
+        CURSOR DIST_VAC IS
+        SELECT * FROM VACUNA_DISTRIBUIDORA 
+        WHERE vacuna_vd = id_vac;
+BEGIN
+    RETURN DIST_VAC;
+END;
