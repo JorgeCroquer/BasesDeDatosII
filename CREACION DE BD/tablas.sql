@@ -12,7 +12,7 @@ CREATE TABLE PAIS(  --FALTA DETALLE
     CONSTRAINT bool_covax
         CHECK (covax_pai IN ('Y', 'N')), --SI/NO
     CONSTRAINT limites_riqueza
-        CHECK (riqueza_pai > 1 AND riqueza_pai < 5)  -- 1 "+POBRE"/ 5 "+RICO"
+        CHECK (riqueza_pai >= 1 AND riqueza_pai <= 5)  -- 1 "+POBRE"/ 5 "+RICO"
 );
 
 CREATE TABLE GRUPO_ETARIO(
@@ -83,7 +83,7 @@ CREATE TABLE RESTRICCIONES(
     descripcion_res VARCHAR2(250),
     CONSTRAINT fk_pais_res
         FOREIGN KEY (pais_res)
-        REFERENCES (id_pai),
+        REFERENCES PAIS(id_pai),
     CONSTRAINT fk_vacuna_res
         FOREIGN KEY (vacuna_res)
         REFERENCES VACUNA(id_vac),
@@ -256,7 +256,7 @@ CREATE TABLE PAGO(
     n_orden_pag NUMBER NOT NULL,
     CONSTRAINT fk_pago_n_orden
         FOREIGN KEY (n_orden_pag)
-        REFERENCES PAIS(id_ord)
+        REFERENCES ORDEN(id_ord)
 );
 
 CREATE TABLE DISTRIBUCION(
@@ -269,7 +269,7 @@ CREATE TABLE DISTRIBUCION(
     CONSTRAINT fk_vacuna_distribucion
         FOREIGN KEY (vacuna_dis)
         REFERENCES VACUNA(id_vac),
-    CONSTRAINT pk_vac_dist
+    CONSTRAINT pk_vac_dis
         PRIMARY KEY (vacuna_dis,n_orden_dis)
 );
 

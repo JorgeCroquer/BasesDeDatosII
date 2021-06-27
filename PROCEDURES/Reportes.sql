@@ -202,7 +202,7 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, nombre_pai, nombre_cen, --ubicacion_cen.dirTostring(), ubicacion_cen.showMap()
+   FOR SELECT bandera_pai, nombre_pai, nombre_cen, ubicacion_cen.ubicacion_textual, --ubicacion_cen.showMap()
    FROM pais
    JOIN centros_vac ON id_pai = pais_cv
    WHERE nombre_pai LIKE NVL(pais_p, nombre_pai);
