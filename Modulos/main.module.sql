@@ -3,7 +3,6 @@ CREATE OR REPLACE PROCEDURE SIMULACION IS
 
     --Definicion de variables
     terminado BOOLEAN := FALSE;
-    covax_existe BOOLEAN := covax_existe;
 
 
     --Definimos una fecha aleatoria entre el 6 y 12 de marzo para el inicio de la simulacion
@@ -31,8 +30,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('SIMULACION COVID-19');
     
     --Inicio
-    EXECUTE creacion_tablas;
-    EXECUTE inserciones_inicio;
+
     --asignacion de fechas para vacunas
     fechas_sputnik := F_FASES(
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
@@ -98,7 +96,6 @@ BEGIN
         LOOP
         
             contagios(fecha_actual);
-            farmaceuticas(fecha_actual);
             
             --Sumamos 7 dias (1 semana) a la fecha actual
             fecha_actual := fecha_actual + 7;
