@@ -10,8 +10,6 @@ INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'niños', 0,18,0.01);
 INSERT INTO PAIS_GE VALUES (1,1);
 INSERT INTO JORNADA_VAC VALUES (CURRENT_DATE,100,100,1,1,1,1); --TIENE TRIGGER
 
---VACUNAS
-INSERT INTO VACUNA VALUES (DEFAULT,'sputnik V',1,91.6,0,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
 
 --ESTATUS
 INSERT INTO ESTATUS VALUES(0,'FASE 0', 'La vacuna se encuentra en I+D');
@@ -20,6 +18,17 @@ INSERT INTO ESTATUS VALUES(DEFAULT,'FASE II', 'Se amplía el grupo de personas e
 INSERT INTO ESTATUS VALUES(DEFAULT,'FASE III', 'Se extienden a poblaciones más grandes y en diferentes regiones y países');
 INSERT INTO ESTATUS VALUES(DEFAULT,'FASE IV', 'Se crece la población en la que se hace la prueba y se mantiene por un periodo de tiempo más largo');
 
+--VACUNAS
+--INSERT INTO VACUNA VALUES(id_vac,nombre_vac,estatus_vac, efectividad_vac,dosis_vac,covax_vac,temperatura_vac, instrucciones_vac, suministro_vac,fechas_vac, F_FASES)
+
+INSERT INTO VACUNA VALUES (DEFAULT,'sputnik V',0,91.6,2,'N',-18,'usar despues de las 2 horas de descongelación',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'pfizer',0,95,2,'Y',-4,'no agitar',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'moderna',0,93,2,'Y',-20,'No volver a congelar despues de descongelada',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'aztrazeneca',0,92,2,'Y',2,'no conservar en congelador',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'janssen',0,96,1,'Y',-15,'no exponer a la luz directa del sol',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'sinopharm',0,93,2,'Y',4,'no conservar en congelador',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'coronavac',0,97,2,'Y',4,'no exponer a la luz directa del sol',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'cansino',0,95,1,'Y',3,'no agitar',10000000,f_fases(NULL,NULL,NULL,NULL));
 
 --Grupo etario
 INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Niños', 0, 14, 0.001);
@@ -30,9 +39,9 @@ INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Ancianos', 61, NULL, 0.20);
 
 --PAIS (FALTAN)
 
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Alemania','EUR', 90, 'Y', 1.47, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Alemania','EUR', 90, 'Y', 1.47, 5); 
 EXECUTE guarda_banderas('alemania.png',1);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Arabia Saudita','ASI', 80, 'Y', 2.43, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Arabia Saudita','ASI', 80, 'Y', 2.43, 5); 
 EXECUTE guarda_banderas('arabia saudita.png',2);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Argentina','AME', 80, 'Y', 2.21, 2);
 EXECUTE guarda_banderas('argentina.png',3);
@@ -94,6 +103,11 @@ EXECUTE guarda_banderas('venezuela.png', 30);
 
 
 --PAIS_ge
+INSERT INTO PAIS_GE VALUES (HABITANTES(11000000,0,0,0),1,1); -- Alemania niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(6800000,0,0,0),2,1; -- Alemania jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(17600000,0,0,0),3,1); -- Alemania adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(9300000,0,0,0),4,1); -- Alemania ancianos
+
 
 INSERT INTO PAIS_GE VALUES (HABITANTES(11000000,0,0,0),1,3); -- Argentina niños
 INSERT INTO PAIS_GE VALUES (HABITANTES(6800000,0,0,0),2,3); -- Argentina jovenes
