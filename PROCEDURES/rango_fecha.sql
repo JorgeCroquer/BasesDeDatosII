@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION rango_fecha(fecha_actual DATE, fecha_comp DATE) RETURN bool  IS
+CREATE OR REPLACE FUNCTION rango_fecha(fecha_actual DATE, fecha_comp DATE) RETURN BOOLEAN  IS
 
     SET fecha_fin DATE =  fecha_actual + 6;
     

@@ -3,6 +3,7 @@ CREATE OR REPLACE PROCEDURE SIMULACION IS
 
     --Definicion de variables
     terminado BOOLEAN := FALSE;
+    covax_existe BOOLEAN := covax_existe;
 
 
     --Definimos una fecha aleatoria entre el 6 y 12 de marzo para el inicio de la simulacion
