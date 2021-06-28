@@ -46,7 +46,7 @@ CREATE TABLE H_HABITANTES(
 
     CONSTRAINT fk_pais_ge_h_hab
         FOREIGN KEY (pais_h,grupo_etario_h)
-        REFERENCES PAIS_GE(pais,grupo_etario),
+        REFERENCES PAIS_GE(pais_pge,grupo_etario_pge),
     CONSTRAINT pk_h_habitantes
         PRIMARY KEY (fecha_h,pais_h,grupo_etario_h)
 );
