@@ -46,7 +46,7 @@ CREATE TABLE H_HABITANTES(
 
     CONSTRAINT fk_pais_ge_h_hab
         FOREIGN KEY (pais_h,grupo_etario_h)
-        REFERENCES PAIS_GE(pais,grupo_etario),
+        REFERENCES PAIS_GE(pais_pge,grupo_etario_pge),
     CONSTRAINT pk_h_habitantes
         PRIMARY KEY (fecha_h,pais_h,grupo_etario_h)
 );
@@ -60,7 +60,6 @@ CREATE TABLE ESTATUS(
 CREATE TABLE VACUNA( 
     id_vac NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_vac VARCHAR2(15) NOT NULL,
-    --laboratorio_vac NUMBER NULL;
     estatus_vac NUMBER NOT NULL,
     efectividad_vac NUMBER,
     dosis_vac NUMBER NOT NULL,
@@ -69,9 +68,6 @@ CREATE TABLE VACUNA(
     instrucciones_vac VARCHAR2(250) NOT NULL,
     suministro_vac NUMBER NOT NULL,
     fechas_vac F_FASES NOT NULL,
-   -- CONSTRAINT fk_laboratorio
-   --     FOREIGN KEY (laboratorio_vac)
-   --     REFERENCES DISTRIBUIDORA(id_dist),
     CONSTRAINT fk_estatus
         FOREIGN KEY (estatus_vac)
         REFERENCES ESTATUS(id_est),
@@ -276,4 +272,3 @@ CREATE TABLE DISTRIBUCION(
     CONSTRAINT pk_vac_dis
         PRIMARY KEY (vacuna_dis,n_orden_dis)
 );
-
