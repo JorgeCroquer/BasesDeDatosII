@@ -46,7 +46,7 @@ CREATE TABLE H_HABITANTES(
 
     CONSTRAINT fk_pais_ge_h_hab
         FOREIGN KEY (pais_h,grupo_etario_h)
-        REFERENCES PAIS_GE(pais,grupo_etario),
+        REFERENCES PAIS_GE(pais_pge,grupo_etario_pge),
     CONSTRAINT pk_h_habitantes
         PRIMARY KEY (fecha_h,pais_h,grupo_etario_h)
 );
@@ -60,7 +60,6 @@ CREATE TABLE ESTATUS(
 CREATE TABLE VACUNA( 
     id_vac NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_vac VARCHAR2(15) NOT NULL,
-    --laboratorio_vac NUMBER NULL;
     estatus_vac NUMBER NOT NULL,
     efectividad_vac NUMBER,
     dosis_vac NUMBER NOT NULL,
@@ -69,9 +68,6 @@ CREATE TABLE VACUNA(
     instrucciones_vac VARCHAR2(250) NOT NULL,
     suministro_vac NUMBER NOT NULL,
     fechas_vac F_FASES NOT NULL,
-   -- CONSTRAINT fk_laboratorio
-   --     FOREIGN KEY (laboratorio_vac)
-   --     REFERENCES DISTRIBUIDORA(id_dist),
     CONSTRAINT fk_estatus
         FOREIGN KEY (estatus_vac)
         REFERENCES ESTATUS(id_est),
@@ -197,22 +193,22 @@ CREATE TABLE EVENTOS_ALEATORIOS(
     nombre_eve VARCHAR2(50) NOT NULL,
     tipo_eve CHAR NOT NULL,
     descripcion_eve VARCHAR2(250) NOT NULL,
-    efecto_eve VARCHAR2(20) NOT NULL,
+    efecto_eve VARCHAR2(20),
     probabilidad_eve NUMBER NOT NULL,
+    habilitado_eve CHAR NOT NULL,
     rango_efecto_eve NUMBER,
     direc_eve CHAR,
-    --posible_eve 
     fecha_ocurrencia_eve DATE,
     pais_eve NUMBER,
     CONSTRAINT fk_pais_eventos_aleatorios
         FOREIGN KEY (pais_eve)
         REFERENCES PAIS(id_pai),
-    CONSTRAINT tipo_evento_aleatorio
-        CHECK (tipo_eve IN ('C', 'E')), --comun/especifico
     CONSTRAINT direc_evento_aleatorio
         CHECK (direc_eve IN ('S', 'B')), --subir/bajar
-    CONSTRAINT efecto_evento_aleatorio
-        CHECK (efecto_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA'))
+    CONSTRAINT tipo_evento_aleatorio
+        CHECK (tipo_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA')),
+    CONSTRAINT habilitado_evento_aleatorio_bool
+        CHECK (habilitado_eve IN ('Y','N'))
 );
 
 CREATE TABLE DISTRIBUIDORA(
@@ -276,4 +272,3 @@ CREATE TABLE DISTRIBUCION(
     CONSTRAINT pk_vac_dis
         PRIMARY KEY (vacuna_dis,n_orden_dis)
 );
-

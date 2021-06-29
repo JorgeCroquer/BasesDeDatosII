@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE asignacion_vacunas(id_vacuna NUMBER) IS
+CREATE OR REPLACE PROCEDURE asignacion_vacunas_covax(id_vacuna NUMBER) IS
 
     DECLARE
         id_covax DISTRIBUIDORA.id_dist%TYPE;
@@ -17,5 +17,6 @@ BEGIN
     SET cantidad_vd = cantidad_vd - cant_vac_covax*0.3                    --Se actualiza el numero de vacunas disponibles para distribucion del laboratorio respectivo.
     WHERE (vacuna_vd = id_vacuna AND distribuidora_vd <> id_covax);     
 
+    commit;
     DBMS_OUTPUT.PUT_LINE('Se asignaron ' || cant_vac_covax*0.3 || ' vacunas ' || SELECT nombre_vac FROM VACUNA WHERE id_vac = id_vacuna || ' al fondo COVAX.');
-END;
+END;    

@@ -10,6 +10,14 @@ INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'niños', 0,18,0.01);
 INSERT INTO PAIS_GE VALUES (1,1);
 INSERT INTO JORNADA_VAC VALUES (CURRENT_DATE,100,100,1,1,1,1); --TIENE TRIGGER
 
+--VACUNAS
+INSERT INTO VACUNA VALUES (DEFAULT,'Pfizer',1,91.6,2,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Janssen',1,91.6,0,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'J&J',1,91.6,1,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'AstraZeneca',1,91.6,0,'N',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Moderna',1,91.6,2,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Sinovac',1,91.6,0,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Sputnik V',1,91.6,2,'N',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
 
 --ESTATUS
 INSERT INTO ESTATUS VALUES(0,'FASE 0', 'La vacuna se encuentra en I+D');
@@ -207,3 +215,8 @@ INSERT INTO PAIS_GE VALUES (HABITANTES(8500000,0,0,0),1,20); --Venezuela niños
 INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),2,20); --Venezuela jovenes
 INSERT INTO PAIS_GE VALUES (HABITANTES(13000000,0,0,0),3,20); --Venezuela adultos
 INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),4,20); --Venezuela ancianos
+
+--Eventos aleatorios
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,1);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,2);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,3);

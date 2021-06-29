@@ -24,7 +24,7 @@ BEGIN
 
         DBMS_OUTPUT.PUT_LINE('infectados actuales -> ' || infectados_actuales);
         DBMS_OUTPUT.PUT_LINE('tasa R -> ' || pais.tasa_repro_pai);
-        nuevos_infectados := infectados_actuales*pais.tasa_repro_pai;
+        nuevos_infectados := infectados_actuales*pais.tasa_repro_pai/3;
 
         DBMS_OUTPUT.PUT_LINE('nuevos infectados -> ' || nuevos_infectados);
 
