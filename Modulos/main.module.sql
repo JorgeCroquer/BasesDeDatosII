@@ -97,7 +97,7 @@ BEGIN
         LOOP
         
             contagios(fecha_actual);
-            
+            disparador_eventos(fecha_actual);
             
             --Sumamos 7 dias (1 semana) a la fecha actual
             fecha_actual := fecha_actual + 7;

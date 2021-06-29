@@ -197,22 +197,22 @@ CREATE TABLE EVENTOS_ALEATORIOS(
     nombre_eve VARCHAR2(50) NOT NULL,
     tipo_eve CHAR NOT NULL,
     descripcion_eve VARCHAR2(250) NOT NULL,
-    efecto_eve VARCHAR2(20) NOT NULL,
+    efecto_eve VARCHAR2(20),
     probabilidad_eve NUMBER NOT NULL,
+    habilitado_eve CHAR NOT NULL,
     rango_efecto_eve NUMBER,
     direc_eve CHAR,
-    --posible_eve 
     fecha_ocurrencia_eve DATE,
     pais_eve NUMBER,
     CONSTRAINT fk_pais_eventos_aleatorios
         FOREIGN KEY (pais_eve)
         REFERENCES PAIS(id_pai),
-    CONSTRAINT tipo_evento_aleatorio
-        CHECK (tipo_eve IN ('C', 'E')), --comun/especifico
     CONSTRAINT direc_evento_aleatorio
         CHECK (direc_eve IN ('S', 'B')), --subir/bajar
-    CONSTRAINT efecto_evento_aleatorio
-        CHECK (efecto_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA'))
+    CONSTRAINT tipo_evento_aleatorio
+        CHECK (tipo_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA')),
+    CONSTRAINT habilitado_evento_aleatorio_bool
+        CHECK (habilitado_eve IN ('Y','N'))
 );
 
 CREATE TABLE DISTRIBUIDORA(

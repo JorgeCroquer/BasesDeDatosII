@@ -109,3 +109,10 @@ INSERT INTO PAIS_GE VALUES (HABITANTES(8500000,0,0,0),1,30); --Venezuela niños
 INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),2,30); --Venezuela jovenes
 INSERT INTO PAIS_GE VALUES (HABITANTES(13000000,0,0,0),3,30); --Venezuela adultos
 INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),4,30); --Venezuela ancianos
+
+
+
+--Eventos aleatorios
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,1);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,2);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,3);

@@ -1,48 +1,65 @@
-CREATE OR REPLACE PROCEDURE eventos_aleatorios IS
+CREATE OR REPLACE PROCEDURE disparador_eventos(fecha_actual DATE) IS
     
     CURSOR eventos IS
         SELECT * FROM EVENTOS_ALEATORIOS;
 
+    numero NUMBER; --Guarda el valor para evaluar la probabilidad
 
+    pais_aleatorio pais.id_pai%TYPE;
 BEGIN
 
     FOR evento IN eventos
     LOOP
 
-        IF (evento.habilitado = 'Y') THEN
+        IF (evento.habilitado_eve = 'Y') THEN
 
-            IF (evento.fecha IS NOT NULL) THEN 
+            IF (evento.fecha_ocurrencia_eve IS NOT NULL) THEN 
             
-                IF(evento.fecha NOT BETWEEN fecha_actual AND fecha_actual+6) THEN
+                IF(evento.fecha_ocurrencia_eve NOT BETWEEN fecha_actual AND fecha_actual+6) THEN
                 
                     CONTINUE; --Salta al siguiente evento
                 
                 END IF;
             
             ELSE 
-                --Lo activa basado en probabilidad
+                numero := TRUNC(DBMS_RANDOM.VALUE(1,100));
+                DBMS_OUTPUT.PUT_LINE('numero -> ' || numero);
+                IF (numero <= evento.probabilidad_eve) THEN
+                    DBMS_OUTPUT.PUT_LINE('se activo');
 
-                IF (activado) THEN
+                    IF (evento.tipo_eve = 'CAMBIO_FECHA') THEN
 
-
-                    IF (evento.efecto_eve = 'CAMBIO_FECHA') THEN
-
-                        --MODIFICA LA FECHA SEGUN EFECTO
+                        --Modifica la fecvha de la vacuna
+                        DBMS_OUTPUT.PUT_LINE('');
+                        EXIT;
                         
+                    ELSIF (evento.tipo_eve = 'CUARENTENA') THEN
+                        DBMS_OUTPUT.PUT_LINE('Es cuarentena');
+                        UPDATE PAIS p SET tasa_repro_pai = 0.9 + TRUNC(DBMS_RANDOM.VALUE(-0.07,0.07),2)
+                        WHERE p.id_pai = evento.pais_eve;
+                        DBMS_OUTPUT.PUT_LINE('pais -> ' || pais_aleatorio);
+
                     ELSE
 
-                        IF (evento.pais IS NULL) THEN 
+                        IF (evento.pais_eve IS NULL) THEN 
 
                             --Escoge un pais al azar
+                            SELECT id_pai INTO pais_aleatorio
+                            FROM pais
+                            ORDER BY DBMS_RANDOM.RANDOM
+                            FETCH FIRST 1 ROWS ONLY;
 
                         END IF;   
 
                         --Aplica el efecto segun el pais.
-
+                        DBMS_OUTPUT.PUT_LINE('');
+                        EXIT;
                     END IF;
-
-                    --Se inhabilita el evento
-                    END LOOP;
+                        --Se inhabilita el evento
+                        UPDATE EVENTOS_ALEATORIOS eve SET eve.habilitado_eve = 'N'
+                        WHERE eve.id_eve = evento.id_eve;
+                        DBMS_OUTPUT.PUT_LINE('Se inhabilito');
+                        
 
 
                 ELSE CONTINUE; --Salta al siguiente evento   
