@@ -44,9 +44,7 @@ INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Jovenes', 15, 26, 0.02);
 INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Adultos', 27, 60, 0.08);
 INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Ancianos', 61, NULL, 0.20);
 
-
---PAIS (FALTAN)
-
+--PAIS
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Alemania','EUR', 90, 'Y', 1.47, 5); 
 EXECUTE guarda_banderas('alemania.png',1);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Arabia Saudita','ASI', 80, 'Y', 2.43, 5); 
@@ -88,7 +86,7 @@ EXECUTE guarda_banderas('italia.png',19);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Venezuela','AME', 70, 'Y', 2.2, 1);
 EXECUTE guarda_banderas('venezuela.png', 20);
 
---Estos no tienen población
+--Estos no tienen población, se supone que no los vamos a usar pero los dejo por si acaso
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Israel','EUR', 90, 'Y', 3, 5);
 EXECUTE guarda_banderas('israel.png',19);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Japon','ASI', 95, 'Y', 1.39, 5);
@@ -109,9 +107,6 @@ INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Sudáfrica','AFR', 80, 'Y', 2.3, 3);
 EXECUTE guarda_banderas('sudafrica.png',28);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Suecia','EUR', 95, 'Y', 1.64, 5);
 EXECUTE guarda_banderas('suecia.png',29);
-
-
-
 
 --PAIS_ge
 INSERT INTO PAIS_GE VALUES (HABITANTES(8400000,0,0,0),1,1); -- Alemania niños
