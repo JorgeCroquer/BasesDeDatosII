@@ -215,3 +215,19 @@ INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),4,20); --Venezuela anciano
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,1);
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,2);
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,3);
+
+--Centros de Vacunación
+-- INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Nombre',capacidad,id pais, UBICACION(UBICACION.validarLatitud(),UBICACION.validarLongitud(),'direcciontextual'))
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Rathaus Schöneberg',700000,1, UBICACION(UBICACION.validarLatitud(52.487588879706664),UBICACION.validarLongitud(13.343324661821699),'Alemania, Berlín, Avenida Martin-Luther junto al parque Rudolph Wilde')); --Alemania
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Olympiapark',700000,1, UBICACION(UBICACION.validarLatitud(48.19270005279563),UBICACION.validarLongitud(11.545147464409),'Alemania, Múnich, Autopista Georg-BReuchle-Ring al noreste del cementerio Westfriedhof'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Planten un Blomen',700000,1, UBICACION(UBICACION.validarLatitud(53.56088212133053),UBICACION.validarLongitud(9.982175996473462),'Alemania, Hamburgo, Autopista Edmund Siemers Alee frente a la universidad de hamburgo'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Westfalenpark Eingang Blütengärten',700000,1, UBICACION(UBICACION.validarLatitud(51.49395284476907),UBICACION.validarLongitud(7.471306596725039),'Alemania, Dortmund,Avenida Ander Buschmühle'));
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Hayat National Hospital',70000,2, UBICACION(UBICACION.validarLatitud(24.69707260809365),UBICACION.validarLongitud(46.771836790091825),'Arabia Saudita, Riad, Avenida Umar Ibn Abdul Aziz al lado del Banco Nacional Arabe')); --Arabia Saudita
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Malha Masjid',70000,2, UBICACION(UBICACION.validarLatitud(24.45972998214987),UBICACION.validarLongitud(39.60431411866359),'Arabia saudita, Medina, Avenida مطبخ الزاهدية'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al shu AIB',70000,2,UBICACION(UBICACION.validarLatitud(29.985905101348436),UBICACION.validarLongitud(40.21944089706485),'Arabia saudita, Hamburgo, Avenida منتزه النخيل'));
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro CEMIC',700000,1, UBICACION(UBICACION.validarLatitud(-34.624058764800594),UBICACION.validarLongitud(-58.450884830299636),'Argentina, Buenos Aires, Caballito, Av. Rivadavia 6044 (C.A.B.A.)')); --Argentina
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Villa Devoto',700000,1, UBICACION(UBICACION.validarLatitud(-34.60025851472542),UBICACION.validarLongitud(-58.50349540747846),'Argentina, Buenos Aires, Emilio Lamarca 3388 esquina Francisco Beiró (C.A.B.A.)'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Pilar',700000,1, UBICACION(UBICACION.validarLatitud(-33.29148464683466),UBICACION.validarLongitud(-66.3291365234207),'Argentina, Buenos Aires, Av. Juan D. Perón 1500 (Hospital Austral)'));
