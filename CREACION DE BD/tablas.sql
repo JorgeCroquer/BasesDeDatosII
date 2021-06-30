@@ -191,7 +191,7 @@ CREATE TABLE VAC_EFEC(
 CREATE TABLE EVENTOS_ALEATORIOS(
     id_eve NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_eve VARCHAR2(50) NOT NULL,
-    tipo_eve CHAR NOT NULL,
+    tipo_eve VARCHAR2(12) NOT NULL,
     descripcion_eve VARCHAR2(250) NOT NULL,
     efecto_eve VARCHAR2(20),
     probabilidad_eve NUMBER NOT NULL,
@@ -206,7 +206,7 @@ CREATE TABLE EVENTOS_ALEATORIOS(
     CONSTRAINT direc_evento_aleatorio
         CHECK (direc_eve IN ('S', 'B')), --subir/bajar
     CONSTRAINT tipo_evento_aleatorio
-        CHECK (tipo_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA')),
+        CHECK (tipo_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA','CUARENTENA')),
     CONSTRAINT habilitado_evento_aleatorio_bool
         CHECK (habilitado_eve IN ('Y','N')) -- YES / NO
 );
