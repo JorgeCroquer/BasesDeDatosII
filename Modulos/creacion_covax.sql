@@ -1,7 +1,9 @@
 CREATE OR REPLACE PROCEDURE creacion_covax IS
 
     c_vacunas SYS_REFCURSOR;
+    c_paises SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;
+    r_pais pais%ROWTYPE;
     covax_id distribuidora.id_dist%TYPE;
 BEGIN
 

@@ -24,18 +24,18 @@ CREATE TABLE GRUPO_ETARIO(
 );
 
 CREATE TABLE PAIS_GE(
-    cant_hab_pge HABITANTES NOT NULL,
-    grupo_etario_pge NUMBER NOT NULL,
     pais_pge NUMBER NOT NULL,
+    grupo_etario_pge NUMBER NOT NULL,
+    cant_hab_pge HABITANTES NOT NULL,
     
-    CONSTRAINT fk_ge
-        FOREIGN KEY (grupo_etario_pge)
-        REFERENCES GRUPO_ETARIO(id_ge),
     CONSTRAINT fk_pais_pge
         FOREIGN KEY (pais_pge)
         REFERENCES PAIS(id_pai),
+    CONSTRAINT fk_ge
+        FOREIGN KEY (grupo_etario_pge)
+        REFERENCES GRUPO_ETARIO(id_ge),
     CONSTRAINT pk_pais_ge
-        PRIMARY KEY (grupo_etario_pge, pais_pge)
+        PRIMARY KEY (pais_pge, grupo_etario_pge)
 );
 
 CREATE TABLE H_HABITANTES(
@@ -72,14 +72,14 @@ CREATE TABLE VACUNA(
         FOREIGN KEY (estatus_vac)
         REFERENCES ESTATUS(id_est),
     CONSTRAINT bool_covax_vac
-        CHECK (covax_vac IN ('Y', 'N'))
+        CHECK (covax_vac IN ('Y', 'N')) -- YES / NO
 
 );
 
 CREATE TABLE RESTRICCIONES(
     pais_res NUMBER NOT NULL,
     vacuna_res NUMBER NOT NULL,   
-    tipo_res VARCHAR2(10) NOT NULL,
+    tipo_res VARCHAR2(2) NOT NULL,
     descripcion_res VARCHAR2(250),
     CONSTRAINT fk_pais_res
         FOREIGN KEY (pais_res)
@@ -90,7 +90,7 @@ CREATE TABLE RESTRICCIONES(
     CONSTRAINT pk_restricciones
         PRIMARY KEY (pais_res,vacuna_res),
     CONSTRAINT check_tipo_res
-        CHECK (tipo_res IN ('Restringida','Parcialmente_restringida'))
+        CHECK (tipo_res IN ('R','PR')) --RESTRINGIDA / PARCIALMENTE RESTRINGIDA
 );
 
 CREATE TABLE CENTRO_VAC(
@@ -191,7 +191,7 @@ CREATE TABLE VAC_EFEC(
 CREATE TABLE EVENTOS_ALEATORIOS(
     id_eve NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_eve VARCHAR2(50) NOT NULL,
-    tipo_eve CHAR NOT NULL,
+    tipo_eve VARCHAR2(12) NOT NULL,
     descripcion_eve VARCHAR2(250) NOT NULL,
     efecto_eve VARCHAR2(20),
     probabilidad_eve NUMBER NOT NULL,
@@ -206,9 +206,9 @@ CREATE TABLE EVENTOS_ALEATORIOS(
     CONSTRAINT direc_evento_aleatorio
         CHECK (direc_eve IN ('S', 'B')), --subir/bajar
     CONSTRAINT tipo_evento_aleatorio
-        CHECK (tipo_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA')),
+        CHECK (tipo_eve IN ('MORTALIDAD','TAZA_REPRO','CAMBIO_FECHA','CUARENTENA')),
     CONSTRAINT habilitado_evento_aleatorio_bool
-        CHECK (habilitado_eve IN ('Y','N'))
+        CHECK (habilitado_eve IN ('Y','N')) -- YES / NO
 );
 
 CREATE TABLE DISTRIBUIDORA(
@@ -260,9 +260,9 @@ CREATE TABLE PAGO(
 );
 
 CREATE TABLE DISTRIBUCION(
-    cantidad_dis NUMBER NOT NULL,
     n_orden_dis NUMBER NOT NULL,
     vacuna_dis NUMBER NOT NULL,
+    cantidad_dis NUMBER NOT NULL,
     CONSTRAINT fk_numero_orden
         FOREIGN KEY (n_orden_dis)
         REFERENCES ORDEN(id_ord),
