@@ -1,28 +1,29 @@
 CREATE OR REPLACE PROCEDURE farmaceuticas(fecha_actual DATE) IS
     
-    
-    DECLARE
-        VACUNAS CURSOR;
-        REGISTRO_VAC VACUNA%ROWTYPE;
-        covax BOOLEAN := covax_existe;
+    c_vacunas SYS_REFCURSOR;
+    r_vacuna vacuna%ROWTYPE;
+    covax BOOLEAN := covax_existe;
 BEGIN
-    VACUNAS := get_vacunas;
-    OPEN VACUNAS;
-    FETCH VACUNAS INTO REGISTRO_VAC;
-    WHILE VACUNAS%FOUND
+    
+    c_vacunas := get_vacunas;
+    
+    
+    WHILE c_vacunas%FOUND
         LOOP 
-            if ((rango_fecha(fecha_actual, REGISTRO_VAC.fechas_vac.fecha_f2)) AND (REGISTRO_VAC.covax_vac = 'Y') AND (NOT(covax))) THEN
-                EXECUTE creacion_covax;
+            FETCH c_vacunas INTO r_vacuna;
+            if ((rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f2)) AND (r_vacuna.covax_vac = 'Y') AND (NOT(covax))) THEN
+                creacion_covax;
                 covax := TRUE;
-                DBMS_OUTPUT.PUT_LINE('El ' || REGISTRO_VAC.fechas_vac.fecha_f2 || ' la vacuna ' || REGISTRO_VAC.nombre_vac || 'es la primera en entrar en fase 2.');
+                DBMS_OUTPUT.PUT_LINE('El ' || r_vacuna.fechas_vac.fecha_f2 || ' la vacuna ' || r_vacuna.nombre_vac || ' es la primera en entrar en fase II.');
                   
-            else if (rango_fecha(fecha_actual, REGISTRO_VAC.fechas_vac.fecha_f4)) THEN
-                    if (REGISTRO_VAC.covax_vac = 'Y') THEN
-                        EXECUTE asignacion_vacunas_covax(REGISTRO_VAC.id_vac);    --asigna 30% a COVAX y el 70% restante se lo queda el laboratorio creador. 
+            else if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f4)) THEN
+                    if (r_vacuna.covax_vac = 'Y') THEN
+                        asignacion_vacunas_covax(r_vacuna.id_vac);    --asigna 30% a COVAX y el 70% restante se lo queda el laboratorio creador. 
                     end if;
-                    DBMS_OUTPUT.PUT_LINE('El ' || REGISTRO_VAC.fechas_vac.fecha_f2 || ' la vacuna' || REGISTRO_VAC.nombre_vac || ' entro en fase 4.');
+                    DBMS_OUTPUT.PUT_LINE('El ' || r_vacuna.fechas_vac.fecha_f2 || ' la vacuna ' || r_vacuna.nombre_vac || ' entro en fase IV.');
                 end if;
-            end if;`
+            end if;
         END LOOP;
-    CLOSE VACUNAS;  
+    CLOSE c_vacunas;  
 END;
+/

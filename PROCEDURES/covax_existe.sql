@@ -1,6 +1,5 @@
 CREATE OR REPLACE FUNCTION covax_existe RETURN BOOLEAN IS 
 
-    DECLARE
         var DISTRIBUIDORA.id_dist%TYPE;
 BEGIN
     SELECT id_dist INTO var FROM DISTRIBUIDORA 
@@ -10,3 +9,4 @@ BEGIN
     
     RETURN (TRUE);
 END;
+/
