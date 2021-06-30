@@ -1,9 +1,8 @@
-CREATE OR REPLACE FUNCTION get_vacunas RETURN CURSOR IS
+CREATE OR REPLACE FUNCTION get_vacunas RETURN SYS_REFCURSOR AS
 
-    DECLARE
-        CURSOR VACUNAS IS
-        SELECT * FROM VACUNA;   
-        
+    c_vacunas SYS_REFCURSOR;
 BEGIN
-    RETURN VACUNAS;
+    OPEN c_vacunas FOR SELECT * FROM vacuna;   
+    RETURN c_vacunas;
 END;
+/

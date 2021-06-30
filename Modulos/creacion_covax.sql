@@ -1,23 +1,24 @@
 CREATE OR REPLACE PROCEDURE creacion_covax IS
 
-    DECLARE
-        VACUNAS CURSOR;
-        REGISTRO_VAC VACUNA%ROWTYPE;
-        COVAX_ID DISTRIBUIDORA.id_dist%TYPE;
+    c_vacunas SYS_REFCURSOR;
+    r_vacuna vacuna%ROWTYPE;
+    covax_id distribuidora.id_dist%TYPE;
 BEGIN
 
     INSERT INTO DISTRIBUIDORA VALUES (DEFAULT, 'COVAX');    --INSERT DE COVAX EN LA TABLA DISTRIBUIDORA
-    SELECT id_dist INTO COVAX_ID FROM DISTRIBUIDORA 
+    SELECT id_dist INTO covax_id FROM DISTRIBUIDORA 
     WHERE nombre_dist = 'COVAX';
-    VACUNAS := get_vacunas;
-    OPEN VACUNAS;
-    FETCH VACUNAS INTO REGISTRO_VAC;
-    WHILE VACUNAS%FOUND
+
+    c_vacunas := get_vacunas;
+    
+    WHILE c_vacunas%FOUND
         LOOP 
-            if (REGISTRO_VAC.covax_vac = 'Y') THEN
-            INSERT INTO VACUNA_DISTRIBUIDORA VALUES (REGISTRO_VAC.id_vac, COVAX_ID, 0);      --ASIGNACION DE CADA VACUNA A COVAX CON CANTIDAD 0 (EN OTRO PROCEDURE SE ASIGNARA EL 30% DE CADA VACUNA EN EL MOMENTO QUE LLEGUE A FASE 4)
-            end if;
+            FETCH c_vacunas INTO r_vacuna;
+            if (r_vacuna.covax_vac = 'Y') THEN
+                INSERT INTO VACUNA_DISTRIBUIDORA VALUES (r_vacuna.id_vac, covax_id, 0);      --ASIGNACION DE CADA VACUNA A COVAX CON CANTIDAD 0 (EN OTRO PROCEDURE SE ASIGNARA EL 30% DE CADA VACUNA EN EL MOMENTO QUE LLEGUE A FASE 4)
+            END if;
         END LOOP;
-    CLOSE VACUNAS;  
+    CLOSE c_vacunas;  
     DBMS_OUTPUT.PUT_LINE('Se conformo la alianza COVAX.');
 END;
+/

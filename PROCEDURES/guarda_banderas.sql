@@ -12,3 +12,4 @@ BEGIN
 
     UPDATE pais SET bandera_pai = v_temp WHERE id_pai = pais;
 END;
+/
