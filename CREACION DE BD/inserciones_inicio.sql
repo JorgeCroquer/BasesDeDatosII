@@ -47,29 +47,29 @@ INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Ancianos', 61, NULL, 0.20);
 
 --PAIS (FALTAN)
 
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Alemania','EUR', 90, 'Y', 1.47, 5); 
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Alemania','EUR', 90, 'Y', 3, 5); 
 EXECUTE guarda_banderas('alemania.png',1);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Arabia Saudita','ASI', 80, 'Y', 2.43, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Arabia Saudita','ASI', 80, 'Y', 1.5, 5);
 EXECUTE guarda_banderas('arabiasaudita.png',2);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Argentina','AME', 80, 'Y', 2.21, 2);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Argentina','AME', 80, 'Y', 2, 2);
 EXECUTE guarda_banderas('argentina.png',3);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Australia','OCE', 85, 'Y', 1.72, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Australia','OCE', 85, 'Y', 1.2, 5);
 EXECUTE guarda_banderas('australia.png',4);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Brasil','AME', 85, 'Y', 1.68, 3);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Brasil','AME', 85, 'Y', 1.1, 3);
 EXECUTE guarda_banderas('brasil.png',5);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Camerun','AFR', 70, 'Y', 4.32, 2);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Camerun','AFR', 70, 'Y', 1.6, 2);
 EXECUTE guarda_banderas('camerun.png',6);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Canadá','AME', 85, 'Y', 1.48, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Canadá','AME', 85, 'Y', 1.3, 5);
 EXECUTE guarda_banderas('canada.png',7);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'China','ASI', 90, 'Y', 1.36, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'China','ASI', 90, 'Y', 1, 5);
 EXECUTE guarda_banderas('china.png',8);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Corea del Sur','ASI', 95, 'Y', 0.95, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Corea del Sur','ASI', 95, 'Y', 1.05, 5);
 EXECUTE guarda_banderas('surcorea.png',9);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Cuba','AME', 70, 'Y', 1.57, 1);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Cuba','AME', 70, 'Y', 1.35, 1);
 EXECUTE guarda_banderas('cuba.png',10);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Egipto','AFR', 75, 'Y', 3.07, 3);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Egipto','AFR', 75, 'Y', 1.1, 3);
 EXECUTE guarda_banderas('egipto.png',11);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'El Salvador','AME', 80, 'Y', 1.77, 2);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'El Salvador','AME', 80, 'Y', 1.85, 2);
 EXECUTE guarda_banderas('salvador.png',12);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'España','EUR', 85, 'Y', 1.24, 4);
 EXECUTE guarda_banderas('españa.png',13);
@@ -81,7 +81,7 @@ INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Haití','AME', 70, 'Y', 2.46, 1);
 EXECUTE guarda_banderas('haiti.png',16);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'India','ASI', 90, 'Y', 2.08, 5);
 EXECUTE guarda_banderas('india.png',17);
-INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Islandia','EUR', 95, 'Y', 1.79, 5);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Islandia','EUR', 95, 'Y', 1.55, 5);
 EXECUTE guarda_banderas('islandia.png',18);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Italia','EUR', 90, 'Y', 1.23, 4);
 EXECUTE guarda_banderas('italia.png',19);
@@ -114,70 +114,70 @@ EXECUTE guarda_banderas('suecia.png',29);
 
 
 --PAIS_ge
-INSERT INTO PAIS_GE VALUES (HABITANTES(8400000,0,0,0),1,1); -- Alemania niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(7900000,0,0,0),2,1); -- Alemania jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(37800000,0,0,0),3,1); -- Alemania adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(23900000,0,0,0),4,1); -- Alemania ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(8400000,220,0,0),1,1); -- Alemania niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(7900000,220,0,0),2,1); -- Alemania jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(37800000,220,0,0),3,1); -- Alemania adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(23900000,220,0,0),4,1); -- Alemania ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(10000000,0,0,0),1,2); -- Arabia saudita  niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(5100000,0,0,0),2,2); -- Arabia saudita jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(17500000,0,0,0),3,2); -- Arabia saudita adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(1700000,0,0,0),4,2); -- Arabia saudita ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(10000000,53,0,0),1,2); -- Arabia saudita  niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(5100000,53,0,0),2,2); -- Arabia saudita jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(17500000,53,0,0),3,2); -- Arabia saudita adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(1700000,53,0,0),4,2); -- Arabia saudita ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(11000000,0,0,0),1,3); -- Argentina niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(6800000,0,0,0),2,3); -- Argentina jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(17600000,0,0,0),3,3); -- Argentina adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(9300000,0,0,0),4,3); -- Argentina ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(11000000,300,0,0),1,3); -- Argentina niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(6800000,300,0,0),2,3); -- Argentina jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(17600000,300,0,0),3,3); -- Argentina adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(9300000,300,0,0),4,3); -- Argentina ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(4100000,0,0,0),1,4); -- Australia niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(2900000,0,0,0),2,4); -- Australia jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(10900000,0,0,0),3,4); -- Australia adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(5000000,0,0,0),4,4); -- Australia ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(4100000,5,0,0),1,4); -- Australia niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(2900000,5,0,0),2,4); -- Australia jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(10900000,5,0,0),3,4); -- Australia adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(5000000,5,0,0),4,4); -- Australia ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(45000000,0,0,0),1,5); -- Brasil niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(33000000,0,0,0),2,5); -- Brasil jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(100700000,0,0,0),3,5); -- Brasil adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(27900000,0,0,0),4,5); -- Brasil ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(45000000,2800,0,0),1,5); -- Brasil niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(33000000,2800,0,0),2,5); -- Brasil jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(100700000,2800,0,0),3,5); -- Brasil adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(27900000,2800,0,0),4,5); -- Brasil ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(10700000,0,0,0),1,6); -- Camerun niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(5000000,0,0,0),2,6); -- Camerun jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(8400000,0,0,0),3,6); -- Camerun adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(1200000,0,0,0),4,6); -- Camerun ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(10700000,12,0,0),1,6); -- Camerun niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(5000000,12,0,0),2,6); -- Camerun jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(8400000,12,0,0),3,6); -- Camerun adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(1200000,12,0,0),4,6); -- Camerun ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(5400000,0,0,0),1,7); -- Canadá niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(4100000,0,0,0),2,7); -- Canadá jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(16200000,0,0,0),3,7); -- Canadá adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(9300000,0,0,0),4,7); -- Canadá ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(5400000,150,0,0),1,7); -- Canadá niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(4100000,150,0,0),2,7); -- Canadá jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(16200000,150,0,0),3,7); -- Canadá adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(9300000,150,0,0),4,7); -- Canadá ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(238000000,0,0,0),1,8); -- China niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(170500000,0,0,0),2,8); -- China jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(741000000,0,0,0),3,8); -- China adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(232000000,0,0,0),4,8); -- China ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(238000000,900,0,0),1,8); -- China niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(170500000,900,0,0),2,8); -- China jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(741000000,900,0,0),3,8); -- China adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(232000000,900,0,0),4,8); -- China ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(6600000,0,0,0),1,9); -- Corea del sur niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(5100000,0,0,0),2,9); -- Corea del sur jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(26900000,0,0,0),3,9); -- Corea del sur adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(11300000,0,0,0),4,9); -- Corea del sur ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(6600000,50,0,0),1,9); -- Corea del sur niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(5100000,50,0,0),2,9); -- Corea del sur jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(26900000,50,0,0),3,9); -- Corea del sur adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(11300000,50,0,0),4,9); -- Corea del sur ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(1800000,0,0,0),1,10); -- Cuba niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(1200000,0,0,0),2,10); -- Cuba jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),3,10); -- Cuba adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(2300000,0,0,0),4,10); -- Cuba ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(1800000,15,0,0),1,10); -- Cuba niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(1200000,15,0,0),2,10); -- Cuba jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,15,0,0),3,10); -- Cuba adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(2300000,15,0,0),4,10); -- Cuba ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(33000000,0,0,0),1,11); -- Egipto niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(18500000,0,0,0),2,11); -- Egipto jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(40400000,0,0,0),3,11); -- Egipto adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(7000000,0,0,0),4,11); -- Egipto ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(33000000,70,0,0),1,11); -- Egipto niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(18500000,70,0,0),2,11); -- Egipto jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(40400000,70,0,0),3,11); -- Egipto adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(7000000,70,0,0),4,11); -- Egipto ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(1500000,0,0,0),1,12); -- El salvador niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(1200000,0,0,0),2,12); -- El salvador jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(2600000,0,0,0),3,12); -- El salvador adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(700000,0,0,0),4,12); -- El salvador ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(1500000,5,0,0),1,12); -- El salvador niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(1200000,5,0,0),2,12); -- El salvador jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(2600000,5,0,0),3,12); -- El salvador adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(700000,5,0,0),4,12); -- El salvador ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(7400000,0,0,0),1,13); -- España niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(4700000,0,0,0),2,13); -- España jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(24700000,0,0,0),3,13); -- España adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(12000000,0,0,0),4,13); -- España ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(7400000,450,0,0),1,13); -- España niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(4700000,450,0,0),2,13); -- España jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(24700000,450,0,0),3,13); -- España adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(12000000,450,0,0),4,13); -- España ancianos
 
 INSERT INTO PAIS_GE VALUES (HABITANTES(61300000,0,0,0),1,14); -- EEUU niños
 INSERT INTO PAIS_GE VALUES (HABITANTES(43100000,0,0,0),2,14); -- EEUU jovenes
@@ -201,10 +201,10 @@ INSERT INTO PAIS_GE VALUES (HABITANTES(131800000,0,0,0),4,17); -- India ancianos
 
 -- Dato curioso la poblacion total de islandia es 343 518
 --Islandía es un pais pequeño ubicado al notre, entre inglaterra y groenlandia
-INSERT INTO PAIS_GE VALUES (HABITANTES(70000,0,0,0),1,18); -- Islandia niños
-INSERT INTO PAIS_GE VALUES (HABITANTES(45400,0,0,0),2,18); -- Islandia jovenes
-INSERT INTO PAIS_GE VALUES (HABITANTES(156800,0,0,0),3,18); -- Islandia adultos
-INSERT INTO PAIS_GE VALUES (HABITANTES(71000,0,0,0),4,18); -- Islandia ancianos
+INSERT INTO PAIS_GE VALUES (HABITANTES(70000,1,0,0),1,18); -- Islandia niños
+INSERT INTO PAIS_GE VALUES (HABITANTES(45400,1,0,0),2,18); -- Islandia jovenes
+INSERT INTO PAIS_GE VALUES (HABITANTES(156800,1,0,0),3,18); -- Islandia adultos
+INSERT INTO PAIS_GE VALUES (HABITANTES(71000,1,0,0),4,18); -- Islandia ancianos
 
 INSERT INTO PAIS_GE VALUES (HABITANTES(8400000,0,0,0),1,19); -- Italia niños
 INSERT INTO PAIS_GE VALUES (HABITANTES(5800000,0,0,0),2,19); -- Italia jovenes
@@ -220,3 +220,25 @@ INSERT INTO PAIS_GE VALUES (HABITANTES(5200000,0,0,0),4,20); --Venezuela anciano
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,1);
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,2);
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,3);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,4);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,5);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,6);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,7);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,8);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,9);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,10);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,11);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,12);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,13);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,14);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,15);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,16);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,17);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,18);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,19);
+INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,20);
+
+
+
+
+
