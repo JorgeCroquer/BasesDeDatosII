@@ -243,16 +243,28 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Olympiapark',700000,1, UBICACION(UBICACIO
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Planten un Blomen',700000,1, UBICACION(UBICACION.validarLatitud(53.56088212133053),UBICACION.validarLongitud(9.982175996473462),'Alemania, Hamburgo, Autopista Edmund Siemers Alee frente a la universidad de hamburgo'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Westfalenpark Eingang Blütengärten',700000,1, UBICACION(UBICACION.validarLatitud(51.49395284476907),UBICACION.validarLongitud(7.471306596725039),'Alemania, Dortmund,Avenida Ander Buschmühle'));
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Hayat National Hospital',70000,2, UBICACION(UBICACION.validarLatitud(24.69707260809365),UBICACION.validarLongitud(46.771836790091825),'Arabia Saudita, Riad, Avenida Umar Ibn Abdul Aziz al lado del Banco Nacional Arabe')); --Arabia Saudita
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Malha Masjid',70000,2, UBICACION(UBICACION.validarLatitud(24.45972998214987),UBICACION.validarLongitud(39.60431411866359),'Arabia saudita, Medina, Avenida مطبخ الزاهدية'));
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al shu AIB',70000,2,UBICACION(UBICACION.validarLatitud(29.985905101348436),UBICACION.validarLongitud(40.21944089706485),'Arabia saudita, Hamburgo, Avenida منتزه النخيل'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Hayat National Hospital',100000,2, UBICACION(UBICACION.validarLatitud(24.69707260809365),UBICACION.validarLongitud(46.771836790091825),'Arabia Saudita, Riad, Avenida Umar Ibn Abdul Aziz al lado del Banco Nacional Arabe')); --Arabia Saudita
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Malha Masjid',100000,2, UBICACION(UBICACION.validarLatitud(24.45972998214987),UBICACION.validarLongitud(39.60431411866359),'Arabia saudita, Medina, Avenida مطبخ الزاهدية'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al shu AIB',100000,2,UBICACION(UBICACION.validarLatitud(29.985905101348436),UBICACION.validarLongitud(40.21944089706485),'Arabia saudita, Hamburgo, Avenida منتزه النخيل'));
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro CEMIC',700000,1, UBICACION(UBICACION.validarLatitud(-34.624058764800594),UBICACION.validarLongitud(-58.450884830299636),'Argentina, Buenos Aires, Caballito, Av. Rivadavia 6044 (C.A.B.A.)')); --Argentina
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Villa Devoto',700000,1, UBICACION(UBICACION.validarLatitud(-34.60025851472542),UBICACION.validarLongitud(-58.50349540747846),'Argentina, Buenos Aires, Emilio Lamarca 3388 esquina Francisco Beiró (C.A.B.A.)'));
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Pilar',700000,1, UBICACION(UBICACION.validarLatitud(-33.29148464683466),UBICACION.validarLongitud(-66.3291365234207),'Argentina, Buenos Aires, Av. Juan D. Perón 1500 (Hospital Austral)'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro CEMIC',100000,3, UBICACION(UBICACION.validarLatitud(-34.624058764800594),UBICACION.validarLongitud(-58.450884830299636),'Argentina, Buenos Aires, Caballito, Av. Rivadavia 6044 (C.A.B.A.)')); --Argentina
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Villa Devoto',100000,3, UBICACION(UBICACION.validarLatitud(-34.60025851472542),UBICACION.validarLongitud(-58.50349540747846),'Argentina, Buenos Aires, Emilio Lamarca 3388 esquina Francisco Beiró (C.A.B.A.)'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Pilar',100000,3, UBICACION(UBICACION.validarLatitud(-33.29148464683466),UBICACION.validarLongitud(-66.3291365234207),'Argentina, Buenos Aires, Av. Juan D. Perón 1500 (Hospital Austral)'));
 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Westmead Hospital',100000,4, UBICACION(UBICACION.validarLatitud(-33.800974999861936),UBICACION.validarLongitud(150.98914146491472),'Australia, Sídney, Av. Darcy frente a la escuela primaria Madre Teresa')); --Australia
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Calvary Public Hospital Bruce',100000,4, UBICACION(UBICACION.validarLatitud(-35.252867201703914),UBICACION.validarLongitud(149.08778306272563),'Australia, Canberra, Aranda,Av Haydon '));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Box Hill Hospital',100000,4,UBICACION(UBICACION.validarLatitud(-37.81334796038165),UBICACION.validarLongitud(145.11850262937645),'Australia, Melbourne, Box hill north, calle arnold junto a Box Hill gardens'));
 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Metropolitano da Lapa',1750000,5, UBICACION(UBICACION.validarLatitud(-23.52881531213897),UBICACION.validarLongitud(-46.69747353152585),'Brasil, São Paulo, Lapa, Av R.Aurélia frente a la direccion Regional de Educación')); --Brasil
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Medico Julio Adnet',1750000,5, UBICACION(UBICACION.validarLatitud(-15.807738789310502),UBICACION.validarLongitud(-47.90940285022161),'Brasil, Brasilia, Asa sul, Via W5 Sul'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Sofia Feldman',1750000,5,UBICACION(UBICACION.validarLatitud(-19.911723965958657),UBICACION.validarLongitud(-43.960767388720825),'Brasil, Belo Horizonte, São Francisco das Chagas, Av Padre Esutáquio'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Pró-Vida',1750000,5,UBICACION(UBICACION.validarLatitud(-33.800974999861936),UBICACION.validarLongitud(150.98914146491472),'Brasil, Montes Claros, Vila greice, Av Nossa Sra. de Fátima')); 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital São Rafael',1750000,5, UBICACION(UBICACION.validarLatitud(-12.925375297889433),UBICACION.validarLongitud(-38.430109240624915),'Brasil, Salvador de Bahía, Av São Rafael frente al Jardín botánico de Salvador'));
 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital District D`efoulan',100000,6, UBICACION(UBICACION.validarLatitud(3.834729907968988),UBICACION.validarLongitud(11.506102680664924),'Camerún, Yaundé, OBOBOGO 1438')); --Camerún
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Douala General Hospital',100000,6, UBICACION(UBICACION.validarLatitud(4.064851444686604),UBICACION.validarLongitud(9.758862172655899),'Camerún, Duala, Diagonal al Collège Malangue'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Adamaoua Regional Hospital',100000,6,UBICACION(UBICACION.validarLatitud(7.315972759777115),UBICACION.validarLongitud(13.584392303709702),'Camerún, Ngaoundere, Adamawa'));
 
-
-
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Toronto General Hospital',100000,7, UBICACION(UBICACION.validarLatitud(43.65980335691164),UBICACION.validarLongitud(-79.3884489421143),'Canadá, Toronto, Avenida universidad frente a Queen`s park')); --Canadá
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'The Ottawa Hospital',100000,7, UBICACION(UBICACION.validarLatitud(45.40314431262979),UBICACION.validarLongitud(-75.6490958370367),'Canadá, Ottawa, Autopista Smyth frente al Faircrest Heights Park'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Vancouver General Hospital',100000,7,UBICACION(UBICACION.validarLatitud(49.262690181925045),UBICACION.validarLongitud(-123.12189638715428),'Canadá, Vancouver, Fairview avenida 12 a dos cuadras del ayuntamiento'));
