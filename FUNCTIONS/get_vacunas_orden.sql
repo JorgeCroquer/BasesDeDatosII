@@ -1,25 +1,24 @@
-CREATE OR REPLACE FUNCTION get_vacunas_orden(porcentaje_pob NUMBER, covax BOOLEAN) RETURN NUMBER AS
-    
-    c_distribucion SYS_REFCURSOR;
-    r_distribucion distribucion%ROWTYPE;
-    precio vacuna.precio_vac%TYPE;
-    monto_total NUMBER := 0;
+CREATE OR REPLACE FUNCTION get_vacunas_orden(pais_id pais.id_pai%TYPE, porcentaje_pob NUMBER, covax BOOLEAN) RETURN NUMBER AS
+
+    c_vacunas SYS_REFCURSOR;
+    r_vacuna vacuna%ROWTYPE;
+    poblacion NUMBER;
+    cont INTEGER := 0;
 BEGIN
-
-    c_distribucion := get_distribucion_orden(n_orden);
-
-    WHILE c_distribucion%FOUND
-        LOOP 
-            FETCH c_distribucion INTO r_distribucion;
-
-            SELECT precio_vac INTO precio FROM VACUNA 
-            WHERE  id_vac = r_distribucion.vacuna_dis;
-            monto_total = monto_total + (precio_vac*r_distribucion.cantidad_dis);
-        END LOOP;
-
-    if (covax) THEN             --SI LA ORDEN ES DE COVAX ENTONCES SUBSIDIA EL 50% DEL MONTO DE LA ORDEN
-        RETURN monto_total/2;
+    if (covax) THEN
+        c_vacunas := get_vacunas_covax;
+    else c_vacunas := get_vacunas;
     END if;
 
-    RETURN monto_total;
+    WHILE c_vacunas%FOUND
+        LOOP 
+            FETCH c_vacunas INTO r_vacuna;
+            if NOT(esta_restringida(pais_id, r_vacuna.id_vac)) THEN
+                cont = cont + 1;
+            END if;
+        END LOOP;
+    CLOSE c_vacunas;
+    poblacion := get_poblacion(pais_id, 'TOTAL');
+    poblacion := poblacion*(porcentaje_pob/100);
+    RETURN poblacion/cont;
 END;
