@@ -20,6 +20,10 @@ BEGIN
                         UPDATE VACUNA 
                         SET estatus_vac = 2                                  
                         WHERE id_vac = r_vacuna.id_vac;
+                        commit;
+                        if (all_vacunas_f2) THEN
+                            asignacion_vacunas_covax;
+                        END if;
                     END if;
                  else if (r_vacuna.estatus_vac = 2 ) THEN
                           if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f3)) THEN
