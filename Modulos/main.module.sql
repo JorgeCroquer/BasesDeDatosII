@@ -99,6 +99,7 @@ BEGIN
             disparador_eventos(fecha_actual);
             farmaceuticas(fecha_actual);
             
+            
             --Sumamos 7 dias (1 semana) a la fecha actual
             fecha_actual := fecha_actual + 7;
 
