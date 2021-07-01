@@ -19,8 +19,8 @@ CREATE TABLE GRUPO_ETARIO(
     id_ge NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_ge VARCHAR2(50) NOT NULL,
     edad_inferior NUMBER NOT NULL,
-    edad_superior NUMBER,
-    mortalidad NUMBER NOT NULL
+    mortalidad NUMBER NOT NULL,
+    edad_superior NUMBER
 );
 
 CREATE TABLE PAIS_GE(
@@ -61,12 +61,12 @@ CREATE TABLE VACUNA(
     id_vac NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_vac VARCHAR2(15) NOT NULL,
     estatus_vac NUMBER NOT NULL,
-    efectividad_vac NUMBER,
+    efectividad_vac NUMBER NOT NULL,
+    precio_vac NUMBER NOT NULL,
     dosis_vac NUMBER NOT NULL,
     covax_vac CHAR NOT NULL,
     temperatura_vac NUMBER NOT NULL,
     instrucciones_vac VARCHAR2(250) NOT NULL,
-    suministro_vac NUMBER NOT NULL,
     fechas_vac F_FASES NOT NULL,
     CONSTRAINT fk_estatus
         FOREIGN KEY (estatus_vac)
@@ -136,11 +136,11 @@ CREATE TABLE SUMINISTROS(
 CREATE TABLE JORNADA_VAC(
     fecha_jv DATE NOT NULL,
     cantidad_pri_jv NUMBER NOT NULL,
-    cantidad_seg_jv NUMBER,
     centro_vac_jv NUMBER NOT NULL,
     vacuna_jv NUMBER NOT NULL,
     pais_jv NUMBER NOT NULL,
     grupo_etario_jv NUMBER NOT NULL,
+    cantidad_seg_jv NUMBER,
     CONSTRAINT fk_centro_vac_jv
         FOREIGN KEY (centro_vac_jv)
         REFERENCES CENTRO_VAC(id_cen),
@@ -193,9 +193,9 @@ CREATE TABLE EVENTOS_ALEATORIOS(
     nombre_eve VARCHAR2(50) NOT NULL,
     tipo_eve VARCHAR2(12) NOT NULL,
     descripcion_eve VARCHAR2(250) NOT NULL,
-    efecto_eve VARCHAR2(20),
     probabilidad_eve NUMBER NOT NULL,
     habilitado_eve CHAR NOT NULL,
+    efecto_eve VARCHAR2(20),
     rango_efecto_eve NUMBER,
     direc_eve CHAR,
     fecha_ocurrencia_eve DATE,
@@ -213,21 +213,21 @@ CREATE TABLE EVENTOS_ALEATORIOS(
 
 CREATE TABLE DISTRIBUIDORA(
     id_dist  NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
-    nombre_dist VARCHAR2(25) NOT NULL
+    nombre_dist VARCHAR2(80) NOT NULL
 );
 
 CREATE TABLE VACUNA_DISTRIBUIDORA(
-    vacuna_vd NUMBER NOT NULL,
     distribuidora_vd NUMBER NOT NULL,
+    vacuna_vd NUMBER NOT NULL,
     cantidad_vd NUMBER NOT NULL,
-    CONSTRAINT fk_vd_vacuna
-        FOREIGN KEY (vacuna_vd)
-        REFERENCES VACUNA(id_vac),
     CONSTRAINT fk_vd_distribuidora
         FOREIGN KEY (distribuidora_vd)
         REFERENCES DISTRIBUIDORA(id_dist),
+    CONSTRAINT fk_vd_vacuna
+        FOREIGN KEY (vacuna_vd)
+        REFERENCES VACUNA(id_vac),
     CONSTRAINT pk_vac_dist
-        PRIMARY KEY (vacuna_vd,distribuidora_vd)
+        PRIMARY KEY (distribuidora_vd, vacuna_vd)
 );
 
 CREATE TABLE ORDEN(

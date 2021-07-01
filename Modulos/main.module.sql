@@ -3,7 +3,7 @@ CREATE OR REPLACE PROCEDURE SIMULACION IS
 
     --Definicion de variables
     terminado BOOLEAN := FALSE;
-
+    b_farmaceuticas BOOLEAN := TRUE;
 
     --Definimos una fecha aleatoria entre el 6 y 12 de marzo para el inicio de la simulacion
     fecha_actual DATE := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(
@@ -97,7 +97,10 @@ BEGIN
         
             contagios(fecha_actual);
             disparador_eventos(fecha_actual);
-            farmaceuticas(fecha_actual);
+            
+            if (b_farmaceuticas) THEN
+                b_farmaceuticas := farmaceuticas(fecha_actual);
+            END if;
             
             
             --Sumamos 7 dias (1 semana) a la fecha actual

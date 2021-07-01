@@ -2,8 +2,6 @@
 
 INSERT INTO EFECTO_SECUNDARIO VALUES (DEFAULT,'fiebre','Temperatura corporal mayor a 38 grados',0.3);
 INSERT INTO VAC_EFEC VALUES (1,1);
-INSERT INTO ESTATUS VALUES(DEFAULT,'aprobada', 'aprobada por la OMS');
-INSERT INTO VACUNA VALUES (DEFAULT,'sputnik V',1,91.6,2,'Y',-8,'no romper',10000000);
 INSERT INTO PAIS VALUES (DEFAULT,'Venezuela');
 INSERT INTO CENTRO_VAC VALUES (DEFAULT,'CDI Piedra Azul',100,1);
 INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'niños', 0,18,0.01);
@@ -11,13 +9,15 @@ INSERT INTO PAIS_GE VALUES (1,1);
 INSERT INTO JORNADA_VAC VALUES (CURRENT_DATE,100,100,1,1,1,1); --TIENE TRIGGER
 
 --VACUNAS
-INSERT INTO VACUNA VALUES (DEFAULT,'Pfizer',1,91.6,2,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'Janssen',1,91.6,0,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'J&J',1,91.6,1,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'AstraZeneca',1,91.6,0,'N',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'Moderna',1,91.6,2,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'Sinovac',1,91.6,0,'Y',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'Sputnik V',1,91.6,2,'N',-8,'no romper',10000000,f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Comirnaty',0,95,16,2,'Y',-4,'No agitar.',f_fases(NULL,NULL,NULL,NULL)); --La Pfizer
+INSERT INTO VACUNA VALUES (DEFAULT,'Janssen',0,96,9,1,'Y',-15,'No exponer a la luz directa del sol.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Johnson & Johnson',0,91.6,9,1,'Y',-8,'No debe almacenarse congelada.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'AstraZeneca',0,92,3,2,'Y',-8,'No conservar en congelador.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Moderna',0,91.6,21,2,'Y',-20,'No volver a congelar despues de descongelada.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'CoronaVac',0,91.6,25,2,'Y',-8,'No exponer a la luz directa del sol.',f_fases(NULL,NULL,NULL,NULL)); --Sinovac
+INSERT INTO VACUNA VALUES (DEFAULT,'Sputnik V',0,91.6,9,2,'N',-18,'Usar despues de las 2 horas de descongelación.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Sinopharm',0,93,30,2,'Y',4,'No debe almacenarse congelada.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Convidicea',0,95,4,1,'N',3,'No agitar.',f_fases(NULL,NULL,NULL,NULL)); --Cansinp
 
 --ESTATUS
 INSERT INTO ESTATUS VALUES(0,'FASE 0', 'La vacuna se encuentra en I+D');
@@ -26,17 +26,27 @@ INSERT INTO ESTATUS VALUES(DEFAULT,'FASE II', 'Se amplía el grupo de personas e
 INSERT INTO ESTATUS VALUES(DEFAULT,'FASE III', 'Se extienden a poblaciones más grandes y en diferentes regiones y países');
 INSERT INTO ESTATUS VALUES(DEFAULT,'FASE IV', 'Se crece la población en la que se hace la prueba y se mantiene por un periodo de tiempo más largo');
 
---VACUNAS
---INSERT INTO VACUNA VALUES(id_vac,nombre_vac,estatus_vac, efectividad_vac,dosis_vac,covax_vac,temperatura_vac, instrucciones_vac, suministro_vac,fechas_vac, F_FASES)
+--DISTRIBUIDORA
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Pfizer-BioNTech');
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Janssen Pharmaceutica'); -- DATO CURIOSO: es una compañía farmacéutica belga filial de la corporación norteamericana Johnson & Johnson
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Johnson & Johnson'); 
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'AstraZeneca');
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Moderna, Inc.');
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Sinovac Biotech');
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Centro Nacional de Investigación de Epidemiología y Microbiología Gamaleya'); --Rusia
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Corporación Grupo Farmacéutico Nacional Chino');     --Sinopharm
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'CanSino Biologics'); 
 
-INSERT INTO VACUNA VALUES (DEFAULT,'sputnik V',0,91.6,2,'N',-18,'usar despues de las 2 horas de descongelación',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'pfizer',0,95,2,'Y',-4,'no agitar',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'moderna',0,93,2,'Y',-20,'No volver a congelar despues de descongelada',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'aztrazeneca',0,92,2,'Y',2,'no conservar en congelador',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'janssen',0,96,1,'Y',-15,'no exponer a la luz directa del sol',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'sinopharm',0,93,2,'Y',4,'no conservar en congelador',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'coronavac',0,97,2,'Y',4,'no exponer a la luz directa del sol',10000000,f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'cansino',0,95,1,'Y',3,'no agitar',10000000,f_fases(NULL,NULL,NULL,NULL));
+--VACUNA_DISTRIBUIDORA
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(1,1, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(2,2, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(3,3, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(4,4, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(5,5, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(6,6, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(7,7, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(8,8, 50000000);
+INSERT INTO VACUNA_DISTRIBUIDORA VALUES(9,9, 50000000);
 
 --Grupo etario
 INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Niños', 0, 14, 0.001);
@@ -44,8 +54,7 @@ INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Jovenes', 15, 26, 0.02);
 INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Adultos', 27, 60, 0.08);
 INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'Ancianos', 61, NULL, 0.20);
 
-
---PAIS (FALTAN)
+--PAIS 
 
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Alemania','EUR', 90, 'Y', 3, 5); 
 EXECUTE guarda_banderas('alemania.png',1);
@@ -116,7 +125,7 @@ INSERT INTO PAIS_GE VALUES (HABITANTES(7900000,220,0,0),2,1); -- Alemania jovene
 INSERT INTO PAIS_GE VALUES (HABITANTES(37800000,220,0,0),3,1); -- Alemania adultos
 INSERT INTO PAIS_GE VALUES (HABITANTES(23900000,220,0,0),4,1); -- Alemania ancianos
 
-INSERT INTO PAIS_GE VALUES (HABITANTES(10000000,53,0,0),1,2); -- Arabia saudita  niños
+INSERT INTO PAIS_GE VALUES (HABITANTES,10000000,53,0,0),1,2); -- Arabia saudita  niños
 INSERT INTO PAIS_GE VALUES (HABITANTES(5100000,53,0,0),2,2); -- Arabia saudita jovenes
 INSERT INTO PAIS_GE VALUES (HABITANTES(17500000,53,0,0),3,2); -- Arabia saudita adultos
 INSERT INTO PAIS_GE VALUES (HABITANTES(1700000,53,0,0),4,2); -- Arabia saudita ancianos
@@ -243,16 +252,28 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Olympiapark',700000,1, UBICACION(UBICACIO
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Planten un Blomen',700000,1, UBICACION(UBICACION.validarLatitud(53.56088212133053),UBICACION.validarLongitud(9.982175996473462),'Alemania, Hamburgo, Autopista Edmund Siemers Alee frente a la universidad de hamburgo'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Westfalenpark Eingang Blütengärten',700000,1, UBICACION(UBICACION.validarLatitud(51.49395284476907),UBICACION.validarLongitud(7.471306596725039),'Alemania, Dortmund,Avenida Ander Buschmühle'));
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Hayat National Hospital',70000,2, UBICACION(UBICACION.validarLatitud(24.69707260809365),UBICACION.validarLongitud(46.771836790091825),'Arabia Saudita, Riad, Avenida Umar Ibn Abdul Aziz al lado del Banco Nacional Arabe')); --Arabia Saudita
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Malha Masjid',70000,2, UBICACION(UBICACION.validarLatitud(24.45972998214987),UBICACION.validarLongitud(39.60431411866359),'Arabia saudita, Medina, Avenida مطبخ الزاهدية'));
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al shu AIB',70000,2,UBICACION(UBICACION.validarLatitud(29.985905101348436),UBICACION.validarLongitud(40.21944089706485),'Arabia saudita, Hamburgo, Avenida منتزه النخيل'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Hayat National Hospital',100000,2, UBICACION(UBICACION.validarLatitud(24.69707260809365),UBICACION.validarLongitud(46.771836790091825),'Arabia Saudita, Riad, Avenida Umar Ibn Abdul Aziz al lado del Banco Nacional Arabe')); --Arabia Saudita
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al Malha Masjid',100000,2, UBICACION(UBICACION.validarLatitud(24.45972998214987),UBICACION.validarLongitud(39.60431411866359),'Arabia saudita, Medina, Avenida مطبخ الزاهدية'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Al shu AIB',100000,2,UBICACION(UBICACION.validarLatitud(29.985905101348436),UBICACION.validarLongitud(40.21944089706485),'Arabia saudita, Hamburgo, Avenida منتزه النخيل'));
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro CEMIC',700000,1, UBICACION(UBICACION.validarLatitud(-34.624058764800594),UBICACION.validarLongitud(-58.450884830299636),'Argentina, Buenos Aires, Caballito, Av. Rivadavia 6044 (C.A.B.A.)')); --Argentina
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Villa Devoto',700000,1, UBICACION(UBICACION.validarLatitud(-34.60025851472542),UBICACION.validarLongitud(-58.50349540747846),'Argentina, Buenos Aires, Emilio Lamarca 3388 esquina Francisco Beiró (C.A.B.A.)'));
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Pilar',700000,1, UBICACION(UBICACION.validarLatitud(-33.29148464683466),UBICACION.validarLongitud(-66.3291365234207),'Argentina, Buenos Aires, Av. Juan D. Perón 1500 (Hospital Austral)'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro CEMIC',100000,3, UBICACION(UBICACION.validarLatitud(-34.624058764800594),UBICACION.validarLongitud(-58.450884830299636),'Argentina, Buenos Aires, Caballito, Av. Rivadavia 6044 (C.A.B.A.)')); --Argentina
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Villa Devoto',100000,3, UBICACION(UBICACION.validarLatitud(-34.60025851472542),UBICACION.validarLongitud(-58.50349540747846),'Argentina, Buenos Aires, Emilio Lamarca 3388 esquina Francisco Beiró (C.A.B.A.)'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Pilar',100000,3, UBICACION(UBICACION.validarLatitud(-33.29148464683466),UBICACION.validarLongitud(-66.3291365234207),'Argentina, Buenos Aires, Av. Juan D. Perón 1500 (Hospital Austral)'));
 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Westmead Hospital',100000,4, UBICACION(UBICACION.validarLatitud(-33.800974999861936),UBICACION.validarLongitud(150.98914146491472),'Australia, Sídney, Av. Darcy frente a la escuela primaria Madre Teresa')); --Australia
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Calvary Public Hospital Bruce',100000,4, UBICACION(UBICACION.validarLatitud(-35.252867201703914),UBICACION.validarLongitud(149.08778306272563),'Australia, Canberra, Aranda,Av Haydon '));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Box Hill Hospital',100000,4,UBICACION(UBICACION.validarLatitud(-37.81334796038165),UBICACION.validarLongitud(145.11850262937645),'Australia, Melbourne, Box hill north, calle arnold junto a Box Hill gardens'));
 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Metropolitano da Lapa',1750000,5, UBICACION(UBICACION.validarLatitud(-23.52881531213897),UBICACION.validarLongitud(-46.69747353152585),'Brasil, São Paulo, Lapa, Av R.Aurélia frente a la direccion Regional de Educación')); --Brasil
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Medico Julio Adnet',1750000,5, UBICACION(UBICACION.validarLatitud(-15.807738789310502),UBICACION.validarLongitud(-47.90940285022161),'Brasil, Brasilia, Asa sul, Via W5 Sul'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Sofia Feldman',1750000,5,UBICACION(UBICACION.validarLatitud(-19.911723965958657),UBICACION.validarLongitud(-43.960767388720825),'Brasil, Belo Horizonte, São Francisco das Chagas, Av Padre Esutáquio'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Pró-Vida',1750000,5,UBICACION(UBICACION.validarLatitud(-33.800974999861936),UBICACION.validarLongitud(150.98914146491472),'Brasil, Montes Claros, Vila greice, Av Nossa Sra. de Fátima')); 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital São Rafael',1750000,5, UBICACION(UBICACION.validarLatitud(-12.925375297889433),UBICACION.validarLongitud(-38.430109240624915),'Brasil, Salvador de Bahía, Av São Rafael frente al Jardín botánico de Salvador'));
 
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital District D`efoulan',100000,6, UBICACION(UBICACION.validarLatitud(3.834729907968988),UBICACION.validarLongitud(11.506102680664924),'Camerún, Yaundé, OBOBOGO 1438')); --Camerún
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Douala General Hospital',100000,6, UBICACION(UBICACION.validarLatitud(4.064851444686604),UBICACION.validarLongitud(9.758862172655899),'Camerún, Duala, Diagonal al Collège Malangue'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Adamaoua Regional Hospital',100000,6,UBICACION(UBICACION.validarLatitud(7.315972759777115),UBICACION.validarLongitud(13.584392303709702),'Camerún, Ngaoundere, Adamawa'));
 
-
-
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Toronto General Hospital',100000,7, UBICACION(UBICACION.validarLatitud(43.65980335691164),UBICACION.validarLongitud(-79.3884489421143),'Canadá, Toronto, Avenida universidad frente a Queen`s park')); --Canadá
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'The Ottawa Hospital',100000,7, UBICACION(UBICACION.validarLatitud(45.40314431262979),UBICACION.validarLongitud(-75.6490958370367),'Canadá, Ottawa, Autopista Smyth frente al Faircrest Heights Park'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Vancouver General Hospital',100000,7,UBICACION(UBICACION.validarLatitud(49.262690181925045),UBICACION.validarLongitud(-123.12189638715428),'Canadá, Vancouver, Fairview avenida 12 a dos cuadras del ayuntamiento'));
