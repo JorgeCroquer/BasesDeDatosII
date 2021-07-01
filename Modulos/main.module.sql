@@ -1,9 +1,10 @@
-CREATE OR REPLACE PROCEDURE SIMULACION IS
+create or replace NONEDITIONABLE PROCEDURE SIMULACION IS
 
 
     --Definicion de variables
     terminado BOOLEAN := FALSE;
-    b_farmaceuticas BOOLEAN := TRUE;
+    --covax_existe BOOLEAN := covax_existe;
+
 
     --Definimos una fecha aleatoria entre el 6 y 12 de marzo para el inicio de la simulacion
     fecha_actual DATE := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(
@@ -20,15 +21,15 @@ CREATE OR REPLACE PROCEDURE SIMULACION IS
     fechas_JANDJ F_FASES;
     fechas_janssen F_FASES;
 
-    
-    
-    
-    
+
+
+
+
     --Procedures locales
 
 BEGIN
     DBMS_OUTPUT.PUT_LINE('SIMULACION COVID-19');
-    
+
     --Inicio
 
     --asignacion de fechas para vacunas
@@ -94,23 +95,19 @@ BEGIN
         -- ciclo de 12 semanas
         FOR i IN 1..12
         LOOP
-        
+
             contagios(fecha_actual);
             disparador_eventos(fecha_actual);
             
-            if (b_farmaceuticas) THEN
-                b_farmaceuticas := farmaceuticas(fecha_actual);
-            END if;
-            
-            
+
             --Sumamos 7 dias (1 semana) a la fecha actual
             fecha_actual := fecha_actual + 7;
 
-            
+
 
         END LOOP;
 
-        
+
         terminado := TRUE; --Esto es por ahora, hay que programar el criterio de salida
     END LOOP;
 
