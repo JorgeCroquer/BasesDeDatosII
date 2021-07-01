@@ -277,3 +277,33 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Adamaoua Regional Hospital',100000,6,UBIC
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Toronto General Hospital',100000,7, UBICACION(UBICACION.validarLatitud(43.65980335691164),UBICACION.validarLongitud(-79.3884489421143),'Canadá, Toronto, Avenida universidad frente a Queen`s park')); --Canadá
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'The Ottawa Hospital',100000,7, UBICACION(UBICACION.validarLatitud(45.40314431262979),UBICACION.validarLongitud(-75.6490958370367),'Canadá, Ottawa, Autopista Smyth frente al Faircrest Heights Park'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Vancouver General Hospital',100000,7,UBICACION(UBICACION.validarLatitud(49.262690181925045),UBICACION.validarLongitud(-123.12189638715428),'Canadá, Vancouver, Fairview avenida 12 a dos cuadras del ayuntamiento'));
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Taoyuan Park',4900000,8, UBICACION(UBICACION.validarLatitud(39.82761719880017),UBICACION.validarLongitud(116.38483107065849),'China, Pekin, Gaozhuangzi, Autopista Huaifang'); --China
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Yongshiying Country Park',4900000,8, UBICACION(UBICACION.validarLatitud(40.038527776582306),UBICACION.validarLongitud(116.44107163564657),'China, Pekin, Qingheyinggcun,Autopista Beiyuan'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Shanghai Binhai Guyuan',4900000,8,UBICACION(UBICACION.validarLatitud(30.857170014651206),UBICACION.validarLongitud(121.7154639954433),'China, Shangai, Qingjian, Avenida Guyuan'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Qingdao Chengyang People`s Hospital',4900000,8,UBICACION(UBICACION.validarLatitud(36.30142841490647),UBICACION.validarLongitud(120.40165900005142),'China, Quigndao, Autopista Changcheng a una cuadra del Masters Golf Club'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Qingdao Municipal Chengyang District People`s Hospital',4900000,8, UBICACION(UBICACION.validarLatitud(36.276052950260805),UBICACION.validarLongitud(120.2402302620307),'China, Quigndao, Chengyang, Autopista 309'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Fuhua Amusement Park',4900000,8,UBICACION(UBICACION.validarLatitud(36.716518077517705),UBICACION.validarLongitud(119.1597640508861),'197 Dongfeng E St, Kuiwen District, Weifang, Shandong, China'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Yuhe Park ',4900000,8,UBICACION(UBICACION.validarLatitud(36.72525545563819),UBICACION.validarLongitud(119.13239478870553),'Beigong E St, Kuiwen District, Weifang, Shandong, China'));
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'일리아스 주얼리',700000,9, UBICACION(UBICACION.validarLatitud(37.57185030873048),UBICACION.validarLongitud(126.99861176284166),'Corea del Sur, Seoul, Jongno-gu, Inui-dong, 48 2 효성주얼리시티 지하 2층 24호')); --Corea del Sur
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Severance Hospital',700000,9, UBICACION(UBICACION.validarLatitud(37.56253695893253),UBICACION.validarLongitud(126.94086919994999),'50-1 Yonsei-ro, Sinchon-dong, Seodaemun-gu, Seoul, Corea del Sur'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'을재대학교의과대학 교수협의회',700000,9,UBICACION(UBICACION.validarLatitud(36.355663089881844),UBICACION.validarLongitud(127.38188069992682),'95 Dunsanseo-ro, Dunsan-dong, Seo-gu, Daejeon, Corea del Sur'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Cheongju Medical Center',700000,9,UBICACION(UBICACION.validarLatitud(36.64024534026787),UBICACION.validarLongitud(127.47312614903416),'48 Heungdeok-ro, Sajik-dong, 서원구 Cheongju-si, Chungcheongbuk-do, Corea del Sur')); 
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Salvador Allende',100000,10, UBICACION(UBICACION.validarLatitud(23.114294883693898),UBICACION.validarLongitud(-82.37909585303233),'Autopista Calzada del Cerro, La Habana, Cuba')); --Cuba
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Nacional',100000,10, UBICACION(UBICACION.validarLatitud(23.065034376599073),UBICACION.validarLongitud(-82.39378094864789),'Avenida San Francisco, La Habana, Cuba'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Materno De Camaguey',100000,10,UBICACION(UBICACION.validarLatitud(21.389172317143565),UBICACION.validarLongitud(-77.93939620314755),'Carretera central Oestre,Camagüey,Cuba'));
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'The Good Shepherd Hospital',700000,11, UBICACION(UBICACION.validarLatitud(30.077698435125217),UBICACION.validarLongitud(31.245511471586983),'121 Shoubra، Street، Gesr Shubra, Shubra, Cairo Governorate 11672, Egipto')); -- Egipto
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Children’s Cancer Hospital Egypt',700000,11, UBICACION(UBICACION.validarLatitud(30.02406589907231),UBICACION.validarLongitud(31.237633390509817),'Zeinhom, El-Sayeda Zainab, Gobernación de El Cairo, Egipto'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'The Eye Hospital',700000,11,UBICACION(UBICACION.validarLatitud(31.198431030983844),UBICACION.validarLongitud(29.917105883144288),'243 Ahmed Ismail, Bab Sharqi WA Wabour Al Meyah, Qism Bab Sharqi, Alexandria Governorate, Egipto'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Talkha Central Hospital',700000,11,UBICACION(UBICACION.validarLatitud(31.050153577273168),UBICACION.validarLongitud(31.3721358770355),'طلخا، Mansoura, Dakahlia Governorate, Egipto')); 
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Militar Central',100000,12, UBICACION(UBICACION.validarLatitud(13.72079178269028),UBICACION.validarLongitud(-89.2162585265391),'Avenida Bernal, San Salvador, El Salvador')); --El salvador
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital General del ISSS',100000,12, UBICACION(UBICACION.validarLatitud(13.703664108040932),UBICACION.validarLongitud(-89.2031612993457),'Alameda Juan Pablo II y, 25 Av Norte, San Salvador, El Salvador'));
+
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital General Universitario Gregorio Marañón',700000,13, UBICACION(UBICACION.validarLatitud(40.42008384932357),UBICACION.validarLongitud(-3.6714130645234446),'Calle del Dr. Esquerdo, 46, 28007 Madrid, España')); --España
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Clínic de Barcelona',700000,13, UBICACION(UBICACION.validarLatitud(41.39027999982525),UBICACION.validarLongitud(2.152032851544197),'C. de Villarroel, 170, 08036 Barcelona, España'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Clínico Universitario de Valencia',700000,13,UBICACION(UBICACION.validarLatitud(39.47926391967858),UBICACION.validarLongitud(-0.3622055056854497),'Av. de Blasco Ibáñez, 17, 46010 València, Valencia, España'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital General Universitario Morales Meseguer',700000,13,UBICACION(UBICACION.validarLatitud(37.99497951533407),UBICACION.validarLongitud(-1.129535213274778),'Av Marqués de los Vélez, s/n, 30008 Murcia, España'));
