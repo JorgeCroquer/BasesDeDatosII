@@ -329,7 +329,7 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Kingsway Hospitals',3500000,17,UBICACION(
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'PSG Hospitals',3500000,17,UBICACION(UBICACION.validarLatitud(11.02021669414624),UBICACION.validarLongitud(77.00689674812683),'Avinashi Rd, Peelamedu, Coimbatore, Tamil Nadu 641004, India'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Vadamalayan Hospitals',3500000,17, UBICACION(UBICACION.validarLatitud(9.950441704373088),UBICACION.validarLongitud(78.12813650675393),'Chockikulam, 15/1, Vallabh Bhai Rd, Madurai, Tamil Nadu 625002, India'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Aster CMI Hospital',3500000,17,UBICACION(UBICACION.validarLatitud(13.062255252117735),UBICACION.validarLongitud(77.5918865187721),'#43/2, New Airport Road, NH-7, Outer Ring Rd, Sahakar Nagar, Bengaluru, Karnataka 560092, India'));
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'MIOT International',3500000,17,UBICACION(UBICACION.validarLatitud(13.03163125827468),UBICACION.validarLongitud(80.18706321521917),'Beigong E St, Kuiwen District, Weifang, Shandong, China'));
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'MIOT International',3500000,17,UBICACION(UBICACION.validarLatitud(13.03163125827468),UBICACION.validarLongitud(80.18706321521917),'4/112, Mount Poonamallee Rd, Sathya Nagar, Manapakkam, Chennai, Tamil Nadu 600089, India'));
 
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Landspítali Grensás',35000,18,UBICACION(UBICACION.validarLatitud(64.12617645648984),UBICACION.validarLongitud(-21.88133238337394),'Skálagerði 11, Reykjavík, Islandia')); --Islandia
 
