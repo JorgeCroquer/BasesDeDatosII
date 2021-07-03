@@ -8,6 +8,13 @@ INSERT INTO GRUPO_ETARIO VALUES (DEFAULT, 'niños', 0,18,0.01);
 INSERT INTO PAIS_GE VALUES (1,1);
 INSERT INTO JORNADA_VAC VALUES (CURRENT_DATE,100,100,1,1,1,1); --TIENE TRIGGER
 
+--ESTATUS
+INSERT INTO ESTATUS VALUES(0,'FASE 0', 'La vacuna se encuentra en I+D');
+INSERT INTO ESTATUS VALUES(DEFAULT,'FASE I', 'Se prueban nuevos medicamentos en grupos pequeños de personas, para evaluar rangos de dosis seguras e identificar efectos secundarios');
+INSERT INTO ESTATUS VALUES(DEFAULT,'FASE II', 'Se amplía el grupo de personas en las que se prueba, para seguir identificando efectos adversos');
+INSERT INTO ESTATUS VALUES(DEFAULT,'FASE III', 'Se extienden a poblaciones más grandes y en diferentes regiones y países');
+INSERT INTO ESTATUS VALUES(DEFAULT,'FASE IV', 'Se crece la población en la que se hace la prueba y se mantiene por un periodo de tiempo más largo');
+
 --VACUNAS
 INSERT INTO VACUNA VALUES (DEFAULT,'Comirnaty',0,95,16*2,2,'Y',-4,'No agitar.',f_fases(NULL,NULL,NULL,NULL)); --La Pfizer
 INSERT INTO VACUNA VALUES (DEFAULT,'Janssen',0,96,9,1,'Y',-15,'No exponer a la luz directa del sol.',f_fases(NULL,NULL,NULL,NULL));
@@ -18,13 +25,6 @@ INSERT INTO VACUNA VALUES (DEFAULT,'CoronaVac',0,91.6,25*2,2,'Y',-8,'No exponer 
 INSERT INTO VACUNA VALUES (DEFAULT,'Sputnik V',0,91.6,9*2,2,'N',-18,'Usar despues de las 2 horas de descongelación.',f_fases(NULL,NULL,NULL,NULL));
 INSERT INTO VACUNA VALUES (DEFAULT,'Sinopharm',0,93,30*2,2,'Y',4,'No debe almacenarse congelada.',f_fases(NULL,NULL,NULL,NULL));
 INSERT INTO VACUNA VALUES (DEFAULT,'Convidicea',0,95,4,1,'N',3,'No agitar.',f_fases(NULL,NULL,NULL,NULL)); --Cansinp
-
---ESTATUS
-INSERT INTO ESTATUS VALUES(0,'FASE 0', 'La vacuna se encuentra en I+D');
-INSERT INTO ESTATUS VALUES(DEFAULT,'FASE I', 'Se prueban nuevos medicamentos en grupos pequeños de personas, para evaluar rangos de dosis seguras e identificar efectos secundarios');
-INSERT INTO ESTATUS VALUES(DEFAULT,'FASE II', 'Se amplía el grupo de personas en las que se prueba, para seguir identificando efectos adversos');
-INSERT INTO ESTATUS VALUES(DEFAULT,'FASE III', 'Se extienden a poblaciones más grandes y en diferentes regiones y países');
-INSERT INTO ESTATUS VALUES(DEFAULT,'FASE IV', 'Se crece la población en la que se hace la prueba y se mantiene por un periodo de tiempo más largo');
 
 --DISTRIBUIDORA
 INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Pfizer-BioNTech');
