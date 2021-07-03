@@ -24,10 +24,9 @@ CREATE TABLE GRUPO_ETARIO(
 );
 
 CREATE TABLE PAIS_GE(
-    pais_pge NUMBER NOT NULL,
-    grupo_etario_pge NUMBER NOT NULL,
     cant_hab_pge HABITANTES NOT NULL,
-    
+    grupo_etario_pge NUMBER NOT NULL,    
+    pais_pge NUMBER NOT NULL,
     CONSTRAINT fk_pais_pge
         FOREIGN KEY (pais_pge)
         REFERENCES PAIS(id_pai),
