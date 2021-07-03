@@ -5,7 +5,7 @@ BEGIN
     
         SELECT SUM(pedido.cantidad_dis) INTO cant_vacunas FROM DISTRIBUCION pedido
         WHERE distribucion. = pais_id;
-        RETURN cant_vacunas;   --RETORNA EL TOTAL DE LA POBLACION DE UN PAIS
+        RETURN cant_vacunas;   --RETORNA EL TOTAL DE VACUNAS EN UNA ORDEN
 
     
 END;
