@@ -16,6 +16,7 @@ BEGIN
                 END if;
         END LOOP;
 
+    CLOSE c_vacunas;
     if (cont = 0) THEN              --CONT SERA 0 CUANDO TODAS LAS VACUNAS ESTEN EN FASE 2 O MAYOR
         return (TRUE);              --INDICARA EL LLAMADO AL PROCEDIMIENTO asignacion_vacunas_covax en cambio_estatus
     END if;

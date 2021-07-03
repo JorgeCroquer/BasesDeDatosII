@@ -3,14 +3,11 @@ CREATE OR REPLACE FUNCTION get_vacunas_orden(pais_id pais.id_pai%TYPE, porcentaj
     c_vacunas SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;
     poblacion NUMBER;
-    cont INTEGER := 0;
+    cont INTEGER := 1;
 BEGIN
     if (covax) THEN
         c_vacunas := get_vacunas_covax;
-    else c_vacunas := get_vacunas;
-    END if;
-
-    WHILE c_vacunas%FOUND
+        WHILE c_vacunas%FOUND
         LOOP 
             FETCH c_vacunas INTO r_vacuna;
             if NOT(esta_restringida(pais_id, r_vacuna.id_vac)) THEN
@@ -18,6 +15,9 @@ BEGIN
             END if;
         END LOOP;
     CLOSE c_vacunas;
+    END if;
+
+    
     poblacion := get_poblacion(pais_id, 'TOTAL');
     poblacion := poblacion*(porcentaje_pob/100);
     RETURN poblacion/cont;
