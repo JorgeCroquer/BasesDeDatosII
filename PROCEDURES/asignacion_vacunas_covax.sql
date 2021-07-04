@@ -6,8 +6,7 @@ CREATE OR REPLACE PROCEDURE asignacion_vacunas_covax IS
     cant_vac_covax vacuna_distribuidora.cantidad_vd%TYPE;
 BEGIN
 
-    SELECT id_dist INTO covax_id FROM DISTRIBUIDORA 
-    WHERE (nombre_dist = 'COVAX');
+    covax_id := get_covax_id;
 
     c_vacunas := get_vacunas_covax;
 
@@ -19,7 +18,7 @@ BEGIN
             WHERE (vacuna_vd = r_vacuna.id_vac AND distribuidora_vd <> covax_id);
 
             UPDATE VACUNA_DISTRIBUIDORA 
-            SET cantidad_vd = cant_vac_covax*0.4                                  --Se asigna el 40% de vacunas a COVAX.
+            SET cantidad_vd = cantidad_vd + cant_vac_covax*0.4                                  --Se asigna el 40% de vacunas a COVAX.
             WHERE (vacuna_vd = r_vacuna.id_vac AND distribuidora_vd = covax_id);      
 
             UPDATE VACUNA_DISTRIBUIDORA 
