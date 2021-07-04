@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION ultima_fecha_f4(c_vacunas SYS_REFCURSOR, fecha_actual) RETURN DATE AS 
+CREATE OR REPLACE FUNCTION ultima_fecha_f4(c_vacunas SYS_REFCURSOR, fecha_actual DATE) RETURN DATE AS 
 
     r_vacuna vacuna%ROWTYPE;
     ultima_fecha DATE := fecha_actual;

@@ -216,7 +216,7 @@ BEGIN
                         SELECT covax_pai INTO covax_p FROM pais WHERE id_pai = p.id_pai;
                         IF(covax_p = 'Y') THEN --pertenece a covax?
                             DBMS_OUTPUT.PUT_LINE('Realizando orden a covax');
-                            aprobado_covax = solitar_orden_covax();
+                            aprobado_covax = solitar_orden_covax(p.id_pai,fecha_actual);
                             IF(aprobado_covax = FALSE) THEN
                                 DBMS_OUTPUT.PUT_LINE('Covax rechazó la orden, realizando orden a otro provedor');
                                 orden_a_proveedor(p.id_pai,fecha_actual);--se pide a alguien mas

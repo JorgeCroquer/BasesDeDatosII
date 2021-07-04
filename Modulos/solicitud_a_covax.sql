@@ -7,12 +7,12 @@ BEGIN
             JOIN DISTRIBUCION ON n_orden_dis = id_ord
             GROUP BY id_pai)
     LOOP
-        porcentaje_equivalente := TRUNC(p.cantidad_vac/get_poblacion(p.id_pai,'TOTAL')*100,2)
+        porcentaje_equivalente := TRUNC(p.cantidad_vac/get_poblacion(p.id_pai,'TOTAL')*100,2);
         IF(porcentaje_equivalente < 20)THEN
             RETURN (FALSE);
         END IF;
     END LOOP;
-    RETURN (TRUE)
+    RETURN (TRUE);
 END;
 
 --Calcula el porcentaje de la población al que aun no se le ha asegurado una vacuna
@@ -26,26 +26,28 @@ BEGIN
     JOIN ORDEN ON pais_ord = id_pai
     JOIN DISTRIBUCION ON n_orden_dis = id_ord
     WHERE id_pai = pais_p;
-    porcentaje_equivalente := TRUNC(cantidad_vac/get_poblacion(pais_p,'TOTAL')*100,2)
+    porcentaje_equivalente := TRUNC((100-(cantidad_vac/get_poblacion(pais_p,'TOTAL')*100)),2);
     RETURN porcentaje_equivalente;
 END;
 
-CREATE OR REPLACE FUNCTION solicitar_orden_covax(pais_p NUMBER) RETURN BOOLEAN AS
+CREATE OR REPLACE FUNCTION solicitar_orden_covax(pais_p NUMBER, fecha_actual DATE) RETURN BOOLEAN AS
 orden_a_aprobar ORDEN%rowtype;
 pago_restante NUMBER;
-porcentaje_restante;
+porcentaje_restante_p NUMBER;
 BEGIN
+    porcentaje_restante_p:= porcentaje_restante(pais_p);
     IF(todos_20() = TRUE)THEN --CUANTO LE FALTA PARA LLEGAR A LA META, ¿A LA META O DE SU POBLACIÓN?
-        --VACUNAS QUE ACEPTA
-        IF(porcentaje_restante(pais_p) < 30) THEN
+        IF(porcentaje_restante_p <= 30) THEN
             --Envía con lo que falta
+            registro_orden_covax(pais_p,fecha_actual,porcentaje_restante_p,2);
             RETURN(TRUE);
         ELSE
-            --Envia 30
+            --Envia con 30
+            registro_orden_covax(pais_p,fecha_actual,30,2);
             RETURN(TRUE);
         END IF;
     ELSE
-        IF(porcentaje_restante(pais_p) < 20) THEN
+        IF(porcentaje_restante_p >= 80) THEN
             SELECT *
             INTO orden_a_aprobar
             FROM orden
@@ -55,7 +57,7 @@ BEGIN
             
             UPDATE ORDEN SET estatus_ord = 'EN TRANSITO' WHERE id_ord = orden_a_aprobar.estatus_ord ; --Ponemos en transito la orden de ese pais a covax (10)
             
-            SELECT orden_a_aprobar.monto_a_pagar - SUM(monto_pag) 
+            SELECT orden_a_aprobar.monto_ord - SUM(monto_pag) 
             INTO pago_restante
             FROM PAGO
             WHERE n_orden_pag = orden_a_aprobar.id_ord;

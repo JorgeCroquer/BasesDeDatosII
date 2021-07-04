@@ -6,18 +6,18 @@ CREATE OR REPLACE PROCEDURE registro_orden_covax(pais_id pais.id_pai%TYPE, fecha
     v_nombre_pais pais.nombre_pai%TYPE;
     v_nombre_distribuidora distribuidora.nombre_dist%TYPE;
     cantidad_vac NUMBER;
-    distribuidora_id := get_covax_id;
+    distribuidora_id distribuidora.id_dist%TYPE := get_covax_id();
 BEGIN
 
-    if (1) THEN 
-        INSERT INTO ORDEN VALUES (DEFAULT, pais_id, distribuidora_id, 0 ,'EN ESPERA', fecha_actual, fecha_actual);      --Se registra la orden sin monto 
-        else INSERT INTO ORDEN VALUES (DEFAULT, pais_id, distribuidora_id, 0 ,'EN TRANSITO', fecha_actual, fecha_actual);       --Se registra la orden sin monto 
+    if (tipo = 1) THEN 
+        INSERT INTO ORDEN VALUES (DEFAULT, pais_id, distribuidora_id, 0 ,'EN ESPERA', fecha_actual, fecha_actual,fecha_actual);      --Se registra la orden sin monto 
+    else INSERT INTO ORDEN VALUES (DEFAULT, pais_id, distribuidora_id, 0 ,'EN TRANSITO', fecha_actual, fecha_actual,fecha_actual);       --Se registra la orden sin monto 
     END if;
 
     n_orden := get_n_orden(pais_id, distribuidora_id, fecha_actual);
 
-            cantidad_vac := get_vacunas_orden(pais_id, porcentaje_pob, TRUE);
-            c_vacunas := get_vacunas_covax;
+            cantidad_vac := get_vacunas_orden(pais_id, porcentaje_pob,1);
+            c_vacunas := get_vacunas_covax();
             WHILE c_vacunas%FOUND
                 LOOP 
                     FETCH c_vacunas INTO r_vacuna;
@@ -32,15 +32,14 @@ BEGIN
 
             CLOSE c_vacunas;
 
-            c_vacunas := get_vacunas_covax;
+            c_vacunas := get_vacunas_covax();
             UPDATE ORDEN 
-            SET monto_ord = get_monto_orden(n_orden, TRUE)                                 --Se actualiza el monto de la orden
+            SET monto_ord = get_monto_orden(n_orden,1)                                 --Se actualiza el monto de la orden
             WHERE (id_ord = n_orden);
             UPDATE ORDEN 
             SET f_entrega_ord = ultima_fecha_f4(c_vacunas,fecha_actual)+30+TRUNC(dbms_random.value(-2,2))                                 --Se actualiza el monto de la orden
             WHERE (id_ord = n_orden);
-            registro_pago(n_orden, fecha_actual, get_monto_orden(n_orden, TRUE));
-    
+            registro_pago(n_orden, fecha_actual, get_monto_orden(n_orden,1));
     commit;
 
     SELECT nombre_pai INTO v_nombre_pais FROM pais
@@ -48,6 +47,6 @@ BEGIN
     SELECT nombre_dist INTO v_nombre_distribuidora FROM distribuidora
     WHERE id_dist = distribuidora_id;
 
-    DBMS_OUTPUT.PUT_LINE( v_nombre_pais|| ' realizo una orden a ' || v_nombre_distribuidora || ' de ' || get_cantidad_vacunas(pais_id, n_orden) || ' vacunas.');
+    DBMS_OUTPUT.PUT_LINE( v_nombre_pais|| ' realizo una orden a ' || v_nombre_distribuidora || ' de ' || get_cantidad_vacunas(n_orden) || ' vacunas.');
 END;   
-/
+
