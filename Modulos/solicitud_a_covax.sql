@@ -15,6 +15,7 @@ BEGIN
     RETURN (TRUE)
 END;
 
+--Calcula el porcentaje de la población al que aun no se le ha asegurado una vacuna
 CREATE OR REPLACE FUNCTION porcentaje_restante(pais_p NUMBER) RETURN NUMBER AS --Podría sustituir a "meta superada" en el moódulo de economía
 porcentaje_equivalente NUMBER;
 cantidad_vac NUMBER;
@@ -26,7 +27,7 @@ BEGIN
     JOIN DISTRIBUCION ON n_orden_dis = id_ord
     WHERE id_pai = pais_p;
     porcentaje_equivalente := TRUNC(cantidad_vac/get_poblacion(pais_p,'TOTAL')*100,2)
-    RETURN porcentaje_restante;
+    RETURN porcentaje_equivalente;
 END;
 
 CREATE OR REPLACE FUNCTION solicitar_orden_covax(pais_p NUMBER) RETURN BOOLEAN AS
@@ -34,8 +35,7 @@ orden_a_aprobar ORDEN%rowtype;
 pago_restante NUMBER;
 porcentaje_restante;
 BEGIN
-    IF(todos_20() = TRUE)THEN
-        --CUANTO LE FALTA PARA LLEGAR A LA META, ¿A LA META O DE SU POBLACIÓN?
+    IF(todos_20() = TRUE)THEN --CUANTO LE FALTA PARA LLEGAR A LA META, ¿A LA META O DE SU POBLACIÓN?
         --VACUNAS QUE ACEPTA
         IF(porcentaje_restante(pais_p) < 30) THEN
             --Envía con lo que falta
