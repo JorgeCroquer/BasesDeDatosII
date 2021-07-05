@@ -241,3 +241,96 @@ BEGIN
         END LOOP;
     END IF;
 END;
+
+--Realiza una orden a un proveedor aleatorio
+CREATE OR REPLACE PROCEDURE orden_a_proveedor(pais_p NUMBER,fecha_actual DATE) IS --PODRIA MODIFICARSE PARA QUE SEA EL MISMO QUE LE PIDE A COVAX
+vacunas_a_ordenar NUMBER;
+cantidad_de_proveedores NUMBER;
+proveedor_escogido NUMBER;
+vacuna_a_solicitar NUMBER;
+precio_vacuna NUMBER;
+monto_a_pagar NUMBER;
+orden_realizada NUMBER;
+monto_a_abonar NUMBER;
+numero_random NUMBER;
+poblacion NUMBER;
+cantidad_de_vacunas NUMBER;
+seleccionada_vac NUMBER := 0;
+BEGIN
+    SELECT count(id_dist) 
+    INTO cantidad_de_proveedores
+    FROM DISTRIBUIDORA 
+    WHERE id_dist != 10; --Cuenta cuantos proveedores hay, Excepto covax que es el 10
+ 
+    poblacion:=get_poblacion(pais_p,'TOTAL');
+    vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
+    DBMS_OUTPUT.PUT_LINE('Cantidad proveedores: '||cantidad_de_proveedores||'Poblacion: '||poblacion||' Vacunas a ordenar: '||vacunas_a_ordenar);
+
+    SELECT count(id_vac) INTO cantidad_de_vacunas FROM VACUNA; --Cuenta las vacunas
+    
+    WHILE (seleccionada_vac = 0) --Seleccionamos una vacuna random que no esté restringida
+    LOOP
+        numero_random:= TRUNC(dbms_random.value(1,cantidad_de_vacunas));
+        SELECT id_vac
+        INTO vacuna_a_solicitar
+        FROM (SELECT rownum r, id_vac
+            FROM VACUNA) 
+        WHERE r = numero_random; --Escoge una vacuna random
+        IF(esta_restringida(pais_p,vacuna_a_solicitar) = FALSE) THEN
+            seleccionada_vac := 1;
+        END IF;    
+    END LOOP;
+    
+    SELECT distribuidora_vd
+    INTO proveedor_escogido
+    FROM VACUNA_DISTRIBUIDORA
+    WHERE vacuna_vd = vacuna_a_solicitar ;--Busca el proveedor correspondiente
+
+    SELECT precio_vac
+    INTO precio_vacuna
+    FROM VACUNA
+    WHERE id_vac = vacuna_a_solicitar; --Busca el precio de la vacuna
+    
+    monto_a_pagar:= vacunas_a_ordenar*precio_vacuna; --Se calcula el monto total a pagar
+    
+    --Se registra la orden
+    INSERT INTO ORDEN VALUES(DEFAULT,pais_p,proveedor_escogido,monto_a_pagar,'EN TRANSITO',fecha_actual,fecha_actual + 30, fecha_actual+30+TRUNC(dbms_random.value(-2,2)))
+    RETURNING id_ord INTO orden_realizada;
+    DBMS_OUTPUT.PUT_LINE('LA ORDEN LLEGA EL DIA '||(fecha_actual + 30) );
+    --Se registran las vacunas en la orden
+    INSERT INTO DISTRIBUCION VALUES(orden_realizada,vacuna_a_solicitar,vacunas_a_ordenar);
+    --Se registra el pago de un porcentaje
+    monto_a_abonar:= monto_a_pagar*TRUNC(dbms_random.value(0.30,0.70),2);
+    INSERT INTO PAGO VALUES(DEFAULT,fecha_actual,monto_a_abonar,orden_realizada);
+END;
+
+CREATE OR REPLACE PROCEDURE pedir_insumos(centro_p NUMBER, fecha_actual DATE) IS
+riqueza NUMBER;
+suministros_c SUMINISTROS%rowtype;
+centro CENTRO_VAC%rowtype;
+BEGIN
+    SELECT *
+    INTO centro
+    FROM CENTRO_VAC
+    WHERE id_cen = centro_p;
+
+    SELECT riqueza_pai
+    INTO riqueza
+    FROM PAIS
+    WHERE id_pai = centro.pais_cv;
+
+    SELECT *
+    INTO suministros_c
+    FROM SUMINISTROS
+    WHERE fecha_sum = fecha_actual
+    AND centro_vac_sum = centro.id_cen; 
+
+    INSERT INTO SUMINISTROS VALUES(fecha_actual+1,
+                                       centro.id_cen,
+                                       suministros_c.cant_jeringas_sum + centro.capacidad_cen * riqueza,
+                                       suministros_c.cant_alcohol_sum + centro.capacidad_cen * riqueza,
+                                       suministros_c.cant_algodon_sum + centro.capacidad_cen * riqueza,
+                                       suministros_c.cant_par_guantes_sum + TRUNC((centro.capacidad_cen * riqueza)/10) + 1);
+    
+    DBMS_OUTPUT.PUT_LINE('El centro de vacunación: '||centro.nombre_cen||' repuso sus suministros para las práximas '||riqueza||' semanas');                                   
+END;
