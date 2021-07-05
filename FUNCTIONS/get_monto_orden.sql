@@ -14,7 +14,7 @@ BEGIN
 
             SELECT precio_vac INTO precio FROM VACUNA 
             WHERE  id_vac = r_distribucion.vacuna_dis;
-            monto_total := monto_total + (precio_vac*r_distribucion.cantidad_dis);
+            monto_total := monto_total + (precio*r_distribucion.cantidad_dis);
         END LOOP;
 
     CLOSE c_distribucion;
