@@ -47,3 +47,4 @@ BEGIN
     UPDATE PAIS SET tasa_repro_pai = 1.15 WHERE id_pai = 19;
     UPDATE PAIS SET tasa_repro_pai = 1.5 WHERE id_pai = 20;
 END;
+
