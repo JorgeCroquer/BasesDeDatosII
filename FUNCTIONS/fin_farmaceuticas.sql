@@ -15,7 +15,7 @@ BEGIN
                     cont := cont + 1;
                 END if;
         END LOOP;
-
+    CLOSE c_vacunas;
     if (cont = 0) THEN              --CONT SERA 0 CUANDO TODAS LAS VACUNAS ESTEN EN FASE IV
         return (FALSE);             --LO QUE INDICA EL FIN DEL MODULO DE FARMACEUTICAS
     END if;

@@ -4,12 +4,11 @@ BEGIN
     SELECT tipo_res INTO restriccion FROM RESTRICCIONES 
     WHERE pais_res = pais_id AND vacuna_res = vacuna_id;
     EXCEPTION 
-    WHEN NO_DATA_FOUND THEN 
-    BEGIN 
-        RETURN (FALSE); 
-    END;
+    WHEN NO_DATA_FOUND THEN RETURN (FALSE); 
+    
     IF (restriccion = 'R') THEN
         RETURN (TRUE);
     else RETURN (FALSE);
     END if;
 END;
+/

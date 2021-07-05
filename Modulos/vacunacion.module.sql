@@ -12,7 +12,7 @@ create or replace NONEDITIONABLE PROCEDURE vacunacion(fecha_actual DATE) IS
                s.cant_alcohol_sum, 
                s.cant_algodon_sum
         FROM CENTRO_VAC cv JOIN SUMINISTROS s ON s.centro_vac_sum = cv.id_cen
-        WHERE s.fecha_sum = TO_DATE('30/06/2021','dd/mm/yyyy');
+        WHERE s.fecha_sum = fecha_actual-7;
 
     CURSOR inventarios(centro NUMBER) IS 
         SELECT * 

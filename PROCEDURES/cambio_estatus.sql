@@ -15,31 +15,29 @@ BEGIN
                     SET estatus_vac = 1                                  
                     WHERE id_vac = r_vacuna.id_vac;
                 END if;
-            else if (r_vacuna.estatus_vac = 1 ) THEN
-                    if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f2)) THEN
-                        UPDATE VACUNA 
-                        SET estatus_vac = 2                                  
-                        WHERE id_vac = r_vacuna.id_vac;
-                        commit;
-                        if (all_vacunas_f2) THEN
-                            asignacion_vacunas_covax;
-                        END if;
+            elsif (r_vacuna.estatus_vac = 1 ) THEN
+                if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f2)) THEN
+                    UPDATE VACUNA 
+                    SET estatus_vac = 2                                  
+                    WHERE id_vac = r_vacuna.id_vac;
+                    commit;
+                    if (all_vacunas_f2) THEN
+                        asignacion_vacunas_covax;
+                        primeras_ordenes_covax(fecha_actual);
                     END if;
-                 else if (r_vacuna.estatus_vac = 2 ) THEN
-                          if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f3)) THEN
-                                UPDATE VACUNA 
-                                SET estatus_vac = 3                                  
-                                WHERE id_vac = r_vacuna.id_vac;
-                          END if;
-                      else if (r_vacuna.estatus_vac = 3 ) THEN
-                                if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f4)) THEN
-                                    UPDATE VACUNA 
-                                    SET estatus_vac = 4                                  
-                                    WHERE id_vac = r_vacuna.id_vac;
-                                END if;
-                      END if;
-                 END if;
-            END if;
+                END if;
+            elsif (r_vacuna.estatus_vac = 2 ) THEN
+                if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f3)) THEN
+                    UPDATE VACUNA 
+                    SET estatus_vac = 3                                  
+                    WHERE id_vac = r_vacuna.id_vac;
+                END if;
+            elsif (r_vacuna.estatus_vac = 3 ) THEN
+                if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f4)) THEN
+                    UPDATE VACUNA 
+                    SET estatus_vac = 4                                  
+                    WHERE id_vac = r_vacuna.id_vac;
+                END if;
             END if;
         END LOOP;
         commit;
