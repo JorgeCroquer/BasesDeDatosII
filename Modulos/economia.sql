@@ -15,7 +15,7 @@ CREATE OR REPLACE FUNCTION orden_pendiente(pais_p NUMBER, fecha_actual DATE) RET
 BEGIN
     FOR o IN (SELECT * FROM ORDEN WHERE pais_ord = pais_p)
     LOOP
-        IF(o.estatus_ord != 'ENTREGADA' AND fecha_actual >= o.f_entrega_ord) THEN
+        IF(o.estatus_ord != 'ENTREGADA' AND o.estatus_ord != 'EN ESPERA') THEN
             RETURN o; 
         END IF;
     END LOOP;
@@ -66,7 +66,7 @@ BEGIN
     JOIN CENTRO_VAC ON centro_vac_inv = id_cen
     WHERE pais_cv = pais_p;
 
-    IF(capacidad_total > total_vacunas_disponibles) THEN
+    IF(capacidad_total > nvl(total_vacunas_disponibles,0)) THEN
         RETURN (TRUE);
     ELSE
         RETURN(FALSE);    
@@ -87,10 +87,16 @@ BEGIN
     LOOP
         SELECT dosis_vac INTO dosis_vacuna FROM VACUNA WHERE id_vac = v.vacuna_dis;
         For c in (SELECT * FROM CENTRO_VAC WHERE pais_cv = pais_p) --Asignamos primero una cantidad igual a cada centro
-        LOOP
+        LOOP            
             cantidad_asignada := TRUNC((v.cantidad_dis/cantidad_centros));
             cantidad_sobrante:= MOD(v.cantidad_dis,cantidad_centros);
-            SELECT cantidad_pri_inv INTO existe_inventario FROM INVENTARIO_VAC WHERE centro_vac_inv = c.id_cen AND vacuna_inv = v.vacuna_dis;
+            BEGIN --ESTO ES COMO TRY
+                SELECT cantidad_pri_inv INTO existe_inventario FROM INVENTARIO_VAC WHERE centro_vac_inv = c.id_cen AND vacuna_inv = v.vacuna_dis;
+                EXCEPTION WHEN no_data_found THEN --ESTO ES EL CATCH
+                BEGIN
+                    existe_inventario:= NULL;
+                END;
+            END;
             IF(existe_inventario IS NULL) THEN
                 IF( dosis_vacuna = 2) THEN
                     INSERT INTO INVENTARIO_VAC VALUES(c.id_cen,v.vacuna_dis, cantidad_asignada, cantidad_asignada);
@@ -137,31 +143,43 @@ precio_vacuna NUMBER;
 monto_a_pagar NUMBER;
 orden_realizada NUMBER;
 monto_a_abonar NUMBER;
+numero_random NUMBER;
+poblacion NUMBER;
 BEGIN
     SELECT count(id_dist) 
     INTO cantidad_de_proveedores
-    FROM DISTRIBUIDORA; --Cuenta cuantos proveedores hay
-    vacunas_a_ordenar:= TRUNC(cantidad_de_proveedores/get_poblacion(pais_p,'TOTAL')); --Divide la población entre la cantidad de proveedores
-    SELECT *
+    FROM DISTRIBUIDORA 
+    WHERE id_dist != 10; --Cuenta cuantos proveedores hay, Excepto covax que es el 1
+ 
+    poblacion:=get_poblacion(pais_p,'TOTAL');
+    vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
+    DBMS_OUTPUT.PUT_LINE('Cantidad proveedores: '||cantidad_de_proveedores||'Poblacion: '||poblacion||' Vacunas a ordenar: '||vacunas_a_ordenar);
+
+    numero_random:= TRUNC(dbms_random.value(1,cantidad_de_proveedores));
+    SELECT id_dist
     INTO proveedor_escogido
-    FROM (SELECT id_dist 
-        FROM DISTRIBUIDORA
-        WHERE id_dist != 1) 
-    WHERE rownum = TRUNC(dbms_random.value(0,cantidad_de_proveedores)); --Escoge un distribuidor random
-    SELECT *
+    FROM (SELECT rownum r, id_dist 
+        FROM DISTRIBUIDORA) 
+    WHERE r = numero_random; --Escoge un distribuidor random
+
+    SELECT vacuna_vd
     INTO vacuna_a_solicitar
-    FROM(SELECT vacuna_vd
-        FROM VACUNA_DISTRIBUIDORA
-        WHERE distribuidora_vd = proveedor_escogido)
-    WHERE rownum = 1;--Escoge la vacuna que se le va a solicitar a ese proveedor
+    FROM VACUNA_DISTRIBUIDORA
+    WHERE distribuidora_vd = proveedor_escogido;--Escoge la vacuna que se le va a solicitar a ese proveedor
+    
     SELECT precio_vac
     INTO precio_vacuna
     FROM VACUNA
     WHERE id_vac = vacuna_a_solicitar;
+    
     monto_a_pagar:= vacunas_a_ordenar*precio_vacuna; --Se calcula el monto total a pagar
+    
     --Se registra la orden
-    INSERT INTO ORDEN VALUES(DEFAULT,pais_p,proveedor_escogido,monto_a_pagar,'EN TRANSITO',fecha_actual,fecha_actual + 30, fecha_actual+TRUNC(dbms_random.value(-2,2)))
+    INSERT INTO ORDEN VALUES(DEFAULT,pais_p,proveedor_escogido,monto_a_pagar,'EN TRANSITO',fecha_actual,fecha_actual + 30, fecha_actual+30+TRUNC(dbms_random.value(-2,2)))
     RETURNING id_ord INTO orden_realizada;
+    DBMS_OUTPUT.PUT_LINE('LA ORDEN LLEGA EL DIA '||(fecha_actual + 30) );
+    --Se registran las vacunas en la orden
+    INSERT INTO DISTRIBUCION VALUES(orden_realizada,vacuna_a_solicitar,vacunas_a_ordenar);
     --Se registra el pago de un porcentaje
     monto_a_abonar:= monto_a_pagar*TRUNC(dbms_random.value(0.30,0.70),2);
     INSERT INTO PAGO VALUES(DEFAULT,fecha_actual,monto_a_abonar,orden_realizada);
@@ -172,11 +190,12 @@ cantidad_centros NUMBER;
 orden_pen ORDEN%rowtype;
 covax_p VARCHAR(1);
 pago_pendiente NUMBER;
+aprobado_covax BOOLEAN;
 BEGIN
     IF (vacuna_aprobada() = TRUE) THEN
         FOR p IN (SELECT * FROM PAIS)
         LOOP
-            orden_pen := orden_pendiente(p.id_pai, fecha_actual);
+            orden_pen:= orden_pendiente(p.id_pai, fecha_actual);
             IF (orden_pen.id_ord IS NOT NULL) THEN --Chequeamos si hay orden pendiente
                 IF(fecha_actual >= orden_pen.f_entrega_ord) THEN --Chequeamos si ya llegó la orden
                     UPDATE ORDEN SET estatus_ord = 'ENTREGADA' WHERE id_ord = orden_pen.id_ord; --Actualizamos la orden a entregada
@@ -197,7 +216,11 @@ BEGIN
                         SELECT covax_pai INTO covax_p FROM pais WHERE id_pai = p.id_pai;
                         IF(covax_p = 'Y') THEN --pertenece a covax?
                             DBMS_OUTPUT.PUT_LINE('Realizando orden a covax');
-                            --se pide a covax
+                            aprobado_covax = solitar_orden_covax(p.id_pai,fecha_actual);
+                            IF(aprobado_covax = FALSE) THEN
+                                DBMS_OUTPUT.PUT_LINE('Covax rechazó la orden, realizando orden a otro provedor');
+                                orden_a_proveedor(p.id_pai,fecha_actual);--se pide a alguien mas
+                            END IF;
                         ELSE
                             orden_a_proveedor(p.id_pai,fecha_actual);--se pide a alguien mas
                             DBMS_OUTPUT.PUT_LINE('Realizando orden a proveedor');

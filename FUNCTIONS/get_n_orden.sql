@@ -6,3 +6,4 @@ BEGIN
     WHERE (pais_ord = pais_id AND distribuidora_ord = distribuidora_id AND f_realizacion_ord = fecha_actual);
     RETURN n_orden;
 END;
+/

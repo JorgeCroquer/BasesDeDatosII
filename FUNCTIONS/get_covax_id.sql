@@ -9,3 +9,4 @@ BEGIN
     
     RETURN covax_id;
 END;
+/
