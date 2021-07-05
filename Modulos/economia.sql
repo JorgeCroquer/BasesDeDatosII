@@ -145,32 +145,42 @@ orden_realizada NUMBER;
 monto_a_abonar NUMBER;
 numero_random NUMBER;
 poblacion NUMBER;
+cantidad_de_vacunas NUMBER;
+seleccionada_vac NUMBER := 0;
 BEGIN
     SELECT count(id_dist) 
     INTO cantidad_de_proveedores
     FROM DISTRIBUIDORA 
-    WHERE id_dist != 10; --Cuenta cuantos proveedores hay, Excepto covax que es el 1
+    WHERE id_dist != 10; --Cuenta cuantos proveedores hay, Excepto covax que es el 10
  
     poblacion:=get_poblacion(pais_p,'TOTAL');
     vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
     DBMS_OUTPUT.PUT_LINE('Cantidad proveedores: '||cantidad_de_proveedores||'Poblacion: '||poblacion||' Vacunas a ordenar: '||vacunas_a_ordenar);
 
-    numero_random:= TRUNC(dbms_random.value(1,cantidad_de_proveedores));
-    SELECT id_dist
-    INTO proveedor_escogido
-    FROM (SELECT rownum r, id_dist 
-        FROM DISTRIBUIDORA) 
-    WHERE r = numero_random; --Escoge un distribuidor random
-
-    SELECT vacuna_vd
-    INTO vacuna_a_solicitar
-    FROM VACUNA_DISTRIBUIDORA
-    WHERE distribuidora_vd = proveedor_escogido;--Escoge la vacuna que se le va a solicitar a ese proveedor
+    SELECT count(id_vac) INTO cantidad_de_vacunas FROM VACUNA; --Cuenta las vacunas
     
+    WHILE (seleccionada_vac = 0) --Seleccionamos una vacuna random que no esté restringida
+    LOOP
+        numero_random:= TRUNC(dbms_random.value(1,cantidad_de_vacunas));
+        SELECT id_vac
+        INTO vacuna_a_solicitar
+        FROM (SELECT rownum r, id_vac
+            FROM VACUNA) 
+        WHERE r = numero_random; --Escoge una vacuna random
+        IF(esta_restringida(pais_p,vacuna_a_solicitar) = FALSE) THEN
+            seleccionada_vac := 1;
+        END IF;    
+    END LOOP;
+    
+    SELECT distribuidora_vd
+    INTO proveedor_escogido
+    FROM VACUNA_DISTRIBUIDORA
+    WHERE vacuna_vd = vacuna_a_solicitar ;--Busca el proveedor correspondiente
+
     SELECT precio_vac
     INTO precio_vacuna
     FROM VACUNA
-    WHERE id_vac = vacuna_a_solicitar;
+    WHERE id_vac = vacuna_a_solicitar; --Busca el precio de la vacuna
     
     monto_a_pagar:= vacunas_a_ordenar*precio_vacuna; --Se calcula el monto total a pagar
     
