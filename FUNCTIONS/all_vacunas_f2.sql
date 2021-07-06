@@ -7,13 +7,13 @@ CREATE OR REPLACE FUNCTION all_vacunas_f2 RETURN BOOLEAN AS
 BEGIN 
 
     c_vacunas := get_vacunas_covax;
-
+    FETCH c_vacunas INTO r_vacuna;
+    WHILE c_vacuna%FOUND
         LOOP 
-            FETCH c_vacunas INTO r_vacuna;
                 if (r_vacuna.estatus_vac < 2) THEN     --SI CONSIGUE VACUNAS EN FASE I SUMA 1
                     cont := cont + 1;
                 END if;
-            EXIT WHEN c_vacunas%NOTFOUND;
+            FETCH c_vacunas INTO r_vacuna;
         END LOOP;
 
     CLOSE c_vacunas;

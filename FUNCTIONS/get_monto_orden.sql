@@ -7,14 +7,14 @@ CREATE OR REPLACE FUNCTION get_monto_orden(n_orden orden.id_ord%TYPE, covax NUMB
 BEGIN
 
     c_distribucion := get_distribucion_orden(n_orden);
-
+    FETCH c_distribucion INTO r_distribucion;
+    WHILE c_distribucion%FOUND
         LOOP 
-            FETCH c_distribucion INTO r_distribucion;
 
             SELECT precio_vac INTO precio FROM VACUNA 
             WHERE  id_vac = r_distribucion.vacuna_dis;
             monto_total := monto_total + (precio*r_distribucion.cantidad_dis);
-            EXIT WHEN c_distribucion%NOTFOUND;
+            FETCH c_distribucion INTO r_distribucion;
         END LOOP;
 
     CLOSE c_distribucion;
