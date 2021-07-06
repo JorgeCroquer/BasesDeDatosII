@@ -12,11 +12,12 @@ BEGIN
     WHERE nombre_dist = 'COVAX';
 
     c_vacunas := get_vacunas_covax;
-    
+    FETCH c_vacunas INTO r_vacuna;
     WHILE c_vacunas%FOUND
         LOOP 
-            FETCH c_vacunas INTO r_vacuna;
+            
             INSERT INTO VACUNA_DISTRIBUIDORA VALUES (r_vacuna.id_vac, covax_id, 0);      --ASIGNACION DE CADA VACUNA A COVAX CON CANTIDAD 0 (EN OTRO PROCEDURE SE ASIGNARA EL 30% DE CADA VACUNA EN EL MOMENTO QUE LLEGUE A FASE 4) 
+            FETCH c_vacunas INTO r_vacuna;
         END LOOP;
     CLOSE c_vacunas;  
     DBMS_OUTPUT.PUT_LINE('Se conformo la alianza COVAX.');

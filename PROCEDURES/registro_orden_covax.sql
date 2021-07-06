@@ -18,9 +18,9 @@ BEGIN
 
     cantidad_vac := get_vacunas_orden(pais_id, porcentaje_pob);
     c_vacunas := get_vacunas_covax();
-
+    FETCH c_vacunas INTO r_vacuna;
+    WHILE c_vacunas%FOUND
         LOOP 
-            FETCH c_vacunas INTO r_vacuna;
             if NOT(esta_restringida(pais_id, r_vacuna.id_vac)) THEN
                 INSERT INTO DISTRIBUCION VALUES (n_orden, distribuidora_id, cantidad_vac); --Se realiza el pedido de todas las vacunas COVAX no restringidas para el pais en partes iguales
                         
@@ -28,7 +28,7 @@ BEGIN
                 SET cantidad_vd = cantidad_vd - cantidad_vac                                 --Se restan las vacunas de covax
                 WHERE (distribuidora_vd = distribuidora_id AND vacuna_vd = r_vacuna.id_vac);
             END if;
-            EXIT WHEN c_vacunas%NOTFOUND;
+            FETCH c_vacunas INTO r_vacuna;
         END LOOP;
 
     CLOSE c_vacunas;
