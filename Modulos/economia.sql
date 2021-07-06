@@ -51,7 +51,7 @@ BEGIN
 END;
 
 --Chequea si el pais se esta quedando sin vacunas y necesita ordenar más
---Toma en cuenta que las vacunas tardan un mes en llegar entonces 
+--Toma en cuenta que las vacunas tardan un mes en llegar, por eso la condicion es *4
 CREATE OR REPLACE FUNCTION hora_de_ordenar( pais_p NUMBER) RETURN BOOLEAN AS
 capacidad_total NUMBER;
 total_vacunas_disponibles NUMBER;
