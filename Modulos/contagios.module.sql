@@ -3,6 +3,8 @@ create or replace NONEDITIONABLE PROCEDURE contagios(fecha_actual DATE) IS
     nuevos_infectados NUMBER;
     nuevos_muertos NUMBER;
     nuevos_recuperados NUMBER;
+    porcentaje_infectados NUMBER;
+    multiplicador NUMBER := 1;
     CURSOR paises IS --Guarda cada registro de PAIS_GE
             SELECT pai.id_pai, pai.tasa_repro_pai, paige.cant_hab_pge, paige.grupo_etario_pge, ge.mortalidad 
             FROM PAIS pai JOIN PAIS_GE paige ON pai.id_pai = paige.pais_pge
@@ -16,6 +18,29 @@ BEGIN
 
     FOR pais IN paises
     LOOP
+        --Primero, ve cuanto porcentaje de infectaod lleva el pais, para regular la tasa r
+        SELECT SUM(pge.cant_hab_pge.cant_infectados)/SUM(pge.cant_hab_pge.cant_total)
+        INTO porcentaje_infectados
+        FROM PAIS_GE pge
+        WHERE pais_pge = 1;
+
+        CASE TRUE
+            WHEN porcentaje_infectados >= 0.2 AND porcentaje_infectados < 0.4 THEN
+                multiplicador := 0.8;
+            WHEN porcentaje_infectados >= 0.4 AND porcentaje_infectados < 0.6 THEN
+                multiplicador := 0.6;
+            WHEN porcentaje_infectados >= 0.6 AND porcentaje_infectados < 0.8 THEN
+                multiplicador := 0.4;
+            WHEN porcentaje_infectados >= 0.8 AND porcentaje_infectados < 1 THEN
+                multiplicador := 0.2;
+            WHEN porcentaje_infectados = 1 THEN
+                multiplicador := 0;
+        END CASE;
+
+        UPDATE PAIS
+        SET TASA_REPRO_PAI = TASA_REPRO_PAI*multiplicador
+        WHERE id_pai = pais.id_pai;
+
         DBMS_OUTPUT.PUT_LINE('pais -> ' || pais.id_pai);
         DBMS_OUTPUT.PUT_LINE('grupo etario -> ' || pais.grupo_etario_pge);
 
