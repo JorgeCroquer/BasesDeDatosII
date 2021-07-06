@@ -185,16 +185,16 @@ CREATE TABLE VAC_EFEC(
     CONSTRAINT fk_vacuna_ve
         FOREIGN KEY (vacuna_ve)
         REFERENCES VACUNA(id_vac)
-);
+); 
 
 CREATE TABLE EVENTOS_ALEATORIOS(
     id_eve NUMBER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1) PRIMARY KEY,
     nombre_eve VARCHAR2(50) NOT NULL,
     tipo_eve VARCHAR2(12) NOT NULL,
     descripcion_eve VARCHAR2(250) NOT NULL,
+    efecto_eve VARCHAR2(20),
     probabilidad_eve NUMBER NOT NULL,
     habilitado_eve CHAR NOT NULL,
-    efecto_eve VARCHAR2(20),
     rango_efecto_eve NUMBER,
     direc_eve CHAR,
     fecha_ocurrencia_eve DATE,
