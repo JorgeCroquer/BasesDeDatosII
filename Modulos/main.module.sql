@@ -38,9 +38,7 @@ BEGIN
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
-    UPDATE VACUNA
-    SET fechas_vac = fechas_sputnik                               
-    WHERE (id_vac = '7');
+   
     fechas_pfizer := F_FASES(
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
