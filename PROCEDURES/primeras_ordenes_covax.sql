@@ -5,12 +5,12 @@ CREATE OR REPLACE PROCEDURE primeras_ordenes_covax(fecha_actual DATE) AS
 BEGIN
     c_paises := get_paises;
     
-    WHILE c_paises%FOUND
         LOOP 
             FETCH c_paises INTO r_pais;
             if (r_pais.covax_pai = 'Y') THEN
                 registro_orden_covax(r_pais.id_pai, fecha_actual, 20, 1);
             END if;
+            EXIT WHEN c_paises%NOTFOUND;
         END LOOP;
     CLOSE c_paises;
 END;

@@ -8,13 +8,13 @@ BEGIN
 
     c_distribucion := get_distribucion_orden(n_orden);
 
-    WHILE c_distribucion%FOUND
         LOOP 
             FETCH c_distribucion INTO r_distribucion;
 
             SELECT precio_vac INTO precio FROM VACUNA 
             WHERE  id_vac = r_distribucion.vacuna_dis;
             monto_total := monto_total + (precio*r_distribucion.cantidad_dis);
+            EXIT WHEN c_distribucion%NOTFOUND;
         END LOOP;
 
     CLOSE c_distribucion;
