@@ -2,7 +2,7 @@ CREATE OR REPLACE FUNCTION farmaceuticas(fecha_actual DATE) RETURN BOOLEAN AS
     
     c_vacunas SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;
-    covax BOOLEAN := FALSE;
+    covax BOOLEAN := covax_existe;
 BEGIN
     cambio_estatus(fecha_actual);
     c_vacunas := get_vacunas;

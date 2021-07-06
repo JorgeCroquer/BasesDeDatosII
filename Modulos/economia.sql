@@ -135,6 +135,7 @@ BEGIN
 END;
 
 --Realiza una orden a un proveedor aleatorio
+--Realiza una orden a un proveedor aleatorio
 CREATE OR REPLACE PROCEDURE orden_a_proveedor(pais_p NUMBER,fecha_actual DATE) IS --PODRIA MODIFICARSE PARA QUE SEA EL MISMO QUE LE PIDE A COVAX
 vacunas_a_ordenar NUMBER;
 cantidad_de_proveedores NUMBER;
@@ -157,7 +158,7 @@ BEGIN
  
     poblacion:=get_poblacion(pais_p,'TOTAL');
     vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
-
+    
     --Si la cantidad de vacunas a ordenar es menor que la cantidad de vacunas que se gastan en un mes(Lo que tardan en llegar las vacunas) 
     --en ese pais la cantidad de vacunas a ordenar se calcula en base a su capacidad total.
     SELECT SUM(capacidad_cen)
@@ -167,7 +168,7 @@ BEGIN
 
     IF(vacunas_a_ordenar < capacidad_total*4) THEN
         vacunas_a_ordenar:= capacidad_total*6;
-    END;
+    END IF;
 
     DBMS_OUTPUT.PUT_LINE('Cantidad proveedores: '||cantidad_de_proveedores||'Poblacion: '||poblacion||' Vacunas a ordenar: '||vacunas_a_ordenar);
 
@@ -241,7 +242,7 @@ BEGIN
                         SELECT covax_pai INTO covax_p FROM pais WHERE id_pai = p.id_pai;
                         IF(covax_p = 'Y') THEN --pertenece a covax?
                             DBMS_OUTPUT.PUT_LINE('Realizando orden a covax');
-                            aprobado_covax := solcitar_orden_covax(p.id_pai,fecha_actual);
+                            aprobado_covax := solicitar_orden_covax(p.id_pai,fecha_actual);
                             IF(aprobado_covax = FALSE) THEN
                                 DBMS_OUTPUT.PUT_LINE('Covax rechazó la orden, realizando orden a otro provedor');
                                 orden_a_proveedor(p.id_pai,fecha_actual);--se pide a alguien mas
