@@ -6,7 +6,6 @@ CREATE OR REPLACE PROCEDURE cambio_estatus(fecha_actual DATE) AS
 BEGIN 
     c_vacunas := get_vacunas;
       
-    WHILE c_vacunas%FOUND
         LOOP 
             FETCH c_vacunas INTO r_vacuna;
             if (r_vacuna.estatus_vac = 0 ) THEN
@@ -39,6 +38,7 @@ BEGIN
                     WHERE id_vac = r_vacuna.id_vac;
                 END if;
             END if;
+            EXIT WHEN c_vacunas%NOTFOUND;
         END LOOP;
         commit;
     CLOSE c_vacunas;

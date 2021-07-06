@@ -23,9 +23,9 @@ BEGIN
             
             ELSE 
                 numero := TRUNC(DBMS_RANDOM.VALUE(1,100));
-                DBMS_OUTPUT.PUT_LINE('numero -> ' || numero);
+                
                 IF (numero <= evento.probabilidad_eve) THEN
-                    DBMS_OUTPUT.PUT_LINE('se activo');
+                    
 
                     IF (evento.tipo_eve = 'CAMBIO_FECHA') THEN
 
@@ -34,10 +34,10 @@ BEGIN
                         EXIT;
                         
                     ELSIF (evento.tipo_eve = 'CUARENTENA') THEN
-                        DBMS_OUTPUT.PUT_LINE('Es cuarentena');
+                        
                         UPDATE PAIS p SET tasa_repro_pai = 0.9 + TRUNC(DBMS_RANDOM.VALUE(-0.07,0.07),2)
                         WHERE p.id_pai = evento.pais_eve;
-                        DBMS_OUTPUT.PUT_LINE('pais -> ' || pais_aleatorio);
+                        
 
                     ELSE
 
@@ -58,7 +58,7 @@ BEGIN
                         --Se inhabilita el evento
                         UPDATE EVENTOS_ALEATORIOS eve SET eve.habilitado_eve = 'N'
                         WHERE eve.id_eve = evento.id_eve;
-                        DBMS_OUTPUT.PUT_LINE('Se inhabilito');
+                        
                         
 
 

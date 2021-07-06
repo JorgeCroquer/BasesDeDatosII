@@ -3,8 +3,7 @@ create or replace NONEDITIONABLE PROCEDURE SIMULACION IS
 
     --Definicion de variables
     terminado BOOLEAN := FALSE;
-    --covax_existe BOOLEAN := covax_existe;
-
+    b_farmaceuticas BOOLEAN := TRUE;
 
     --Definimos una fecha aleatoria entre el 6 y 12 de marzo para el inicio de la simulacion
     fecha_actual DATE := TO_DATE(TRUNC(DBMS_RANDOM.VALUE(
@@ -39,6 +38,9 @@ BEGIN
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
     );
+    UPDATE VACUNA
+    SET fechas_vac = fechas_sputnik                               
+    WHERE (id_vac = '7');
     fechas_pfizer := F_FASES(
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
@@ -87,17 +89,47 @@ BEGIN
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
         F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
     );
+    UPDATE VACUNA
+    SET fechas_vac = fechas_pfizer                             
+    WHERE (id_vac = '1');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_janssen                             
+    WHERE (id_vac = '2');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_JANDJ                             
+    WHERE (id_vac = '3');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_aztrazeneca                             
+    WHERE (id_vac = '4');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_moderna                              
+    WHERE (id_vac = '5');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_sinovac                             
+    WHERE (id_vac = '6');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_sputnik                               
+    WHERE (id_vac = '7');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_sinopharm                             
+    WHERE (id_vac = '8');
+    UPDATE VACUNA
+    SET fechas_vac = fechas_cansino                             
+    WHERE (id_vac = '9');
 
-
+    commit;
     --Bucle principal
     WHILE NOT terminado
     LOOP
         -- ciclo de 12 semanas
-        FOR i IN 1..12
+        FOR i IN 1..48
         LOOP
-
-            contagios(fecha_actual);
-            disparador_eventos(fecha_actual);
+            DBMS_OUTPUT.PUT_LINE('Semana '|| i || ' Lunes '|| fecha_actual);
+            --contagios(fecha_actual);
+            --disparador_eventos(fecha_actual);
+            if (b_farmaceuticas) THEN
+                b_farmaceuticas := farmaceuticas(fecha_actual);
+            END if;
             
 
             --Sumamos 7 dias (1 semana) a la fecha actual
@@ -106,7 +138,6 @@ BEGIN
 
 
         END LOOP;
-
 
         terminado := TRUE; --Esto es por ahora, hay que programar el criterio de salida
     END LOOP;
