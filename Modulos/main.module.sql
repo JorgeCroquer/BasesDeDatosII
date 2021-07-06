@@ -120,9 +120,11 @@ BEGIN
     WHILE NOT terminado
     LOOP
         -- ciclo de 12 semanas
-        FOR i IN 1..48
+        FOR i IN 1..72
         LOOP
+            DBMS_OUTPUT.PUT_LINE('');
             DBMS_OUTPUT.PUT_LINE('Semana '|| i || ' Lunes '|| fecha_actual);
+            DBMS_OUTPUT.PUT_LINE('');
             --contagios(fecha_actual);
             --disparador_eventos(fecha_actual);
             if (b_farmaceuticas) THEN
