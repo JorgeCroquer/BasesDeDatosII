@@ -7,7 +7,7 @@ BEGIN
     cambio_estatus(fecha_actual);
     c_vacunas := get_vacunas;
     FETCH c_vacunas INTO r_vacuna;
-    WHILE c_vacuna%FOUND
+    WHILE c_vacunas%FOUND
         LOOP 
            
             if ((r_vacuna.estatus_vac = 2) AND (r_vacuna.covax_vac = 'Y') AND (covax = 0)) THEN
