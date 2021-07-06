@@ -147,6 +147,7 @@ monto_a_abonar NUMBER;
 numero_random NUMBER;
 poblacion NUMBER;
 cantidad_de_vacunas NUMBER;
+capacidad_total NUMBER;
 seleccionada_vac NUMBER := 0;
 BEGIN
     SELECT count(id_dist) 
@@ -157,6 +158,18 @@ BEGIN
     poblacion:=get_poblacion(pais_p,'TOTAL');
     vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
     DBMS_OUTPUT.PUT_LINE('Cantidad proveedores: '||cantidad_de_proveedores||'Poblacion: '||poblacion||' Vacunas a ordenar: '||vacunas_a_ordenar);
+
+    --Si la cantidad de vacunas a ordenar es menor que la cantidad de vacunas que se gastan en un mes(Lo que tardan en llegar las vacunas) 
+    --en ese pais la cantidad de vacunas a ordenar se calcula en base a su capacidad total.
+    SELECT SUM(capacidad_cen)
+    INTO capacidad_total
+    FROM CENTRO_VAC
+    WHERE pais_cv = pais_p;
+
+    IF(vacunas_a_ordenar < capacidad_total*4) THEN
+    BEGIN
+        vacunas_a_ordenar:= capacidad_total*6;
+    END;
 
     SELECT count(id_vac) INTO cantidad_de_vacunas FROM VACUNA; --Cuenta las vacunas
     
@@ -188,7 +201,7 @@ BEGIN
     --Se registra la orden
     INSERT INTO ORDEN VALUES(DEFAULT,pais_p,proveedor_escogido,monto_a_pagar,'EN TRANSITO',fecha_actual,fecha_actual + 30, fecha_actual+30+TRUNC(dbms_random.value(-2,2)))
     RETURNING id_ord INTO orden_realizada;
-    DBMS_OUTPUT.PUT_LINE('LA ORDEN LLEGA EL DIA '||(fecha_actual + 30) );
+    DBMS_OUTPUT.PUT_LINE('SE REALIZÓ UNA ORDEN QUE LLEGA EL DIA '||(fecha_actual + 30) );
     --Se registran las vacunas en la orden
     INSERT INTO DISTRIBUCION VALUES(orden_realizada,vacuna_a_solicitar,vacunas_a_ordenar);
     --Se registra el pago de un porcentaje
@@ -205,6 +218,7 @@ aprobado_covax BOOLEAN;
 BEGIN
     IF (vacuna_aprobada() = TRUE) THEN
         FOR p IN (SELECT * FROM PAIS)
+         DBMS_OUTPUT.PUT_LINE('El pais: '||p.nombre_pai||' hará lo siguiente:');
         LOOP
             orden_pen:= orden_pendiente(p.id_pai, fecha_actual);
             IF (orden_pen.id_ord IS NOT NULL) THEN --Chequeamos si hay orden pendiente
