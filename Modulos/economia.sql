@@ -135,6 +135,7 @@ BEGIN
 END;
 
 --Realiza una orden a un proveedor aleatorio
+--Realiza una orden a un proveedor aleatorio
 CREATE OR REPLACE PROCEDURE orden_a_proveedor(pais_p NUMBER,fecha_actual DATE) IS --PODRIA MODIFICARSE PARA QUE SEA EL MISMO QUE LE PIDE A COVAX
 vacunas_a_ordenar NUMBER;
 cantidad_de_proveedores NUMBER;
@@ -157,7 +158,7 @@ BEGIN
  
     poblacion:=get_poblacion(pais_p,'TOTAL');
     vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
-    DBMS_OUTPUT.PUT_LINE('Cantidad proveedores: '||cantidad_de_proveedores||'Poblacion: '||poblacion||' Vacunas a ordenar: '||vacunas_a_ordenar);
+    
 
     --Si la cantidad de vacunas a ordenar es menor que la cantidad de vacunas que se gastan en un mes(Lo que tardan en llegar las vacunas) 
     --en ese pais la cantidad de vacunas a ordenar se calcula en base a su capacidad total.
@@ -166,10 +167,13 @@ BEGIN
     FROM CENTRO_VAC
     WHERE pais_cv = pais_p;
 
+    
+    
     IF(vacunas_a_ordenar < capacidad_total*4) THEN
-    BEGIN
         vacunas_a_ordenar:= capacidad_total*6;
-    END;
+    END IF;
+
+    DBMS_OUTPUT.PUT_LINE('Cantidad proveedores: '||cantidad_de_proveedores||'Poblacion: '||poblacion||' Vacunas a ordenar: '||vacunas_a_ordenar);
 
     SELECT count(id_vac) INTO cantidad_de_vacunas FROM VACUNA; --Cuenta las vacunas
     
@@ -218,8 +222,8 @@ aprobado_covax BOOLEAN;
 BEGIN
     IF (vacuna_aprobada() = TRUE) THEN
         FOR p IN (SELECT * FROM PAIS)
-         DBMS_OUTPUT.PUT_LINE('El pais: '||p.nombre_pai||' hará lo siguiente:');
         LOOP
+            DBMS_OUTPUT.PUT_LINE('El pais: '||p.nombre_pai||' hará lo siguiente:');
             orden_pen:= orden_pendiente(p.id_pai, fecha_actual);
             IF (orden_pen.id_ord IS NOT NULL) THEN --Chequeamos si hay orden pendiente
                 IF(fecha_actual >= orden_pen.f_entrega_ord) THEN --Chequeamos si ya llegó la orden
@@ -241,7 +245,7 @@ BEGIN
                         SELECT covax_pai INTO covax_p FROM pais WHERE id_pai = p.id_pai;
                         IF(covax_p = 'Y') THEN --pertenece a covax?
                             DBMS_OUTPUT.PUT_LINE('Realizando orden a covax');
-                            aprobado_covax = solitar_orden_covax(p.id_pai,fecha_actual);
+                            aprobado_covax := solicitar_orden_covax(p.id_pai,fecha_actual);
                             IF(aprobado_covax = FALSE) THEN
                                 DBMS_OUTPUT.PUT_LINE('Covax rechazó la orden, realizando orden a otro provedor');
                                 orden_a_proveedor(p.id_pai,fecha_actual);--se pide a alguien mas

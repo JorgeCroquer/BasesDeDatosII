@@ -33,61 +33,61 @@ BEGIN
 
     --asignacion de fechas para vacunas
     fechas_sputnik := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     UPDATE VACUNA
     SET fechas_vac = fechas_sputnik                               
     WHERE (id_vac = '7');
     fechas_pfizer := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     fechas_moderna := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     fechas_sinopharm := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     fechas_sinovac := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     fechas_cansino := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     fechas_aztrazeneca := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     fechas_JANDJ := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     fechas_janssen := F_FASES(
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))),
-        F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
+        TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
     UPDATE VACUNA
     SET fechas_vac = fechas_pfizer                             
