@@ -51,6 +51,7 @@ BEGIN
 END;
 
 --Chequea si el pais se esta quedando sin vacunas y necesita ordenar más
+--Toma en cuenta que las vacunas tardan un mes en llegar entonces 
 CREATE OR REPLACE FUNCTION hora_de_ordenar( pais_p NUMBER) RETURN BOOLEAN AS
 capacidad_total NUMBER;
 total_vacunas_disponibles NUMBER;
@@ -66,7 +67,7 @@ BEGIN
     JOIN CENTRO_VAC ON centro_vac_inv = id_cen
     WHERE pais_cv = pais_p;
 
-    IF(capacidad_total > nvl(total_vacunas_disponibles,0)) THEN
+    IF(capacidad_total*4 >= nvl(total_vacunas_disponibles,0)) THEN
         RETURN (TRUE);
     ELSE
         RETURN(FALSE);    
