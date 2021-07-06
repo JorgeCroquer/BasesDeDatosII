@@ -9,9 +9,10 @@ BEGIN
     covax_id := get_covax_id;
 
     c_vacunas := get_vacunas_covax;
-
+    FETCH c_vacunas INTO r_vacuna;
+    WHILE c_vacunas%FOUND
         LOOP 
-            FETCH c_vacunas INTO r_vacuna;
+            
 
             SELECT cantidad_vd INTO cant_vac_covax FROM VACUNA_DISTRIBUIDORA
             WHERE (vacuna_vd = r_vacuna.id_vac AND distribuidora_vd <> covax_id);
@@ -25,7 +26,7 @@ BEGIN
             WHERE (vacuna_vd = r_vacuna.id_vac AND distribuidora_vd <> covax_id);     
 
             DBMS_OUTPUT.PUT_LINE('Se asignaron ' || cant_vac_covax*0.4 || ' vacunas ' || r_vacuna.nombre_vac || ' al fondo COVAX.');
-            EXIT WHEN c_vacunas%NOTFOUND;
+            FETCH c_vacunas INTO r_vacuna;
         END LOOP;
     CLOSE c_vacunas;
     commit;

@@ -6,13 +6,14 @@ CREATE OR REPLACE FUNCTION get_vacunas_orden(pais_id pais.id_pai%TYPE, porcentaj
     cont INTEGER := 1;
 BEGIN
     c_vacunas := get_vacunas_covax;
-            
+    FETCH c_vacunas INTO r_vacuna;
+    WHILE c_vacuna%FOUND       
     LOOP            --COMO LA SOLICITUD DE COVAX ES DE TODAS LAS VACUNAS NO RESTRINGIDAS PARA EL PAIS Y SE HACE PARA UN % DE POBLACION DETERMINADO, ENTONCES,
-        FETCH c_vacunas INTO r_vacuna;
+        
         if NOT(esta_restringida(pais_id, r_vacuna.id_vac)) THEN
             cont := cont + 1;                   --SE CUENTA LA CANTIDAD DE VACUNAS NO RESTRINGIDAS PARA EL PAIS
         END if;
-        EXIT WHEN c_vacunas%NOTFOUND;
+        FETCH c_vacunas INTO r_vacuna;
     END LOOP;
     CLOSE c_vacunas;
 
