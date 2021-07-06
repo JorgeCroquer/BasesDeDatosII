@@ -231,9 +231,6 @@ BEGIN
         DBMS_OUTPUT.PUT_LINE('guantes -> ' || cant_par_guantes_sum);
 
         --Fin de pruebas
-        DBMS_OUTPUT.PUT_LINE('nuevas primeras dosis -> ' || nuevas_primeras_dosis);
-
-        
 
         --Chequea si habia falta de insumos para pedir mas
         IF (nuevas_primeras_dosis < check_insumos) THEN
@@ -241,6 +238,16 @@ BEGIN
             pedir_insumos(centro.id_cen,fecha_actual);
 
         END IF;
+        --Nunca se deben poner mas de la mitad de la capacidad en primeras 
+        --Por eso, si las nuevas primeras dosis son mas que la mitad de la capacidad del centro...
+        IF (nuevas_primeras_dosis > centro.capacidad_cen*0.5) THEN
+            --Capa a la mitad del centro las primeras dosis aplicables
+            nuevas_primeras_dosis := centro.capacidad_cen*0.5;
+        END IF;
+
+        DBMS_OUTPUT.PUT_LINE('nuevas primeras dosis -> ' || nuevas_primeras_dosis);
+
+
 
         --Guarda el porcentaje de ancianos vacunados
         SELECT (SELECT  SUM(jv.cantidad_pri_jv)
@@ -432,11 +439,11 @@ BEGIN
                     FROM PAIS_GE pge
                     WHERE grupo_etario_pge = 3 AND pais_pge= centro.pais_cv;
 
-                    --Cuantos adultos quedan por vacunar
+                    --Cuantos jovenes quedan por vacunar
                     SELECT pge.cant_hab_pge.cant_total-(SELECT SUM(cantidad_pri_jv) 
                                                         FROM JORNADA_VAC 
                                                         WHERE grupo_etario_jv = 2 AND pais_jv= centro.pais_cv)
-                    INTO por_vacunar_adultos
+                    INTO por_vacunar_jovenes
                     FROM PAIS_GE pge
                     WHERE grupo_etario_pge = 2 AND pais_pge= centro.pais_cv;
 
@@ -482,7 +489,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('jovenes vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
+                        DBMS_OUTPUT.PUT_LINE('jovenes vacunados -> ' ||TRUNC(por_vacunar_jovenes *porc_vac.porcentaje));
 
                         --34% para los ancianos
                         UPDATE JORNADA_VAC

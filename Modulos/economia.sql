@@ -159,7 +159,6 @@ BEGIN
     poblacion:=get_poblacion(pais_p,'TOTAL');
     vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
     
-
     --Si la cantidad de vacunas a ordenar es menor que la cantidad de vacunas que se gastan en un mes(Lo que tardan en llegar las vacunas) 
     --en ese pais la cantidad de vacunas a ordenar se calcula en base a su capacidad total.
     SELECT SUM(capacidad_cen)
@@ -167,8 +166,6 @@ BEGIN
     FROM CENTRO_VAC
     WHERE pais_cv = pais_p;
 
-    
-    
     IF(vacunas_a_ordenar < capacidad_total*4) THEN
         vacunas_a_ordenar:= capacidad_total*6;
     END IF;
