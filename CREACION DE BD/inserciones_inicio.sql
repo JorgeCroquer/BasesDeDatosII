@@ -18,7 +18,7 @@ INSERT INTO ESTATUS VALUES(DEFAULT,'FASE IV', 'Se crece la población en la que 
 --VACUNAS
 INSERT INTO VACUNA VALUES (DEFAULT,'Comirnaty',0,95,16*2,2,'Y',-4,'No agitar.',f_fases(NULL,NULL,NULL,NULL)); --La Pfizer
 INSERT INTO VACUNA VALUES (DEFAULT,'Janssen',0,96,9,1,'Y',-15,'No exponer a la luz directa del sol.',f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'Johnson & Johnson',0,91.6,9,1,'Y',-8,'No debe almacenarse congelada.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Johnson and Johnson',0,91.6,9,1,'Y',-8,'No debe almacenarse congelada.',f_fases(NULL,NULL,NULL,NULL));
 INSERT INTO VACUNA VALUES (DEFAULT,'AstraZeneca',0,92,3*2,2,'Y',-8,'No conservar en congelador.',f_fases(NULL,NULL,NULL,NULL));
 INSERT INTO VACUNA VALUES (DEFAULT,'Moderna',0,91.6,21*2,2,'Y',-20,'No volver a congelar despues de descongelada.',f_fases(NULL,NULL,NULL,NULL));
 INSERT INTO VACUNA VALUES (DEFAULT,'CoronaVac',0,91.6,25*2,2,'Y',-8,'No exponer a la luz directa del sol.',f_fases(NULL,NULL,NULL,NULL)); --Sinovac
@@ -29,7 +29,7 @@ INSERT INTO VACUNA VALUES (DEFAULT,'Convidicea',0,95,4,1,'N',3,'No agitar.',f_fa
 --DISTRIBUIDORA
 INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Pfizer-BioNTech');
 INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Janssen Pharmaceutica'); -- DATO CURIOSO: es una compañía farmacéutica belga filial de la corporación norteamericana Johnson & Johnson
-INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Johnson & Johnson'); 
+INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Johnson and Johnson'); 
 INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'AstraZeneca');
 INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Moderna, Inc.');
 INSERT INTO DISTRIBUIDORA VALUES(DEFAULT,'Sinovac Biotech');
@@ -278,7 +278,7 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Toronto General Hospital',100000,7, UBICA
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'The Ottawa Hospital',100000,7, UBICACION(UBICACION.validarLatitud(45.40314431262979),UBICACION.validarLongitud(-75.6490958370367),'Canadá, Ottawa, Autopista Smyth frente al Faircrest Heights Park'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Vancouver General Hospital',100000,7,UBICACION(UBICACION.validarLatitud(49.262690181925045),UBICACION.validarLongitud(-123.12189638715428),'Canadá, Vancouver, Fairview avenida 12 a dos cuadras del ayuntamiento'));
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Taoyuan Park',3500000,8, UBICACION(UBICACION.validarLatitud(39.82761719880017),UBICACION.validarLongitud(116.38483107065849),'China, Pekin, Gaozhuangzi, Autopista Huaifang'); --China
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Taoyuan Park',3500000,8, UBICACION(UBICACION.validarLatitud(39.82761719880017),UBICACION.validarLongitud(116.38483107065849),'China, Pekin, Gaozhuangzi, Autopista Huaifang')); --China
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Yongshiying Country Park',3500000,8, UBICACION(UBICACION.validarLatitud(40.038527776582306),UBICACION.validarLongitud(116.44107163564657),'China, Pekin, Qingheyinggcun,Autopista Beiyuan'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Shanghai Binhai Guyuan',3500000,8,UBICACION(UBICACION.validarLatitud(30.857170014651206),UBICACION.validarLongitud(121.7154639954433),'China, Shangai, Qingjian, Avenida Guyuan'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Qingdao Chengyang People`s Hospital',3500000,8,UBICACION(UBICACION.validarLatitud(36.30142841490647),UBICACION.validarLongitud(120.40165900005142),'China, Quigndao, Autopista Changcheng a una cuadra del Masters Golf Club'));
@@ -308,7 +308,7 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Clínic de Barcelona',700000,13,
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Clínico Universitario de Valencia',700000,13,UBICACION(UBICACION.validarLatitud(39.47926391967858),UBICACION.validarLongitud(-0.3622055056854497),'Av. de Blasco Ibáñez, 17, 46010 València, Valencia, España'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital General Universitario Morales Meseguer',700000,13,UBICACION(UBICACION.validarLatitud(37.99497951533407),UBICACION.validarLongitud(-1.129535213274778),'Av Marqués de los Vélez, s/n, 30008 Murcia, España'));
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'George Washington University Hospital',2450000,14, UBICACION(UBICACION.validarLatitud(38.901812758765885),UBICACION.validarLongitud(-77.05072671242297),'900 23rd St NW, Washington, DC 20037, Estados Unidos'); --Estados Unidos
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'George Washington University Hospital',2450000,14, UBICACION(UBICACION.validarLatitud(38.901812758765885),UBICACION.validarLongitud(-77.05072671242297),'900 23rd St NW, Washington, DC 20037, Estados Unidos')); --Estados Unidos
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Kings County Hospital Center',2450000,14, UBICACION(UBICACION.validarLatitud(40.65749040815204),UBICACION.validarLongitud(-73.94300401301932),'451 Clarkson Ave, Brooklyn, NY 11207, Estados Unidos'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'New England Baptist Hospital',2450000,14,UBICACION(UBICACION.validarLatitud(42.33149172955849),UBICACION.validarLongitud(-71.10670745553361),'125 Parker Hill Ave, Boston, MA 02120, Estados Unidos'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'PIH Health Good Samaritan Hospital',2450000,14,UBICACION(UBICACION.validarLatitud(34.05487944263586),UBICACION.validarLongitud(-118.26498583002194),'1225 Wilshire Blvd, Los Angeles, CA 90017, Estados Unidos'));
@@ -323,7 +323,7 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hôpital Pierre Wertheimer',700000,15, UB
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hôpital Universitaire La paix',70000,16, UBICACION(UBICACION.validarLatitud(18.55689579122387),UBICACION.validarLongitud(-72.29804277424239),'21b Delmas 33, Port-au-Prince, Haití')); --Haití
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Hospital Notre Dame',70000,16, UBICACION(UBICACION.validarLatitud(18.227799846643133),UBICACION.validarLongitud(-73.754117489097),'32 Route Nationale 2, Arrondissement des Cayes, Haití'));
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Army Hospital Research And Referral',3500000,17, UBICACION(UBICACION.validarLatitud(28.587310335053044),UBICACION.validarLongitud(77.15801238968842),'Near, Military Hospital Road, Subroto Park, Dhaula Kuan, New Delhi, Delhi 110010, India'); --India
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Army Hospital Research And Referral',3500000,17,UBICACION(UBICACION.validarLatitud(28.587310335053044),UBICACION.validarLongitud(77.15801238968842),'Near, Military Hospital Road, Subroto Park, Dhaula Kuan, New Delhi, Delhi 110010, India')); --India
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'AIIMS Hospital',3500000,17,UBICACION(UBICACION.validarLatitud(28.567411569600164),UBICACION.validarLongitud(77.21105575468566),'Ansari Nagar East, Gautam Nagar, Ansari Nagar East, New Delhi, Delhi 110029, India'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Kingsway Hospitals',3500000,17,UBICACION(UBICACION.validarLatitud(21.15598822268801),UBICACION.validarLongitud(79.08497035483104),'Kingsway Near Kasturchand Park, Nagpur, Maharashtra 440001, India'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'PSG Hospitals',3500000,17,UBICACION(UBICACION.validarLatitud(11.02021669414624),UBICACION.validarLongitud(77.00689674812683),'Avinashi Rd, Peelamedu, Coimbatore, Tamil Nadu 641004, India'));
@@ -333,7 +333,7 @@ INSERT INTO CENTRO_VAC VALUES(DEFAULT,'MIOT International',3500000,17,UBICACION(
 
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Landspítali Grensás',35000,18,UBICACION(UBICACION.validarLatitud(64.12617645648984),UBICACION.validarLongitud(-21.88133238337394),'Skálagerði 11, Reykjavík, Islandia')); --Islandia
 
-INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Ospedale Generale M.G. Vannini Figlie di San Camillo',700000,19,UBICACION,(UBICACION.validarLatitud(41.88088080686826),UBICACION.validarLongitud(12.54285692958975),'Via di Acqua Bullicante, 4, 00177 Roma RM, Italia')); --Italia
+INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Ospedale Generale M.G. Vannini Figlie di San Camillo',700000,19,UBICACION(UBICACION.validarLatitud(41.88088080686826),UBICACION.validarLongitud(12.54285692958975),'Via di Acqua Bullicante, 4, 00177 Roma RM, Italia')); --Italia
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Centro Trasfusionale Ospedaliero - Primo Policlinico di Napoli',700000,19, UBICACION(UBICACION.validarLatitud(40.851131376879366),UBICACION.validarLongitud(14.253355264587015),'Via del Sole, 10, 80138 Napoli NA, Italia'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Policlinico of Milan',700000,19, UBICACION(UBICACION.validarLatitud(45.45962456163846),UBICACION.validarLongitud(9.194949120260109),'Via Francesco Sforza, 35, 20122 Milano MI, Italia'));
 INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Ospedale Universitario di Careggi Pronto Soccorso',700000,19, UBICACION(UBICACION.validarLatitud(43.806396008119115),UBICACION.validarLongitud(11.248766183717517),'Viale Gaetano Pieraccini, 50139 Firenze FI, Italia'));
