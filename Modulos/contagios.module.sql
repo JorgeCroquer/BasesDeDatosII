@@ -5,6 +5,7 @@ create or replace NONEDITIONABLE PROCEDURE contagios(fecha_actual DATE) IS
     nuevos_recuperados NUMBER;
     porcentaje_infectados NUMBER;
     multiplicador NUMBER := 1;
+    tasa_r_real NUMBER;
     CURSOR paises IS --Guarda cada registro de PAIS_GE
             SELECT pai.id_pai, pai.tasa_repro_pai, paige.cant_hab_pge, paige.grupo_etario_pge, ge.mortalidad 
             FROM PAIS pai JOIN PAIS_GE paige ON pai.id_pai = paige.pais_pge
@@ -18,24 +19,36 @@ BEGIN
 
     FOR pais IN paises
     LOOP
+        multiplicador := 1;
+        tasa_r_real := pais.tasa_repro_pai;
+
         --Primero, ve cuanto porcentaje de infectaod lleva el pais, para regular la tasa r
         SELECT SUM(pge.cant_hab_pge.cant_infectados)/SUM(pge.cant_hab_pge.cant_total)
         INTO porcentaje_infectados
         FROM PAIS_GE pge
-        WHERE pais_pge = 1;
+        WHERE pais_pge = pais.id_pai;
 
         CASE TRUE
             WHEN porcentaje_infectados >= 0.2 AND porcentaje_infectados < 0.4 THEN
                 multiplicador := 0.8;
+                tasa_r_real := tasa_r_real*0.8;
             WHEN porcentaje_infectados >= 0.4 AND porcentaje_infectados < 0.6 THEN
                 multiplicador := 0.6;
+                tasa_r_real := tasa_r_real*0.6;
             WHEN porcentaje_infectados >= 0.6 AND porcentaje_infectados < 0.8 THEN
                 multiplicador := 0.4;
+                tasa_r_real := tasa_r_real*0.4;
             WHEN porcentaje_infectados >= 0.8 AND porcentaje_infectados < 1 THEN
                 multiplicador := 0.2;
+                tasa_r_real := tasa_r_real*0.2;
             WHEN porcentaje_infectados = 1 THEN
                 multiplicador := 0;
+                tasa_r_real := tasa_r_real*0;
+            ELSE 
+                multiplicador := 1;
         END CASE;
+        DBMS_OUTPUT.PUT_LINE('porcentaje infectados =>' || porcentaje_infectados);
+        DBMS_OUTPUT.PUT_LINE('multiplicador =>' || multiplicador);
 
         UPDATE PAIS
         SET TASA_REPRO_PAI = TASA_REPRO_PAI*multiplicador
@@ -48,8 +61,13 @@ BEGIN
                                 -(pais.cant_hab_pge.cant_recuperados+pais.cant_hab_pge.cant_fallecidos); 
 
         DBMS_OUTPUT.PUT_LINE('infectados actuales -> ' || infectados_actuales);
-        DBMS_OUTPUT.PUT_LINE('tasa R -> ' || pais.tasa_repro_pai);
-        nuevos_infectados := infectados_actuales*pais.tasa_repro_pai/3 + TRUNC(DBMS_RANDOM.VALUE(-2,2));
+        DBMS_OUTPUT.PUT_LINE('tasa R -> ' || tasa_r_real);
+
+        IF(tasa_r_real = 0) THEN 
+            nuevos_infectados := 0; --Evitamos el random value
+        ELSE
+            nuevos_infectados := infectados_actuales*tasa_r_real/3 + TRUNC(DBMS_RANDOM.VALUE(-2,2));
+        END IF;
 
         DBMS_OUTPUT.PUT_LINE('nuevos infectados -> ' || nuevos_infectados);
 
