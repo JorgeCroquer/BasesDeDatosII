@@ -160,45 +160,46 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_5(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT  bandera_pai, nombre_pai, nombre_vac, SUM(ge.cant_hab_pge.cant_total) as cant_total, SUM(cantidad_pri_jv) as cantidad_vacunados, TRUNC((SUM(ge.cant_hab_pge.cant_total)/SUM(cantidad_pri_jv))*100,2) as porcentaje_vacunado
-   FROM pais
+   FOR 
+   SELECT p2.bandera_pai, r.nombre_pai, nombre_vac, cant_habitantes, cantidad_vacunados, porcentaje_vacunado
+   FROM ( SELECT p1.id_pai, p1.nombre_pai, nombre_vac, get_poblacion(id_pai,'TOTAL') as cant_habitantes, SUM(cantidad_pri_jv) as cantidad_vacunados, 
+   TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
+   FROM pais p1
    JOIN pais_ge ge ON pais_pge = id_pai
    JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
    JOIN vacuna ON vacuna_jv = id_vac
    WHERE nombre_pai LIKE nvl(pais_p, nombre_pai)
    AND nombre_vac LIKE nvl(vacuna_p, nombre_vac)
-   GROUP BY 1,2,3
-   HAVING 6 >= nvl(vacunados_p,0);
+   GROUP BY nombre_pai, nombre_vac, id_pai
+   HAVING TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) >= nvl(vacunados_p,0)
+   AND SUM(cantidad_pri_jv) > 0
+   ORDER BY nombre_pai) r
+   JOIN PAIS p2 ON p2.id_pai = r.id_pai;
+  
 END;
 
 --Reporte 6 
-
-CREATE OR REPLACE PROCEDURE reporte_6(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, fecha_inicio date, fecha_fin date ) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_6(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, fecha_inicio date, fecha_fin date ) IS
 BEGIN
    OPEN rep_cursor
-   -- ((vacunados en la fecha fin - vacunados en la fecha inicio) / cantidad de habitantes)*100
-   FOR SELECT  bandera_pai, nombre_pai, nvl(fecha_inicio,MIN(fecha_jv)), nvl(fecha_fin,MAX(fecha_jv)), 
-   ((SUM(cantidad_pri_jv) - (SELECT SUM(cantidad_pri_jv)
-                              FROM pais
-                              JOIN pais_ge ge ON pais_pge = id_pai
-                              JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
-                              WHERE id_pai = p.id_pai
-                              AND fecha_jv = nvl(fecha_inicio,(SELECT MIN(fecha_jv) FROM jornada_vac WHERE pais_jv = pais_p))
-                              )) /(SELECT SUM(ge.cant_hab_pge.cant_total)
-                                 FROM pais_ge
-                                 WHERE pais_pge = p.id_pai))*100 as porcentaje_vacunado
+   FOR SELECT p2.bandera_pai, r.nombre_pai, fecha_i, fecha_f, porcentaje_vacunado
+   FROM (SELECT p.nombre_pai, p.id_pai, nvl(fecha_inicio,MIN(fecha_jv)) fecha_i, nvl(fecha_fin,MAX(fecha_jv)) fecha_f,
+   TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
    FROM pais p
    JOIN pais_ge ge ON pais_pge = id_pai
    JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
-   AND nombre_pai LIKE nvl(pais_p, nombre_pai)
-   GROUP BY 1,2
-   HAVING 3 >= nvl(vacunados_p,0)
-   AND fecha_jv = nvl(fecha_fin,MAX(fecha_jv));
+   WHERE nombre_pai LIKE nvl(pais_p, nombre_pai)
+   AND fecha_jv BETWEEN nvl(fecha_inicio, (SELECT MIN(fecha_jv) FROM JORNADA_VAC WHERE pais_jv = p.id_pai)) 
+   AND nvl(fecha_fin,(SELECT MAX(fecha_jv) FROM JORNADA_VAC WHERE pais_jv = p.id_pai))
+   GROUP BY nombre_pai,id_pai
+   HAVING TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) >= nvl(vacunados_p,0)
+   ORDER BY nombre_pai) r
+   JOIN PAIS p2 ON p2.id_pai = r.id_pai;
 END;
 
 --Reporte 7
 
-CREATE OR REPLACE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT bandera_pai, nombre_pai, nombre_cen, c.ubicacion.direccion_textual, c.ubicacion.getLatitud(),c.ubicacion.getLongitud() 
@@ -208,19 +209,24 @@ BEGIN
 END;
 
 --Reporte 7 - subreporte 1
-CREATE OR REPLACE PROCEDURE reporte_7_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_7_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT nombre_ge, edad_inferior, edad_superior, SUM(cantidad_pri_jv)
    FROM pais
    JOIN centro_vac ON id_pai = pais_cv
    JOIN pais_ge ON pais_pge = id_pai
-   JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
+   JOIN jornada_vac jv1 ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
    JOIN grupo_etario ON grupo_etario_pge = id_ge
    WHERE id_pai = pais_p
    AND id_cen = centro_p
-   GROUP BY 1,2,3
-   HAVING fecha_jv = MAX(fecha_jv);
+   AND fecha_jv  = (SELECT MAX(fecha_jv)
+                    FROM jornada_vac jv2
+                    WHERE jv2.pais_jv = jv1.pais_jv
+                    AND jv2.grupo_etario_jv = jv1.grupo_etario_jv
+                    AND jv2.centro_vac_jv = jv1.centro_vac_jv
+                    AND jv2.vacuna_jv = jv1.vacuna_jv)
+  GROUP BY  nombre_ge, edad_inferior, edad_superior;                
 END;
 
 --Reporte 7 - subreporte 2
