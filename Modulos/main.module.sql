@@ -134,7 +134,7 @@ BEGIN
             modulo_economia(fecha_actual);
             END if;
             
-            --reporte_semanal_mundial;
+            reporte_semanal_mundial;
             --Sumamos 7 dias (1 semana) a la fecha actual
             fecha_actual := fecha_actual + 7;
 

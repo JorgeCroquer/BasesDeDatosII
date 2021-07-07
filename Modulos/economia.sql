@@ -155,7 +155,7 @@ BEGIN
     SELECT count(id_dist) 
     INTO cantidad_de_proveedores
     FROM DISTRIBUIDORA 
-    WHERE id_dist != 10; --Cuenta cuantos proveedores hay, Excepto covax que es el 10
+    WHERE id_dist <> get_covax_id; --Cuenta cuantos proveedores hay, Excepto covax que es el 10
  
     poblacion:=get_poblacion(pais_p,'TOTAL');
     vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
