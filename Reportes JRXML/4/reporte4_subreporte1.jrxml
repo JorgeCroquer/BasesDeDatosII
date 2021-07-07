@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte4_subreporte1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3fa88c5e-5194-4aa4-81e9-63e47ff7a257">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
+	<parameter name="pais" class="java.lang.Integer"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_4_subreporte_1($P{ORACLE_REF_CURSOR}, $P{pais})}]]>
+	</queryString>
+	<field name="CANT_HAB_PGE.CANT_TOTAL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="CANT_HAB_PGE.CANT_TOTAL"/>
+	</field>
+	<field name="NOMBRE_GE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_GE"/>
+	</field>
+	<field name="EDAD_INFERIOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EDAD_INFERIOR"/>
+	</field>
+	<field name="EDAD_SUPERIOR" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="EDAD_SUPERIOR"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement x="-20" y="1" width="250" height="20" uuid="3da7dc94-1954-46d4-b99d-876b7f66698a"/>
+				<textFieldExpression><![CDATA[$F{CANT_HAB_PGE.CANT_TOTAL} + " - " + $F{NOMBRE_GE} + " (" +$F{EDAD_INFERIOR}+ " años - " + $F{EDAD_SUPERIOR} + " años) "]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
