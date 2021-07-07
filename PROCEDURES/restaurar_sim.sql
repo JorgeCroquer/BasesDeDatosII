@@ -54,5 +54,4 @@ BEGIN
     DELETE FROM JORNADA_VAC;
     --PROVISIONAL
     UPDATE VACUNA vac SET vac.fechas_vac = F_FASES(NULL,NULL,NULL, TO_DATE('07/04/2021','dd/mm/yyyy'));
-
 END;

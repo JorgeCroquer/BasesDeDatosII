@@ -198,7 +198,7 @@ END;
 
 --Reporte 7
 
-CREATE OR REPLACE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT bandera_pai, nombre_pai, nombre_cen, c.ubicacion.direccion_textual, c.ubicacion.getLatitud(),c.ubicacion.getLongitud() 
@@ -208,19 +208,24 @@ BEGIN
 END;
 
 --Reporte 7 - subreporte 1
-CREATE OR REPLACE PROCEDURE reporte_7_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_7_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT nombre_ge, edad_inferior, edad_superior, SUM(cantidad_pri_jv)
    FROM pais
    JOIN centro_vac ON id_pai = pais_cv
    JOIN pais_ge ON pais_pge = id_pai
-   JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
+   JOIN jornada_vac jv1 ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
    JOIN grupo_etario ON grupo_etario_pge = id_ge
    WHERE id_pai = pais_p
    AND id_cen = centro_p
-   GROUP BY 1,2,3
-   HAVING fecha_jv = MAX(fecha_jv);
+   AND fecha_jv  = (SELECT MAX(fecha_jv)
+                    FROM jornada_vac jv2
+                    WHERE jv2.pais_jv = jv1.pais_jv
+                    AND jv2.grupo_etario_jv = jv1.grupo_etario_jv
+                    AND jv2.centro_vac_jv = jv1.centro_vac_jv
+                    AND jv2.vacuna_jv = jv1.vacuna_jv)
+  GROUP BY  nombre_ge, edad_inferior, edad_superior;                
 END;
 
 --Reporte 7 - subreporte 2
