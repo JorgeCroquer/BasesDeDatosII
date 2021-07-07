@@ -125,8 +125,8 @@ BEGIN
             DBMS_OUTPUT.PUT_LINE('');
             DBMS_OUTPUT.PUT_LINE('Semana '|| i || ' Lunes '|| fecha_actual);
             DBMS_OUTPUT.PUT_LINE('');
-            --contagios(fecha_actual);
-            --disparador_eventos(fecha_actual);
+            contagios(fecha_actual);
+            disparador_eventos(fecha_actual);
             if (b_farmaceuticas) THEN
                 b_farmaceuticas := farmaceuticas(fecha_actual);
             END if;
