@@ -63,11 +63,11 @@ create or replace NONEDITIONABLE PROCEDURE vacunacion(fecha_actual DATE) IS
 
 BEGIN
 
-    DBMS_OUTPUT.PUT_LINE('entre en vacunacion');
+    --DBMS_OUTPUT.PUT_LINE('entre en vacunacion');
 
     FOR centro in centros_vacunacion
     LOOP
-        DBMS_OUTPUT.PUT_LINE('centro -> ' || centro.id_cen);
+        --DBMS_OUTPUT.PUT_LINE('centro -> ' || centro.id_cen);
 
         --Inserta un nuevo registro de suministros para la fecha actual
         INSERT INTO SUMINISTROS VALUES(fecha_actual,
@@ -102,10 +102,10 @@ BEGIN
         --Primero hay que ver si hay dosis pendientes en cada jornada de cada vacuna y grupo
         FOR inventario IN inventarios(centro.id_cen)
         LOOP
-            DBMS_OUTPUT.PUT_LINE('vacuna -> ' || inventario.vacuna_inv);
+            --DBMS_OUTPUT.PUT_LINE('vacuna -> ' || inventario.vacuna_inv);
             FOR grupo IN 1..4
             LOOP
-                DBMS_OUTPUT.PUT_LINE('grupo -> ' || grupo);
+                --DBMS_OUTPUT.PUT_LINE('grupo -> ' || grupo);
                 --Primero abre la jornada 
 
 
@@ -131,17 +131,17 @@ BEGIN
                         AND centro.cant_algodon_sum > pendientes.cantidad_pri_jv
                         AND centro.cant_par_guantes_sum > pendientes.cantidad_pri_jv/10) 
                     THEN
-                        DBMS_OUTPUT.PUT_LINE('Si hay suministros' );
+                        --DBMS_OUTPUT.PUT_LINE('Si hay suministros' );
 
 
 
                         --Chequea la existencia de segundas dosis suficientes en el inventario
                         IF (inventario.cantidad_seg_inv > pendientes.cantidad_pri_jv) THEN 
-                            DBMS_OUTPUT.PUT_LINE('Si hay inventario ');
+                            --DBMS_OUTPUT.PUT_LINE('Si hay inventario ');
                             --Suma las nuevas segundas dosis
-                            DBMS_OUTPUT.PUT_LINE('pendientes -> ' ||pendientes.cantidad_pri_jv );
+                            --DBMS_OUTPUT.PUT_LINE('pendientes -> ' ||pendientes.cantidad_pri_jv );
                             nuevas_segundas_dosis := nuevas_segundas_dosis+pendientes.cantidad_pri_jv;
-                            DBMS_OUTPUT.PUT_LINE('Nuevas segundas dosis -> ' || nuevas_segundas_dosis);
+                            --DBMS_OUTPUT.PUT_LINE('Nuevas segundas dosis -> ' || nuevas_segundas_dosis);
                             --Actualiza los suministros
                             UPDATE SUMINISTROS
                             SET cant_jeringas_sum = cant_jeringas_sum - pendientes.cantidad_pri_jv,
@@ -187,7 +187,7 @@ BEGIN
         SELECT SUM(cantidad_pri_inv) INTO existencia  
         FROM INVENTARIO_VAC
         WHERE centro_vac_inv = centro.id_cen;
-        DBMS_OUTPUT.PUT_LINE('existencia -> ' || existencia);
+        --DBMS_OUTPUT.PUT_LINE('existencia -> ' || existencia);
         SELECT SUM(cantidad_seg_jv) INTO segundas_dosis
         FROM JORNADA_VAC
         WHERE centro_vac_jv = centro.id_cen AND fecha_jv = fecha_actual;
@@ -201,7 +201,7 @@ BEGIN
         WHERE cv.id_cen = centro.id_cen;
 
         check_insumos := nuevas_primeras_dosis;
-        DBMS_OUTPUT.PUT_LINE('check_insumo -> ' || check_insumos);
+        --DBMS_OUTPUT.PUT_LINE('check_insumo -> ' || check_insumos);
         
         --Pregunta si hay insumos, elige lo que haya menos de los insumos (incluido las nuevas primeras dosis)
         SELECT LEAST(cant_jeringas_sum,cant_alcohol_sum,cant_algodon_sum,cant_par_guantes_sum*10,nuevas_primeras_dosis)
@@ -213,22 +213,22 @@ BEGIN
         SELECT cant_jeringas_sum INTO cant_jeringas_sum
         FROM SUMINISTROS
         WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        DBMS_OUTPUT.PUT_LINE('jeringas -> ' || cant_jeringas_sum);
+        --DBMS_OUTPUT.PUT_LINE('jeringas -> ' || cant_jeringas_sum);
 
         SELECT cant_alcohol_sum INTO cant_alcohol_sum
         FROM SUMINISTROS
         WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        DBMS_OUTPUT.PUT_LINE('alcohol -> ' || cant_alcohol_sum);
+        --DBMS_OUTPUT.PUT_LINE('alcohol -> ' || cant_alcohol_sum);
 
         SELECT cant_algodon_sum INTO cant_algodon_sum
         FROM SUMINISTROS
         WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        DBMS_OUTPUT.PUT_LINE('algodon -> ' || cant_algodon_sum);
+        --DBMS_OUTPUT.PUT_LINE('algodon -> ' || cant_algodon_sum);
 
         SELECT cant_par_guantes_sum INTO cant_par_guantes_sum
         FROM SUMINISTROS
         WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        DBMS_OUTPUT.PUT_LINE('guantes -> ' || cant_par_guantes_sum);
+        --DBMS_OUTPUT.PUT_LINE('guantes -> ' || cant_par_guantes_sum);
 
         --Fin de pruebas
 
@@ -245,7 +245,7 @@ BEGIN
             nuevas_primeras_dosis := centro.capacidad_cen*0.5;
         END IF;
 
-        DBMS_OUTPUT.PUT_LINE('nuevas primeras dosis -> ' || nuevas_primeras_dosis);
+        --DBMS_OUTPUT.PUT_LINE('nuevas primeras dosis -> ' || nuevas_primeras_dosis);
 
 
 
@@ -257,11 +257,11 @@ BEGIN
         FROM PAIS_GE pge
         WHERE pge.grupo_etario_pge = 4 AND pge.pais_pge =centro.pais_cv;
 
-        DBMS_OUTPUT.PUT_LINE('porcentaje ancianos vacunados -> ' || porcentaje_vacunados);
+        --DBMS_OUTPUT.PUT_LINE('porcentaje ancianos vacunados -> ' || porcentaje_vacunados);
 
         --El 40% de los ancianos ya esta vacunado?
         IF (porcentaje_vacunados > 0.40) THEN
-            DBMS_OUTPUT.PUT_LINE('Mas de 40% de ancianos vacunados');
+            --DBMS_OUTPUT.PUT_LINE('Mas de 40% de ancianos vacunados');
             --Guarda el porcentaje de adultos vacunados
             SELECT (SELECT  SUM(jv.cantidad_pri_jv)
                     FROM JORNADA_VAC jv 
@@ -269,10 +269,10 @@ BEGIN
             INTO porcentaje_vacunados
             FROM PAIS_GE pge
             WHERE pge.grupo_etario_pge = 3 AND pge.pais_pge = centro.pais_cv;
-            DBMS_OUTPUT.PUT_LINE('porcentaje adultos vacunados -> ' || porcentaje_vacunados);
+            --DBMS_OUTPUT.PUT_LINE('porcentaje adultos vacunados -> ' || porcentaje_vacunados);
 
             IF (porcentaje_vacunados > 0.40) THEN 
-                DBMS_OUTPUT.PUT_LINE('Mas de 40% de adultos vacunados');
+                --DBMS_OUTPUT.PUT_LINE('Mas de 40% de adultos vacunados');
                 --Guarda el porcentaje de jovenes vacunados
                 SELECT (SELECT  SUM(jv.cantidad_pri_jv)
                         FROM JORNADA_VAC jv 
@@ -280,9 +280,9 @@ BEGIN
                 INTO porcentaje_vacunados
                 FROM PAIS_GE pge
                 WHERE pge.grupo_etario_pge = 2 AND pge.pais_pge = centro.pais_cv;
-                DBMS_OUTPUT.PUT_LINE('porcentaje jovenes vacunados -> ' || porcentaje_vacunados);
+                --DBMS_OUTPUT.PUT_LINE('porcentaje jovenes vacunados -> ' || porcentaje_vacunados);
                 IF (porcentaje_vacunados > 0.40) THEN
-                    DBMS_OUTPUT.PUT_LINE('Mas de 40% de jovenes vacunados');
+                    --DBMS_OUTPUT.PUT_LINE('Mas de 40% de jovenes vacunados');
                     --Hay mas de 40% de jovenes vacunados. A cada grupo le toca 25%
 
                     --Hay que verificar que no se vaya a pasar de vacunados
@@ -373,7 +373,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
+                        --DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
 
                         --25% a adultos
                         UPDATE JORNADA_VAC
@@ -383,7 +383,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('adultos vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
+                        --DBMS_OUTPUT.PUT_LINE('adultos vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
 
                         --25% a jovenes
                         UPDATE JORNADA_VAC
@@ -393,7 +393,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('jovenes vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
+                        --DBMS_OUTPUT.PUT_LINE('jovenes vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
 
                         --25% nenes
                         UPDATE JORNADA_VAC
@@ -403,7 +403,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('niños vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
+                        --DBMS_OUTPUT.PUT_LINE('niños vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
 
                         
 
@@ -413,7 +413,7 @@ BEGIN
                         SET cantidad_pri_inv = cantidad_pri_inv - nuevas_primeras_dosis*porc_vac.porcentaje
                         WHERE centro_vac_inv = centro.id_cen
                             AND vacuna_inv = porc_vac.vacuna_inv;
-                        DBMS_OUTPUT.PUT_LINE('vacunados -> ' || nuevas_primeras_dosis*porc_vac.porcentaje);
+                        --DBMS_OUTPUT.PUT_LINE('vacunados -> ' || nuevas_primeras_dosis*porc_vac.porcentaje);
                     END LOOP;
                 ELSE
                     --Hay menos de 40% de adultos vacunados. Toca el 34% a ancianos, 33% a adultos
@@ -479,7 +479,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('adultos vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
+                        --DBMS_OUTPUT.PUT_LINE('adultos vacunados -> ' ||TRUNC(por_vacunar_adultos *porc_vac.porcentaje));
 
                         --33% a jovenes
                         UPDATE JORNADA_VAC
@@ -489,7 +489,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('jovenes vacunados -> ' ||TRUNC(por_vacunar_jovenes *porc_vac.porcentaje));
+                        --DBMS_OUTPUT.PUT_LINE('jovenes vacunados -> ' ||TRUNC(por_vacunar_jovenes *porc_vac.porcentaje));
 
                         --34% para los ancianos
                         UPDATE JORNADA_VAC
@@ -499,7 +499,7 @@ BEGIN
                             AND vacuna_jv = porc_vac.vacuna_inv
                             AND pais_jv = centro.pais_cv
                             AND centro_vac_jv = centro.id_cen;
-                        DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
+                        --DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
                         --Resta la vacuna 
                         UPDATE INVENTARIO_VAC
                         SET cantidad_pri_inv = cantidad_pri_inv - nuevas_primeras_dosis*porc_vac.porcentaje
@@ -558,7 +558,7 @@ BEGIN
                         AND vacuna_jv = porc_vac.vacuna_inv
                         AND pais_jv = centro.pais_cv
                         AND centro_vac_jv = centro.id_cen;
-                    DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
+                    --DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
 
                     UPDATE JORNADA_VAC
                     SET cantidad_pri_jv = TRUNC(por_vacunar_adultos*porc_vac.porcentaje)
@@ -567,7 +567,7 @@ BEGIN
                         AND vacuna_jv = porc_vac.vacuna_inv
                         AND pais_jv = centro.pais_cv
                         AND centro_vac_jv = centro.id_cen;
-                    DBMS_OUTPUT.PUT_LINE('adultos vacunados -> ' || TRUNC(por_vacunar_adultos*porc_vac.porcentaje));
+                    --DBMS_OUTPUT.PUT_LINE('adultos vacunados -> ' || TRUNC(por_vacunar_adultos*porc_vac.porcentaje));
                     --Resta la vacuna 
                     UPDATE INVENTARIO_VAC
                     SET cantidad_pri_inv = cantidad_pri_inv - nuevas_primeras_dosis*porc_vac.porcentaje
@@ -582,7 +582,7 @@ BEGIN
 
         --Hay menos de 40% de ancianos vacunados. Toca el 100% a ancianos
 
-        DBMS_OUTPUT.PUT_LINE('Menos de 40% de ancianos vacunados');
+        --DBMS_OUTPUT.PUT_LINE('Menos de 40% de ancianos vacunados');
             FOR porc_vac IN porcentajes_vacuna(centro.id_cen)
             LOOP
 
@@ -609,7 +609,7 @@ BEGIN
                     AND pais_jv = centro.pais_cv
                     AND centro_vac_jv = centro.id_cen;
 
-                DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
+                --DBMS_OUTPUT.PUT_LINE('ancianos vacunados -> ' || TRUNC(por_vacunar_ancianos*porc_vac.porcentaje));
 
                --Resta la vacuna 
                 UPDATE INVENTARIO_VAC
@@ -622,7 +622,7 @@ BEGIN
         END IF;
         --Solo falta restar los insumos
 
-        DBMS_OUTPUT.PUT_LINE('resto insumos');
+        --DBMS_OUTPUT.PUT_LINE('resto insumos');
         UPDATE SUMINISTROS
         SET cant_jeringas_sum = cant_jeringas_sum - nuevas_primeras_dosis,
             cant_alcohol_sum = cant_alcohol_sum - nuevas_primeras_dosis,
