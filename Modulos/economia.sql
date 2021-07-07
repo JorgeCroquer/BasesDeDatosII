@@ -191,7 +191,7 @@ BEGIN
     SELECT distribuidora_vd
     INTO proveedor_escogido
     FROM VACUNA_DISTRIBUIDORA
-    WHERE vacuna_vd = vacuna_a_solicitar ;--Busca el proveedor correspondiente
+    WHERE vacuna_vd = vacuna_a_solicitar;--Busca el proveedor correspondiente
 
     SELECT precio_vac
     INTO precio_vacuna
