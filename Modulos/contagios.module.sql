@@ -47,21 +47,21 @@ BEGIN
             ELSE 
                 multiplicador := 1;
         END CASE;
-        DBMS_OUTPUT.PUT_LINE('porcentaje infectados =>' || porcentaje_infectados);
-        DBMS_OUTPUT.PUT_LINE('multiplicador =>' || multiplicador);
+        --DBMS_OUTPUT.PUT_LINE('porcentaje infectados =>' || TRUNC(porcentaje_infectados,2));
+        --DBMS_OUTPUT.PUT_LINE('multiplicador =>' || multiplicador);
 
         UPDATE PAIS
         SET TASA_REPRO_PAI = TASA_REPRO_PAI*multiplicador
         WHERE id_pai = pais.id_pai;
 
-        DBMS_OUTPUT.PUT_LINE('pais -> ' || pais.id_pai);
-        DBMS_OUTPUT.PUT_LINE('grupo etario -> ' || pais.grupo_etario_pge);
+        --DBMS_OUTPUT.PUT_LINE('pais -> ' || pais.id_pai);
+        --DBMS_OUTPUT.PUT_LINE('grupo etario -> ' || pais.grupo_etario_pge);
 
         infectados_actuales := pais.cant_hab_pge.cant_infectados
                                 -(pais.cant_hab_pge.cant_recuperados+pais.cant_hab_pge.cant_fallecidos); 
 
-        DBMS_OUTPUT.PUT_LINE('infectados actuales -> ' || infectados_actuales);
-        DBMS_OUTPUT.PUT_LINE('tasa R -> ' || tasa_r_real);
+        --DBMS_OUTPUT.PUT_LINE('infectados actuales -> ' || infectados_actuales);
+        --DBMS_OUTPUT.PUT_LINE('tasa R -> ' || tasa_r_real);
 
         IF(tasa_r_real = 0) THEN 
             nuevos_infectados := 0; --Evitamos el random value
@@ -69,7 +69,7 @@ BEGIN
             nuevos_infectados := infectados_actuales*tasa_r_real/3 + TRUNC(DBMS_RANDOM.VALUE(-2,2));
         END IF;
 
-        DBMS_OUTPUT.PUT_LINE('nuevos infectados -> ' || nuevos_infectados);
+        --DBMS_OUTPUT.PUT_LINE('nuevos infectados -> ' || nuevos_infectados);
 
         UPDATE PAIS_GE p SET p.cant_hab_pge.cant_infectados = p.cant_hab_pge.cant_infectados + ROUND(nuevos_infectados)
         WHERE p.grupo_etario_pge = pais.grupo_etario_pge AND pais.id_pai = p.pais_pge;
@@ -95,10 +95,10 @@ BEGIN
                 
            infectados_actuales := mortales.hab.cant_infectados-(mortales.hab.cant_recuperados+mortales.hab.cant_fallecidos);
         
-        DBMS_OUTPUT.PUT_LINE('mortalidad -> ' || mortalidad);
+        --DBMS_OUTPUT.PUT_LINE('mortalidad -> ' || mortalidad);
             nuevos_muertos := ROUND(infectados_actuales*mortalidad);
             nuevos_recuperados := infectados_actuales-nuevos_muertos;
-        DBMS_OUTPUT.PUT_LINE('nuevos muertos -> ' || nuevos_muertos);
+        --DBMS_OUTPUT.PUT_LINE('nuevos muertos -> ' || nuevos_muertos);
             UPDATE PAIS_GE pge SET pge.cant_hab_pge.cant_fallecidos = pge.cant_hab_pge.cant_fallecidos + nuevos_muertos, pge.cant_hab_pge.cant_recuperados = nuevos_recuperados
             WHERE pge.grupo_etario_pge = pais.grupo_etario_pge AND pais.id_pai = pge.pais_pge;
         END IF;

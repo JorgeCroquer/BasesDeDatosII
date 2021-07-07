@@ -120,7 +120,7 @@ BEGIN
     WHILE NOT terminado
     LOOP
         -- ciclo de 12 semanas
-        FOR i IN 1..72
+        FOR i IN 1..300
         LOOP
             DBMS_OUTPUT.PUT_LINE('');
             DBMS_OUTPUT.PUT_LINE('Semana '|| i || ' Lunes '|| fecha_actual);
@@ -129,9 +129,12 @@ BEGIN
             disparador_eventos(fecha_actual);
             if (b_farmaceuticas) THEN
                 b_farmaceuticas := farmaceuticas(fecha_actual);
+            else 
+            vacunacion(fecha_actual);
+            modulo_economia(fecha_actual);
             END if;
             
-
+            --reporte_semanal_mundial;
             --Sumamos 7 dias (1 semana) a la fecha actual
             fecha_actual := fecha_actual + 7;
 

@@ -41,7 +41,8 @@ BEGIN
         BEGIN
             vacunas_t:=0; 
         END;                    
-    END;                    
+    END;
+    DBMS_OUTPUT.PUT_LINE('');                    
     DBMS_OUTPUT.PUT_LINE('--------------------------Reporte semamnal mundial');
     DBMS_OUTPUT.PUT_LINE('Hasta ahora se han registrado:');
     DBMS_OUTPUT.PUT_LINE('Infectados: '||infectados_t||' Fallecidos: '||fallecidos_t||' Recuperados '||recuperados_t);
