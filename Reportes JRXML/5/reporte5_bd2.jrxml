@@ -32,66 +32,58 @@
 	</style>
 	<subDataset name="Dataset1" uuid="d09ca0a1-95b5-41ae-a624-3e1e96e0f4df">
 		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
-		<parameter name="vacuna" class="java.lang.String">
+		<parameter name="nombre_pais" class="java.lang.String">
 			<parameterDescription><![CDATA[Nombre de la vacuna]]></parameterDescription>
 		</parameter>
-		<parameter name="fecha_aprobacion" class="java.sql.Date">
-			<parameterDescription><![CDATA[Fecha de fase 4 de la vacuna]]></parameterDescription>
-		</parameter>
+		<parameter name="vacunados" class="java.math.BigDecimal"/>
+		<parameter name="vacuna" class="java.lang.Integer"/>
 		<queryString language="plsql">
-			<![CDATA[{call reporte_1($P{ORACLE_REF_CURSOR}, $P{vacuna},$P{fecha_aprobacion})}]]>
+			<![CDATA[{call reporte_5($P{ORACLE_REF_CURSOR}, $P{nombre_pais},$P{vacunados},$P{vacuna})}]]>
 		</queryString>
-		<field name="FECHAS_VAC.FECHA_F1" class="java.sql.Timestamp">
-			<property name="com.jaspersoft.studio.field.label" value="FECHAS_VAC.FECHA_F1"/>
+		<field name="BANDERA_PAI" class="java.io.InputStream">
+			<property name="com.jaspersoft.studio.field.label" value="BANDERA_PAI"/>
 		</field>
-		<field name="FECHAS_VAC.FECHA_F4" class="java.sql.Timestamp">
-			<property name="com.jaspersoft.studio.field.label" value="FECHAS_VAC.FECHA_F4"/>
+		<field name="NOMBRE_PAI" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.label" value="NOMBRE_PAI"/>
 		</field>
 		<field name="NOMBRE_VAC" class="java.lang.String">
 			<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
 		</field>
-		<field name="NOMBRE_EST" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="NOMBRE_EST"/>
+		<field name="CANT_HABITANTES" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.label" value="CANT_HABITANTES"/>
 		</field>
-		<field name="V.FECHAS_VAC.FASEACTUAL()" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="V.FECHAS_VAC.FASEACTUAL()"/>
+		<field name="CANTIDAD_VACUNADOS" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.label" value="CANTIDAD_VACUNADOS"/>
 		</field>
-		<field name="EFECTIVIDAD_VAC" class="java.math.BigDecimal">
-			<property name="com.jaspersoft.studio.field.label" value="EFECTIVIDAD_VAC"/>
-		</field>
-		<field name="COVAX_VAC" class="java.lang.String">
-			<property name="com.jaspersoft.studio.field.label" value="COVAX_VAC"/>
+		<field name="PORCENTAJE_VACUNADO" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_VACUNADO"/>
 		</field>
 	</subDataset>
-	<parameter name="vacuna" class="java.lang.String">
+	<parameter name="nombre_pais" class="java.lang.String">
 		<parameterDescription><![CDATA[Nombre de la vacuna]]></parameterDescription>
 	</parameter>
-	<parameter name="fecha_aprobacion" class="java.sql.Date">
-		<parameterDescription><![CDATA[Fecha de fase 4 de la vacuna]]></parameterDescription>
-	</parameter>
+	<parameter name="vacunados" class="java.math.BigDecimal"/>
+	<parameter name="vacuna" class="java.lang.Integer"/>
 	<queryString language="plsql">
-		<![CDATA[{call reporte_1($P{ORACLE_REF_CURSOR}, $P{vacuna},$P{fecha_aprobacion})}]]>
+		<![CDATA[{call reporte_5($P{ORACLE_REF_CURSOR}, $P{nombre_pais},$P{vacunados},$P{vacuna})}]]>
 	</queryString>
-	<field name="FECHAS_VAC.FECHA_F1" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.label" value="FECHAS_VAC.FECHA_F1"/>
+	<field name="BANDERA_PAI" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.label" value="BANDERA_PAI"/>
 	</field>
-	<field name="FECHAS_VAC.FECHA_F4" class="java.sql.Timestamp">
-		<property name="com.jaspersoft.studio.field.label" value="FECHAS_VAC.FECHA_F4"/>
+	<field name="NOMBRE_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_PAI"/>
 	</field>
 	<field name="NOMBRE_VAC" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
 	</field>
-	<field name="NOMBRE_EST" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_EST"/>
+	<field name="CANT_HABITANTES" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CANT_HABITANTES"/>
 	</field>
-	<field name="V.FECHAS_VAC.FASEACTUAL()" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="V.FECHAS_VAC.FASEACTUAL()"/>
+	<field name="CANTIDAD_VACUNADOS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="CANTIDAD_VACUNADOS"/>
 	</field>
-	<field name="EFECTIVIDAD_VAC" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.label" value="EFECTIVIDAD_VAC"/>
-	</field>
-	<field name="COVAX_VAC" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.label" value="COVAX_VAC"/>
+	<field name="PORCENTAJE_VACUNADO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_VACUNADO"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -99,11 +91,11 @@
 	<title>
 		<band height="200" splitType="Stretch">
 			<staticText>
-				<reportElement x="210" y="40" width="293" height="76" uuid="bed004e4-924c-4da0-9fc9-bd6303fbf650"/>
+				<reportElement x="220" y="30" width="293" height="130" uuid="bed004e4-924c-4da0-9fc9-bd6303fbf650"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="25"/>
 				</textElement>
-				<text><![CDATA[Reporte de diferentes tipos de vacuna]]></text>
+				<text><![CDATA[Cantidad y porcentaje de población vacunada en los diferentes países del mundo]]></text>
 			</staticText>
 			<image>
 				<reportElement x="0" y="0" width="210" height="200" uuid="e94e0cbe-f29d-44b8-8ce3-9d7137a19157"/>
@@ -112,9 +104,10 @@
 		</band>
 	</title>
 	<detail>
-		<band height="290" splitType="Stretch">
+		<band height="92" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT} == 1]]></printWhenExpression>
 			<componentElement>
-				<reportElement x="0" y="0" width="550" height="290" uuid="fd9ff401-d519-4dd1-af0d-0b69c7e9ecbc">
+				<reportElement x="0" y="0" width="541" height="80" uuid="fd9ff401-d519-4dd1-af0d-0b69c7e9ecbc">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -123,124 +116,111 @@
 				</reportElement>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
 					<datasetRun subDataset="Dataset1" uuid="4cd6a3fb-7056-4dfc-8ede-cc1abeeafb4b">
+						<datasetParameter name="ORACLE_REF_CURSOR">
+							<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+						</datasetParameter>
 						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 					</datasetRun>
-					<jr:column width="93" uuid="17fc6f41-e4fb-4803-b7a9-c970cc935e28">
+					<jr:column width="76" uuid="17fc6f41-e4fb-4803-b7a9-c970cc935e28">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="93" height="30" uuid="dd4e8bac-d0bf-4f10-b950-427df09a9b0e"/>
+								<reportElement x="0" y="0" width="76" height="30" uuid="dd4e8bac-d0bf-4f10-b950-427df09a9b0e"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Fecha de creación]]></text>
+								<text><![CDATA[Bandera]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="93" height="30" uuid="09f47f9f-8efb-4cf3-ac24-3bce043e007c"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{FECHAS_VAC.FECHA_F1}]]></textFieldExpression>
-							</textField>
+						<jr:detailCell style="Table_TD" height="50">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<image hAlign="Center" vAlign="Middle">
+								<reportElement x="0" y="0" width="76" height="50" uuid="38b6cdfd-4783-4442-a024-4c712c7a3138"/>
+								<imageExpression><![CDATA[$F{BANDERA_PAI}]]></imageExpression>
+							</image>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="80" uuid="5e1e0098-018c-4ee9-84f0-54e53e3e4f9d">
+					<jr:column width="74" uuid="5e1e0098-018c-4ee9-84f0-54e53e3e4f9d">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="80" height="30" uuid="299f2e2b-5979-4f10-a592-c045be07c2a4"/>
+								<reportElement x="0" y="0" width="74" height="30" uuid="299f2e2b-5979-4f10-a592-c045be07c2a4"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Fecha de aprobación]]></text>
+								<text><![CDATA[Pais]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
+						<jr:detailCell style="Table_TD" height="50">
 							<textField>
-								<reportElement x="0" y="0" width="80" height="30" uuid="82f29c6f-ca23-4674-befb-51b2a9b54724"/>
+								<reportElement x="0" y="0" width="74" height="50" uuid="c1208fa9-eb5e-419f-be74-bf52b5b4ce54"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{FECHAS_VAC.FECHA_F4}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{NOMBRE_PAI}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="81" uuid="eab77bf9-0aca-4760-9778-e45dd667ab8b">
+					<jr:column width="107" uuid="eab77bf9-0aca-4760-9778-e45dd667ab8b">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="81" height="30" uuid="cb79f921-dd1d-41ed-9544-9b88d1e7d644"/>
+								<reportElement x="0" y="0" width="107" height="30" uuid="cb79f921-dd1d-41ed-9544-9b88d1e7d644"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Nombre de la vacuna]]></text>
+								<text><![CDATA[Cantidad de habitantes]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
+						<jr:detailCell style="Table_TD" height="50">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
 							<textField>
-								<reportElement x="0" y="0" width="81" height="30" uuid="9da7341a-6425-48d3-a5cc-d0beef0be2dd"/>
+								<reportElement x="0" y="0" width="107" height="50" uuid="e6c86b85-e4b5-40cf-9628-bce5bda68ee5"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{NOMBRE_VAC}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{CANT_HABITANTES}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="73" uuid="673da07c-035a-416f-b9d6-07bb88117bab">
+					<jr:column width="115" uuid="673da07c-035a-416f-b9d6-07bb88117bab">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="73" height="30" uuid="fe0d241e-8e58-427e-8f4d-d65cba59effc"/>
+								<reportElement x="0" y="0" width="115" height="30" uuid="fe0d241e-8e58-427e-8f4d-d65cba59effc"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Estatus de la vacuna]]></text>
+								<text><![CDATA[Cantidad de vacunados]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
+						<jr:detailCell style="Table_TD" height="50">
 							<textField>
-								<reportElement x="0" y="0" width="73" height="30" uuid="7eb4b948-60ae-4e6c-a112-cdc351caeec4"/>
+								<reportElement x="0" y="0" width="115" height="50" uuid="052d754d-4349-442c-9b43-0b49a25a2dd2"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{NOMBRE_EST}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{CANTIDAD_VACUNADOS}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="71" uuid="e3133fa5-69a1-4f19-89a9-47f845b49420">
+					<jr:column width="96" uuid="d92e2370-8238-49ef-91eb-180d2ad2bce2">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column5"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="71" height="30" uuid="039e1c4d-4693-499d-8990-9d542f7a13bb"/>
+								<reportElement x="0" y="0" width="96" height="30" uuid="b49ebff9-2136-4ef1-8b79-7c10990617b5"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Fase de la vacuna]]></text>
+								<text><![CDATA[Porcentaje de vacunados]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
+						<jr:detailCell style="Table_TD" height="50">
 							<textField>
-								<reportElement x="0" y="0" width="71" height="30" uuid="76493d52-874d-4690-974a-83f95822b831"/>
+								<reportElement x="0" y="0" width="96" height="50" uuid="aaa5f898-7c69-4d08-8dd9-3f253a0f270e"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{V.FECHAS_VAC.FASEACTUAL()}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{PORCENTAJE_VACUNADO}.toString() + "%"]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>
-					<jr:column width="82" uuid="c6c1802c-9870-41ef-8b93-41f46c100e00">
+					<jr:column width="73" uuid="3b725c4d-3ec3-4908-86b8-b4fb803c4dde">
 						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column6"/>
 						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
 							<staticText>
-								<reportElement x="0" y="0" width="82" height="30" uuid="c6f90eae-d32a-457b-8c7f-c05ded353b15"/>
+								<reportElement x="0" y="0" width="73" height="30" uuid="166918e9-77de-4de2-8723-71d6f67a6cd0"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Porcentaje de efectividad]]></text>
+								<text><![CDATA[Vacuna]]></text>
 							</staticText>
 						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
+						<jr:detailCell style="Table_TD" height="50">
 							<textField>
-								<reportElement x="0" y="0" width="82" height="30" uuid="b2434247-6e1a-4640-b809-5f0198de621a"/>
+								<reportElement x="0" y="0" width="73" height="50" uuid="89592648-579f-4e66-af12-1e76179ae0ba"/>
 								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{EFECTIVIDAD_VAC}]]></textFieldExpression>
-							</textField>
-						</jr:detailCell>
-					</jr:column>
-					<jr:column width="70" uuid="94631b5c-19dc-4366-8a56-cf5692b81a94">
-						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column7"/>
-						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
-							<staticText>
-								<reportElement x="0" y="0" width="70" height="30" uuid="e7cd9166-d3fe-4daf-8d9a-a92f8cb758c7"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<text><![CDATA[Parte de COVAX]]></text>
-							</staticText>
-						</jr:columnHeader>
-						<jr:detailCell style="Table_TD" height="30">
-							<textField>
-								<reportElement x="0" y="0" width="70" height="30" uuid="9f201d85-84f7-4253-88c6-87fefa376e31"/>
-								<textElement textAlignment="Center" verticalAlignment="Middle"/>
-								<textFieldExpression><![CDATA[$F{COVAX_VAC}]]></textFieldExpression>
+								<textFieldExpression><![CDATA[$F{NOMBRE_VAC}]]></textFieldExpression>
 							</textField>
 						</jr:detailCell>
 					</jr:column>

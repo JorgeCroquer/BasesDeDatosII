@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte2_subreporte" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22b72d5c-35cf-4290-a62c-2cac571d2752">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
+	<parameter name="fecha_inicio" class="java.sql.Date"/>
+	<parameter name="fecha_fin" class="java.sql.Date"/>
+	<parameter name="pais" class="java.math.BigDecimal"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_2_subreporte_1($P{ORACLE_REF_CURSOR}, $P{fecha_inicio},$P{fecha_fin},$P{pais})}]]>
+	</queryString>
+	<field name="NOMBRE_VAC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
+	</field>
+	<field name="SUM(CANTIDAD_DIS)" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="SUM(CANTIDAD_DIS)"/>
+	</field>
+	<field name="(SUM(CANTIDAD_DIS)/(SELECTSUM(CANTIDAD_DIS)FROMORDENJOINDISTRIBUCIONONN_ORDEN_DIS=ID_ORDJOINPAISONPAIS_ORD=ID_PAIWHEREID_PAI=:B3ANDF_REALIZACION_ORD&gt;=NVL(:B2,F_REALIZACION_ORD)ANDF_ENTREGA_ORD&lt;=NVL(:B1,F_ENTREGA_ORD))*100)" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label">
+			<![CDATA[(SUM(CANTIDAD_DIS)/(SELECTSUM(CANTIDAD_DIS)FROMORDENJOINDISTRIBUCIONONN_ORDEN_DIS=ID_ORDJOINPAISONPAIS_ORD=ID_PAIWHEREID_PAI=:B3ANDF_REALIZACION_ORD>=NVL(:B2,F_REALIZACION_ORD)ANDF_ENTREGA_ORD<=NVL(:B1,F_ENTREGA_ORD))*100)]]>
+		</property>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="35" splitType="Stretch">
+			<textField>
+				<reportElement x="-20" y="0" width="290" height="30" uuid="4247360f-5a04-4923-a718-1bbe507ff7b1"/>
+				<textFieldExpression><![CDATA[$F{SUM(CANTIDAD_DIS)}+"("+$F{(SUM(CANTIDAD_DIS)/(SELECTSUM(CANTIDAD_DIS)FROMORDENJOINDISTRIBUCIONONN_ORDEN_DIS=ID_ORDJOINPAISONPAIS_ORD=ID_PAIWHEREID_PAI=:B3ANDF_REALIZACION_ORD>=NVL(:B2,F_REALIZACION_ORD)ANDF_ENTREGA_ORD<=NVL(:B1,F_ENTREGA_ORD))*100)} + "%) - "  +$F{NOMBRE_VAC}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
