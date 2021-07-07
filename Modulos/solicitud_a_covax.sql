@@ -30,50 +30,44 @@ BEGIN
     RETURN porcentaje_equivalente;
 END;
 
-CREATE OR REPLACE PROCEDURE modulo_economia(fecha_actual DATE) IS
-cantidad_centros NUMBER;
-orden_pen ORDEN%rowtype;
-covax_p VARCHAR(1);
-pago_pendiente NUMBER;
-aprobado_covax BOOLEAN;
+create or replace NONEDITIONABLE FUNCTION solicitar_orden_covax(pais_p NUMBER, fecha_actual DATE) RETURN BOOLEAN AS
+orden_a_aprobar ORDEN%rowtype;
+pago_restante NUMBER;
+porcentaje_restante_p NUMBER;
 BEGIN
-    IF (vacuna_aprobada() = TRUE) THEN
-        FOR p IN (SELECT * FROM PAIS)
-        LOOP
-            orden_pen:= orden_pendiente(p.id_pai, fecha_actual);
-            IF (orden_pen.id_ord IS NOT NULL) THEN --Chequeamos si hay orden pendiente
-                IF(fecha_actual >= orden_pen.f_entrega_ord) THEN --Chequeamos si ya llegó la orden
-                    UPDATE ORDEN SET estatus_ord = 'ENTREGADA' WHERE id_ord = orden_pen.id_ord; --Actualizamos la orden a entregada
-                    distribuir_vacunas(orden_pen,p.id_pai); --distribuimos las vacunas entre los diferentes centros de vacunacion
-                    DBMS_OUTPUT.PUT_LINE('Orden recibida.Distribuyendo vacunas...');
-                    SELECT orden_pen.monto_ord - SUM(monto_pag) 
-                    INTO pago_pendiente
-                    FROM PAGO
-                    WHERE n_orden_pag = orden_pen.id_ord;
-                    IF(pago_pendiente > 0) THEN --Realizamos el pago pendiente de ser necesario 
-                        INSERT INTO PAGO VALUES(DEFAULT,orden_pen.f_entrega_ord,pago_pendiente,orden_pen.id_ord);
-                    END IF;
-                    DBMS_OUTPUT.PUT_LINE('Pago completado');
-                END IF;
-            ELSE 
-                IF(meta_superada(p.id_pai) = FALSE) THEN --Se superó la meta de vacunación?
-                    IF(hora_de_ordenar(p.id_pai) = TRUE) THEN -- Ya toca volver a pedir?
-                        SELECT covax_pai INTO covax_p FROM pais WHERE id_pai = p.id_pai;
-                        IF(covax_p = 'Y') THEN --pertenece a covax?
-                            DBMS_OUTPUT.PUT_LINE('Realizando orden a covax');
-                            aprobado_covax := solicitar_orden_covax(p.id_pai,fecha_actual);
-                            IF(aprobado_covax = FALSE) THEN
-                                DBMS_OUTPUT.PUT_LINE('Covax rechazó la orden, realizando orden a otro provedor');
-                                orden_a_proveedor(p.id_pai,fecha_actual);--se pide a alguien mas
-                            END IF;
-                        ELSE
-                            orden_a_proveedor(p.id_pai,fecha_actual);--se pide a alguien mas
-                            DBMS_OUTPUT.PUT_LINE('Realizando orden a proveedor');
-                        END IF;
-                    END IF;
-                END IF;
+    porcentaje_restante_p:= porcentaje_restante(pais_p);
+    IF(todos_20() = TRUE)THEN --CUANTO LE FALTA PARA LLEGAR A LA META, ¿A LA META O DE SU POBLACIÓN?
+        IF(porcentaje_restante_p <= 30) THEN
+            --Envía con lo que falta
+            registro_orden_covax(pais_p,fecha_actual,porcentaje_restante_p,2);
+            RETURN(TRUE);
+        ELSE
+            --Envia con 30
+            registro_orden_covax(pais_p,fecha_actual,30,2);
+            RETURN(TRUE);
+        END IF;
+    ELSE
+        IF(porcentaje_restante_p >= 80) THEN
+            SELECT *
+            INTO orden_a_aprobar
+            FROM orden
+            WHERE pais_ord = pais_p 
+            AND distribuidora_ord = 10 
+            AND estatus_ord = 'EN ESPERA'; --Obtenemos la orden en espera, solo debería haber 1
+
+            UPDATE ORDEN SET estatus_ord = 'EN TRANSITO' WHERE id_ord = orden_a_aprobar.estatus_ord ; --Ponemos en transito la orden de ese pais a covax (10)
+
+            SELECT orden_a_aprobar.monto_ord - SUM(monto_pag) 
+            INTO pago_restante
+            FROM PAGO
+            WHERE n_orden_pag = orden_a_aprobar.id_ord;
+            IF(pago_restante> 0) THEN --Realizamos el pago pendiente de ser necesario 
+                INSERT INTO PAGO VALUES(DEFAULT,orden_a_aprobar.f_entrega_ord,pago_restante,orden_a_aprobar.id_ord);
             END IF;
-        END LOOP;
+            DBMS_OUTPUT.PUT_LINE('Pago completado');
+        ELSE
+            RETURN (FALSE);
+        END IF;
     END IF;
 END;
 
