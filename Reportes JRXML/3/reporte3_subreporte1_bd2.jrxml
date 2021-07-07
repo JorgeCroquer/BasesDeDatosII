@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte3_subreporte1_bd2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryWithPageHeaderAndFooter="true" uuid="3c7ec947-5b9b-4ff2-b305-d431ea435441">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
+	<parameter name="orden" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_3_subreporte_1($P{ORACLE_REF_CURSOR}, $P{orden})}]]>
+	</queryString>
+	<field name="NOMBRE_VAC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
+	</field>
+	<field name="PORCENTAJE_INCLUIDO" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_INCLUIDO"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="-20" y="0" width="60" height="30" uuid="e70e650c-35e1-434b-ac54-d34ebd040850"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_VAC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="40" y="0" width="30" height="30" uuid="a8e38b60-81cb-4a7c-812e-18119bf31be4"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PORCENTAJE_INCLUIDO}+'%']]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

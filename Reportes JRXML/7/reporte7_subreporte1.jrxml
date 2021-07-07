@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_7_subreporte1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="938b3025-869a-4c43-92c4-16c696965a4e">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
+	<parameter name="pais_p_sub" class="java.math.BigDecimal"/>
+	<parameter name="centro_p_sub" class="java.math.BigDecimal"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_7_subreporte_1($P{ORACLE_REF_CURSOR},$P{pais_p_sub},$P{centro_p_sub})}]]>
+	</queryString>
+	<field name="NOMBRE_GE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_GE"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_GE"/>
+	</field>
+	<field name="EDAD_INFERIOR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="EDAD_INFERIOR"/>
+		<property name="com.jaspersoft.studio.field.label" value="EDAD_INFERIOR"/>
+	</field>
+	<field name="EDAD_SUPERIOR" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="EDAD_SUPERIOR"/>
+		<property name="com.jaspersoft.studio.field.label" value="EDAD_SUPERIOR"/>
+	</field>
+	<field name="SUM(CANTIDAD_PRI_JV)" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="SUM(CANTIDAD_PRI_JV)"/>
+		<property name="com.jaspersoft.studio.field.label" value="SUM(CANTIDAD_PRI_JV)"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement stretchType="ContainerHeight" x="0" y="0" width="200" height="30" uuid="f4a1960c-7b4e-4806-bf2e-0b81f882c3b2"/>
+				<textFieldExpression><![CDATA["● "+$F{SUM(CANTIDAD_PRI_JV)}+" - "+$F{NOMBRE_GE}+" ("+$F{EDAD_INFERIOR}+" - "+$F{EDAD_SUPERIOR}+" años)"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

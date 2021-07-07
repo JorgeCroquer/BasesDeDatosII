@@ -44,7 +44,7 @@ BEGIN
 END;
 -- Reporte2 - subreporte 1
 -- El tema de las fechas seria algo como "entre estas dos fechas venezuela adquirió esta cantidad de vacunas"
-CREATE OR REPLACE PROCEDURE reporte_2_subreporte_1(rep_cursor OUT sys_refcursor, fecha_inicio date, fecha_fin date, pais_p number) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_2_subreporte_1(rep_cursor OUT sys_refcursor, fecha_inicio date, fecha_fin date, pais_p number) IS
 BEGIN
    --nombre de la vacuna, cantidad total de vacunas de ese tipo, (cantidad de este tipo/cantidad total )*100
    OPEN rep_cursor
@@ -72,10 +72,10 @@ END;
 --Covax es el distribuidor 1;
 --Hay que agregar en el reporteador que en este caso todos los paises van a poder disponer de 50% de vacunas
 
-CREATE OR REPLACE PROCEDURE reporte_3(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p varchar) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_3(rep_cursor OUT sys_refcursor, pais_p varchar, estatus_p varchar) IS
 BEGIN
     OPEN rep_cursor
-    FOR SELECT p2.bandera_pai, r.id_pai, id_ord, r.nombre_pai, estatus_ord, f_estimada_ord, fecha_pago, Monto_pagado, porcentaje_pagado, monto_restante, porcentaje_restante 
+    FOR SELECT p2.bandera_pai, r.id_pai, id_ord, r.nombre_pai, estatus_ord, TO_CHAR(f_estimada_ord,'dd/mm/yy'), TO_CHAR(fecha_pago,'dd/mm/yy'), Monto_pagado, porcentaje_pagado, monto_restante, porcentaje_restante 
     FROM (SELECT p1.id_pai, id_ord, p1.nombre_pai, estatus_ord, f_estimada_ord, max(fecha_pag) as fecha_pago, sum(monto_pag) as Monto_pagado, (sum(monto_pag)/monto_ord)*100 as porcentaje_pagado, (monto_ord - sum(monto_pag)) as monto_restante, (100 - (sum(monto_pag)/monto_ord)*100) as porcentaje_restante 
             FROM pais p1
             JOIN orden ON pais_ord = p1.id_pai
@@ -89,7 +89,7 @@ BEGIN
 END;
 
 --Reporte 3 - subreporte 1
-CREATE OR REPLACE PROCEDURE reporte_3_subreporte_1(rep_cursor OUT sys_refcursor, orden_p number) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_3_subreporte_1(rep_cursor OUT sys_refcursor, orden_p number) IS
 BEGIN
     OPEN rep_cursor
     FOR SELECT nombre_vac, (cantidad_dis/(SELECT SUM(cantidad_dis)
@@ -104,7 +104,7 @@ BEGIN
 END;
 
 --Reporte 3 - subreporte 2
-CREATE OR REPLACE PROCEDURE reporte_3_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_3_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number) IS
 BEGIN
     OPEN rep_cursor
     FOR SELECT tipo_res, nombre_vac, nvl(descripcion_res,'')
@@ -134,7 +134,7 @@ BEGIN
 END;
 
 --Reporte 4 - subreporte 1
-CREATE OR REPLACE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_4_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT  ge.cant_hab_pge.cant_total, nombre_ge, edad_inferior, edad_superior
@@ -145,7 +145,7 @@ END;
 
 --Reporte 4 - subreporte 2
 
-CREATE OR REPLACE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number ) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_4_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number ) IS
 BEGIN
    OPEN rep_cursor
    FOR SELECT  TRUNC((get_poblacion_e(pais_p,id_ge)/get_poblacion(pais_p,'TOTAL'))*100,2) as porcentaje_incluido, 
@@ -157,7 +157,7 @@ END;
 
 --Reporte 5 
 
-CREATE OR REPLACE PROCEDURE reporte_5(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_5(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
 BEGIN
    OPEN rep_cursor
    FOR 
@@ -175,14 +175,14 @@ BEGIN
    AND SUM(cantidad_pri_jv) > 0
    ORDER BY nombre_pai) r
    JOIN PAIS p2 ON p2.id_pai = r.id_pai;
-  
+
 END;
 
 --Reporte 6 
 create or replace NONEDITIONABLE PROCEDURE reporte_6(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, fecha_inicio date, fecha_fin date ) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT p2.bandera_pai, r.nombre_pai, fecha_i, fecha_f, porcentaje_vacunado
+   FOR SELECT p2.bandera_pai, r.nombre_pai, TO_CHAR(fecha_i,'dd/mm/yy'), TO_CHAR(fecha_f,'dd/mm/yy'), porcentaje_vacunado
    FROM (SELECT p.nombre_pai, p.id_pai, nvl(fecha_inicio,MIN(fecha_jv)) fecha_i, nvl(fecha_fin,MAX(fecha_jv)) fecha_f,
    TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
    FROM pais p
@@ -202,7 +202,7 @@ END;
 create or replace NONEDITIONABLE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, nombre_pai, nombre_cen, c.ubicacion.direccion_textual, c.ubicacion.getLatitud(),c.ubicacion.getLongitud() 
+   FOR SELECT id_pai, id_cen, bandera_pai, nombre_pai, nombre_cen, c.ubicacion.direccion_textual, c.ubicacion.getLatitud(),c.ubicacion.getLongitud() 
    FROM pais
    JOIN centro_vac c ON id_pai = pais_cv
    WHERE nombre_pai LIKE nvl(pais_p, nombre_pai);
