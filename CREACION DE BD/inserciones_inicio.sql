@@ -243,6 +243,15 @@ INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,18);
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,19);
 INSERT INTO eventos_aleatorios VALUES (DEFAULT, 'Cuarentena', 'CUARENTENA', 'Las personas del pais deben aislarse socialmente',NULL,50,'Y',NULL,NULL,NULL,20);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_Pfizer','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de Pfizer, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_Janssen','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de Janssen, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_JANDJ','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de Johnson and Johnson, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_Aztrazeneca','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de Aztrazeneca, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_Moderna','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de Moderna, Inc., su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_Sinovac','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de Sinovac, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_Gamaleya','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios del Centro Nacional de Investigación de Epidemiología y Microbiología Gamaleya, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_CGFNC','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de la Corporación Grupo Farmacéutico Nacional Chino, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
+INSERT INTO EVENTOS_ALEATORIOS VALUES (DEFAULT,'Incendio_Cansino','CAMBIO_FECHA', 'Ocurrió un incendio en los Laboratorios de CanSino Biologics, su vacuna se retrasa 3 meses',3,3,'Y',NULL,NULL,NULL,NULL);
 
 --Centros de Vacunación
 -- INSERT INTO CENTRO_VAC VALUES(DEFAULT,'Nombre',capacidad,id pais, UBICACION(UBICACION.validarLatitud(),UBICACION.validarLongitud(),'direcciontextual'))

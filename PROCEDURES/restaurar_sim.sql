@@ -1,6 +1,6 @@
 --Este procedure sirve para retornar la simulacion al punto inicial
 
-CREATE OR REPLACE PROCEDURE RESTAURAR_SIM IS
+create or replace NONEDITIONABLE PROCEDURE RESTAURAR_SIM IS
     tabla VARCHAR2(12) := 'H_HABITANTES';
 
 BEGIN
@@ -46,5 +46,13 @@ BEGIN
     UPDATE PAIS SET tasa_repro_pai = 1.55 WHERE id_pai = 18;
     UPDATE PAIS SET tasa_repro_pai = 1.15 WHERE id_pai = 19;
     UPDATE PAIS SET tasa_repro_pai = 1.5 WHERE id_pai = 20;
-END;
+    DELETE FROM INVENTARIO_VAC;
+    DELETE FROM PAGO;
+    DELETE FROM DISTRIBUCION;
+    DELETE FROM ORDEN;
+    DELETE FROM SUMINISTROS WHERE fecha_sum != TO_DATE('05/03/2020','dd/mm/yyyy');
+    DELETE FROM JORNADA_VAC;
+    --PROVISIONAL
+    UPDATE VACUNA vac SET vac.fechas_vac = F_FASES(NULL,NULL,NULL, TO_DATE('07/04/2021','dd/mm/yyyy'));
 
+END;
