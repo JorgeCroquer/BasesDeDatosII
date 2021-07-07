@@ -150,6 +150,7 @@ poblacion NUMBER;
 cantidad_de_vacunas NUMBER;
 capacidad_total NUMBER;
 seleccionada_vac NUMBER := 0;
+estatus_vacuna NUMBER;
 BEGIN
     SELECT count(id_dist) 
     INTO cantidad_de_proveedores
@@ -177,12 +178,12 @@ BEGIN
     WHILE (seleccionada_vac = 0) --Seleccionamos una vacuna random que no esté restringida
     LOOP
         numero_random:= TRUNC(dbms_random.value(1,cantidad_de_vacunas));
-        SELECT id_vac
-        INTO vacuna_a_solicitar
-        FROM (SELECT rownum r, id_vac
+        SELECT id_vac, estatus_vac
+        INTO vacuna_a_solicitar, estatus_vacuna
+        FROM (SELECT rownum r, id_vac, estatus_vac
             FROM VACUNA) 
         WHERE r = numero_random; --Escoge una vacuna random
-        IF(esta_restringida(pais_p,vacuna_a_solicitar) = FALSE) THEN
+        IF(esta_restringida(pais_p,vacuna_a_solicitar) = FALSE AND estatus_vacuna = 4) THEN
             seleccionada_vac := 1;
         END IF;    
     END LOOP;
