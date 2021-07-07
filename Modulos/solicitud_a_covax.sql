@@ -27,6 +27,8 @@ BEGIN
     JOIN DISTRIBUCION ON n_orden_dis = id_ord
     WHERE id_pai = pais_p;
     porcentaje_equivalente := TRUNC((100-(cantidad_vac/get_poblacion(pais_p,'TOTAL')*100)),2);
+
+    porcentaje_equivalente := TRUNC((100 - ((division)*100)), 2)
     RETURN porcentaje_equivalente;
 END;
 
@@ -65,6 +67,7 @@ BEGIN
                 INSERT INTO PAGO VALUES(DEFAULT,orden_a_aprobar.f_entrega_ord,pago_restante,orden_a_aprobar.id_ord);
             END IF;
             DBMS_OUTPUT.PUT_LINE('Pago completado');
+            
         ELSE
             RETURN (FALSE);
         END IF;
