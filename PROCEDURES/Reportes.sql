@@ -179,28 +179,22 @@ BEGIN
 END;
 
 --Reporte 6 
-
-CREATE OR REPLACE PROCEDURE reporte_6(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, fecha_inicio date, fecha_fin date ) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_6(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, fecha_inicio date, fecha_fin date ) IS
 BEGIN
    OPEN rep_cursor
-   -- ((vacunados en la fecha fin - vacunados en la fecha inicio) / cantidad de habitantes)*100
-   FOR SELECT  bandera_pai, nombre_pai, nvl(fecha_inicio,MIN(fecha_jv)), nvl(fecha_fin,MAX(fecha_jv)), 
-   ((SUM(cantidad_pri_jv) - (SELECT SUM(cantidad_pri_jv)
-                              FROM pais
-                              JOIN pais_ge ge ON pais_pge = id_pai
-                              JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
-                              WHERE id_pai = p.id_pai
-                              AND fecha_jv = nvl(fecha_inicio,(SELECT MIN(fecha_jv) FROM jornada_vac WHERE pais_jv = pais_p))
-                              )) /(SELECT SUM(ge.cant_hab_pge.cant_total)
-                                 FROM pais_ge
-                                 WHERE pais_pge = p.id_pai))*100 as porcentaje_vacunado
+   FOR SELECT p2.bandera_pai, r.nombre_pai, fecha_i, fecha_f, porcentaje_vacunado
+   FROM (SELECT p.nombre_pai, p.id_pai, nvl(fecha_inicio,MIN(fecha_jv)) fecha_i, nvl(fecha_fin,MAX(fecha_jv)) fecha_f,
+   TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
    FROM pais p
    JOIN pais_ge ge ON pais_pge = id_pai
    JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
-   AND nombre_pai LIKE nvl(pais_p, nombre_pai)
-   GROUP BY 1,2
-   HAVING 3 >= nvl(vacunados_p,0)
-   AND fecha_jv = nvl(fecha_fin,MAX(fecha_jv));
+   WHERE nombre_pai LIKE nvl(pais_p, nombre_pai)
+   AND fecha_jv BETWEEN nvl(fecha_inicio, (SELECT MIN(fecha_jv) FROM JORNADA_VAC WHERE pais_jv = p.id_pai)) 
+   AND nvl(fecha_fin,(SELECT MAX(fecha_jv) FROM JORNADA_VAC WHERE pais_jv = p.id_pai))
+   GROUP BY nombre_pai,id_pai
+   HAVING TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) >= nvl(vacunados_p,0)
+   ORDER BY nombre_pai) r
+   JOIN PAIS p2 ON p2.id_pai = r.id_pai;
 END;
 
 --Reporte 7
