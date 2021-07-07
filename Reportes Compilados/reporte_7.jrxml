@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_7" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="651b7b76-9650-4ea9-90f0-89c8455f1ad5">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BD2"/>
+	<parameter name="pais_p" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_7($P{ORACLE_REF_CURSOR},$P{pais_p})}]]>
+	</queryString>
+	<field name="ID_PAI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PAI"/>
+	</field>
+	<field name="ID_CEN" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_CEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_CEN"/>
+	</field>
+	<field name="BANDERA_PAI" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.name" value="BANDERA_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="BANDERA_PAI"/>
+	</field>
+	<field name="NOMBRE_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_PAI"/>
+	</field>
+	<field name="NOMBRE_CEN" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_CEN"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_CEN"/>
+	</field>
+	<field name="UBICACION.DIRECCION_TEXTUAL" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="UBICACION.DIRECCION_TEXTUAL"/>
+		<property name="com.jaspersoft.studio.field.label" value="UBICACION.DIRECCION_TEXTUAL"/>
+	</field>
+	<field name="C.UBICACION.GETLATITUD()" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="C.UBICACION.GETLATITUD()"/>
+		<property name="com.jaspersoft.studio.field.label" value="C.UBICACION.GETLATITUD()"/>
+	</field>
+	<field name="C.UBICACION.GETLONGITUD()" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="C.UBICACION.GETLONGITUD()"/>
+		<property name="com.jaspersoft.studio.field.label" value="C.UBICACION.GETLONGITUD()"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="185" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="210" height="170" uuid="c06a06a2-df0a-41ec-9e96-3a5408d6d084"/>
+				<imageExpression><![CDATA["C:/Users/Usuario/Documents/Universidad/7mo sem/Bases de datos 2/proyecto/BasesDeDatosII/Imagenes/covax.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="230" y="60" width="293" height="76" uuid="f7936d37-0cc7-4e2c-9ff2-03d9ccde1685"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25"/>
+				</textElement>
+				<text><![CDATA[Reporte de centros de vacunación]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="32" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="1" width="100" height="30" uuid="8706e82d-d128-400e-a3f2-256fe5ec7299">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee48cd5f-5fd3-4645-a214-76c8fe7f746c"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Bandera del país]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="1" width="100" height="30" uuid="a3a4c186-09f7-4b3c-8ce5-7b7eb3d65b49">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fcc8e112-6438-43cf-99fc-f3a692172d6f"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Nombre del Pais]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="30" uuid="22c3ebfd-dd10-44e4-847c-ad8f6fa1a086">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af2facc7-8570-4648-b444-098108afa77d"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Nombre del centro]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="302" y="1" width="131" height="30" uuid="8817278d-a155-479e-9ab1-70018fce7aa9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08e318e3-9642-4abd-9bbc-8f2a05642f74"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Dirección]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="1" width="117" height="30" uuid="97857b08-7ece-4ba3-a05f-faf3f22316c2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Cantidad de vacunados por grupo etario]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="202" splitType="Stretch">
+			<frame>
+				<reportElement x="2" y="0" width="552" height="50" uuid="4a91e556-55c0-4933-a4c5-88183c701afe"/>
+				<subreport isUsingCache="true">
+					<reportElement stretchType="ContainerHeight" x="431" y="0" width="121" height="50" uuid="4e50070b-ea99-46f6-bb1b-f16f579a7d31"/>
+					<subreportParameter name="pais_p_sub">
+						<subreportParameterExpression><![CDATA[$F{ID_PAI}]]></subreportParameterExpression>
+					</subreportParameter>
+					<subreportParameter name="centro_p_sub">
+						<subreportParameterExpression><![CDATA[$F{ID_CEN}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA["reporte_7_subreporte1.jasper"]]></subreportExpression>
+				</subreport>
+				<textField>
+					<reportElement x="300" y="0" width="130" height="50" uuid="6b362700-f76c-49e0-83aa-ce2430a91eb5">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="08e318e3-9642-4abd-9bbc-8f2a05642f74"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{UBICACION.DIRECCION_TEXTUAL}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="200" y="0" width="100" height="50" uuid="ce1f006d-cce8-4a23-ba8b-b374f7f00200">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="af2facc7-8570-4648-b444-098108afa77d"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{NOMBRE_CEN}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="98" y="0" width="100" height="50" uuid="5531e8ad-863f-4009-881b-c2bee6076a18">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="fcc8e112-6438-43cf-99fc-f3a692172d6f"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{NOMBRE_PAI}]]></textFieldExpression>
+				</textField>
+				<image>
+					<reportElement x="0" y="0" width="98" height="50" uuid="c2f979e1-7ec4-4987-ba85-fd65c00044ba"/>
+					<imageExpression><![CDATA[$F{BANDERA_PAI}]]></imageExpression>
+				</image>
+			</frame>
+			<frame>
+				<reportElement x="2" y="60" width="420" height="142" uuid="2806d6a7-4f41-423b-8679-b3dc836bd981"/>
+				<componentElement>
+					<reportElement x="0" y="0" width="420" height="140" uuid="bad75ce5-adc8-4bd8-ad15-4b3d9f37cd98"/>
+					<c:map xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+						<c:latitudeExpression><![CDATA[$F{C.UBICACION.GETLATITUD()}]]></c:latitudeExpression>
+						<c:longitudeExpression><![CDATA[$F{C.UBICACION.GETLONGITUD()}]]></c:longitudeExpression>
+						<c:zoomExpression><![CDATA[8]]></c:zoomExpression>
+						<c:markerData>
+							<c:item>
+								<c:itemProperty name="latitude">
+									<valueExpression><![CDATA[$F{C.UBICACION.GETLATITUD()}]]></valueExpression>
+								</c:itemProperty>
+								<c:itemProperty name="longitude">
+									<valueExpression><![CDATA[$F{C.UBICACION.GETLONGITUD()}]]></valueExpression>
+								</c:itemProperty>
+							</c:item>
+						</c:markerData>
+					</c:map>
+				</componentElement>
+			</frame>
+		</band>
+	</detail>
+</jasperReport>

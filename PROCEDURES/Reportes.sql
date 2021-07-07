@@ -202,7 +202,7 @@ END;
 create or replace NONEDITIONABLE PROCEDURE reporte_7(rep_cursor OUT sys_refcursor, pais_p varchar) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT bandera_pai, nombre_pai, nombre_cen, c.ubicacion.direccion_textual, c.ubicacion.getLatitud(),c.ubicacion.getLongitud() 
+   FOR SELECT id_pai, id_cen, bandera_pai, nombre_pai, nombre_cen, c.ubicacion.direccion_textual, c.ubicacion.getLatitud(),c.ubicacion.getLongitud() 
    FROM pais
    JOIN centro_vac c ON id_pai = pais_cv
    WHERE nombre_pai LIKE nvl(pais_p, nombre_pai);
