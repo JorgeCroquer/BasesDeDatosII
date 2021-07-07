@@ -30,7 +30,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('SIMULACION COVID-19');
 
     --Inicio
-
+    
     --asignacion de fechas para vacunas
     fechas_sputnik := F_FASES(
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
