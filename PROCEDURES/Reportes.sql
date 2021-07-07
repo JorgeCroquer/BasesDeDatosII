@@ -160,15 +160,22 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_5(rep_cursor OUT sys_refcursor, pais_p varchar, vacunados_p number, vacuna_p varchar ) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT  bandera_pai, nombre_pai, nombre_vac, SUM(ge.cant_hab_pge.cant_total) as cant_total, SUM(cantidad_pri_jv) as cantidad_vacunados, TRUNC((SUM(ge.cant_hab_pge.cant_total)/SUM(cantidad_pri_jv))*100,2) as porcentaje_vacunado
-   FROM pais
+   FOR 
+   SELECT p2.bandera_pai, r.nombre_pai, nombre_vac, cant_habitantes, cantidad_vacunados, porcentaje_vacunado
+   FROM ( SELECT p1.id_pai, p1.nombre_pai, nombre_vac, get_poblacion(id_pai,'TOTAL') as cant_habitantes, SUM(cantidad_pri_jv) as cantidad_vacunados, 
+   TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
+   FROM pais p1
    JOIN pais_ge ge ON pais_pge = id_pai
    JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
    JOIN vacuna ON vacuna_jv = id_vac
    WHERE nombre_pai LIKE nvl(pais_p, nombre_pai)
    AND nombre_vac LIKE nvl(vacuna_p, nombre_vac)
-   GROUP BY 1,2,3
-   HAVING 6 >= nvl(vacunados_p,0);
+   GROUP BY nombre_pai, nombre_vac, id_pai
+   HAVING TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) >= nvl(vacunados_p,0)
+   AND SUM(cantidad_pri_jv) > 0
+   ORDER BY nombre_pai) r
+   JOIN PAIS p2 ON p2.id_pai = r.id_pai;
+  
 END;
 
 --Reporte 6 
