@@ -7,7 +7,7 @@ CREATE OR REPLACE FUNCTION get_vacunas_orden(pais_id pais.id_pai%TYPE, porcentaj
 BEGIN
     c_vacunas := get_vacunas_covax;
     FETCH c_vacunas INTO r_vacuna;
-    WHILE c_vacuna%FOUND       
+    WHILE c_vacunas%FOUND       
     LOOP            --COMO LA SOLICITUD DE COVAX ES DE TODAS LAS VACUNAS NO RESTRINGIDAS PARA EL PAIS Y SE HACE PARA UN % DE POBLACION DETERMINADO, ENTONCES,
         
         if NOT(esta_restringida(pais_id, r_vacuna.id_vac)) THEN
