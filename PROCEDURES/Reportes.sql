@@ -6,7 +6,7 @@
 -- SELECT nvl(SomeNullableField, 'If null, this value') FROM SomeTable
 -- Cuando se ingrese el nombre se debe ingresar como %nombre%
 
-CREATE OR REPLACE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, nombre_vacuna_p varchar, fecha_aprobacion_p date) IS
+create or replace NONEDITIONABLE PROCEDURE reporte_1(rep_cursor OUT sys_refcursor, nombre_vacuna_p varchar, fecha_aprobacion_p date) IS
 BEGIN
     OPEN rep_cursor
     FOR SELECT v.fechas_vac.fecha_f1 , v.fechas_vac.fecha_f4 ,
@@ -15,7 +15,7 @@ BEGIN
     FROM vacuna v
     JOIN estatus ON estatus_vac = id_est
     WHERE nombre_vac  LIKE  nvl(nombre_vacuna_p, nombre_vac)
-    AND nvl(v.fechas_vac.fecha_f4,'01-01-2000') >= nvl(fecha_aprobacion_p, nvl(v.fechas_vac.fecha_f4,'01-01-2000')); 
+    AND nvl(v.fechas_vac.fecha_f4,TO_DATE('01-01-2000','dd/mm/yyyy')) >= nvl(fecha_aprobacion_p, nvl(v.fechas_vac.fecha_f4,TO_DATE('01-01-2000','dd/mm/yyyy'))); 
     --NVL dentro de NVL porque el registro puede ser nulo tambien y en ese caso se cambia por una fecha cualquiera
 END;
 

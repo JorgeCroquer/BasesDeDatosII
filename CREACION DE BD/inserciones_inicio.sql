@@ -71,7 +71,7 @@ EXECUTE guarda_banderas('egipto.png',11);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'El Salvador','AME', 80, 'Y', 1.85, 2);
 EXECUTE guarda_banderas('salvador.png',12);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'España','EUR', 85, 'Y', 1.24, 4);
-EXECUTE guarda_banderas('españa.png',13);
+EXECUTE guarda_banderas('espana.png',13);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Estados Unidos','AME', 90, 'Y', 3.2, 5);
 EXECUTE guarda_banderas('eeuu.png',14);
 INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Francia','EUR', 85, 'Y', 2.5, 5);
