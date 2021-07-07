@@ -8,7 +8,7 @@ BEGIN
 
     c_vacunas := get_vacunas_covax;
     FETCH c_vacunas INTO r_vacuna;
-    WHILE c_vacuna%FOUND
+    WHILE c_vacunas%FOUND
         LOOP 
                 if (r_vacuna.estatus_vac < 2) THEN     --SI CONSIGUE VACUNAS EN FASE I SUMA 1
                     cont := cont + 1;

@@ -22,7 +22,7 @@ BEGIN
     WHILE c_vacunas%FOUND
         LOOP 
             if NOT(esta_restringida(pais_id, r_vacuna.id_vac)) THEN
-                INSERT INTO DISTRIBUCION VALUES (n_orden, distribuidora_id, cantidad_vac); --Se realiza el pedido de todas las vacunas COVAX no restringidas para el pais en partes iguales
+                INSERT INTO DISTRIBUCION VALUES (n_orden, r_vacuna.id_vac, cantidad_vac); --Se realiza el pedido de todas las vacunas COVAX no restringidas para el pais en partes iguales
                         
                 UPDATE VACUNA_DISTRIBUIDORA 
                 SET cantidad_vd = cantidad_vd - cantidad_vac                                 --Se restan las vacunas de covax
@@ -47,7 +47,7 @@ BEGIN
     WHERE id_pai = pais_id;
     SELECT nombre_dist INTO v_nombre_distribuidora FROM distribuidora
     WHERE id_dist = distribuidora_id;
-
+    DBMS_OUTPUT.PUT_LINE('');
     DBMS_OUTPUT.PUT_LINE( v_nombre_pais|| ' realizo una orden a ' || v_nombre_distribuidora || ' de ' || get_cantidad_vacunas(n_orden) || ' vacunas.');
 END; 
 /  

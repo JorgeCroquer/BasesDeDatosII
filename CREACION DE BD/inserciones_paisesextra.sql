@@ -1,0 +1,21 @@
+--Estos no tienen población, se supone que no los vamos a usar pero los dejo por si acaso
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Israel','EUR', 90, 'Y', 3, 5);
+EXECUTE guarda_banderas('israel.png',19);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Japon','ASI', 95, 'Y', 1.39, 5);
+EXECUTE guarda_banderas('japon.png',21);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Mexico','AME', 80, 'Y', 2.04, 3);
+EXECUTE guarda_banderas('mexico.png',22);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Nigeria','AFR', 70, 'Y', 5.11, 2);
+EXECUTE guarda_banderas('nigeria.png',23);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Nueva Zelanda','OCE', 90, 'Y', 1.67, 5);
+EXECUTE guarda_banderas('nuevazelanda.png',24);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Portugal','EUR', 85, 'Y', 1.17, 4);
+EXECUTE guarda_banderas('portugal.png',25);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Reino Unido','EUR', 95, 'Y', 1.65, 5);
+EXECUTE guarda_banderas('reinounido.png',26);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Rusia','EUR', 90, 'Y', 1.48, 5);
+EXECUTE guarda_banderas('rusia.png',27);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Sudáfrica','AFR', 80, 'Y', 2.3, 3);
+EXECUTE guarda_banderas('sudafrica.png',28);
+INSERT INTO PAIS VALUES (DEFAULT, DEFAULT, 'Suecia','EUR', 95, 'Y', 1.64, 5);
+EXECUTE guarda_banderas('suecia.png',29);

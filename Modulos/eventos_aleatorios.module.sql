@@ -29,7 +29,7 @@ BEGIN
 
                     IF (evento.tipo_eve = 'CAMBIO_FECHA') THEN
 
-                        --Modifica la fecha de la vacuna
+                        --Modifica la fecha de la vacuna 
                         DBMS_OUTPUT.PUT_LINE('');
                         EXIT;
                         
@@ -62,7 +62,7 @@ BEGIN
                         
 
 
-                ELSE CONTINUE; --Salta al siguiente evento   
+                ELSE CONTINUE; --Salta al siguiente evento  
                 END IF;
                 
 

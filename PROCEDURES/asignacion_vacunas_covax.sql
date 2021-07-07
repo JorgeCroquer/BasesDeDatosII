@@ -24,7 +24,7 @@ BEGIN
             UPDATE VACUNA_DISTRIBUIDORA 
             SET cantidad_vd = cantidad_vd - cant_vac_covax*0.4                    --Se actualiza el numero de vacunas disponibles para distribucion del laboratorio respectivo.
             WHERE (vacuna_vd = r_vacuna.id_vac AND distribuidora_vd <> covax_id);     
-
+            DBMS_OUTPUT.PUT_LINE('');
             DBMS_OUTPUT.PUT_LINE('Se asignaron ' || cant_vac_covax*0.4 || ' vacunas ' || r_vacuna.nombre_vac || ' al fondo COVAX.');
             FETCH c_vacunas INTO r_vacuna;
         END LOOP;
