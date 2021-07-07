@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_7" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="651b7b76-9650-4ea9-90f0-89c8455f1ad5">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BD2"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
 	<parameter name="pais_p" class="java.lang.String"/>
 	<queryString language="plsql">
 		<![CDATA[{call reporte_7($P{ORACLE_REF_CURSOR},$P{pais_p})}]]>
 	</queryString>
 	<field name="ID_PAI" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="ID_PAI"/>
 		<property name="com.jaspersoft.studio.field.label" value="ID_PAI"/>
+		<property name="com.jaspersoft.studio.field.name" value="ID_PAI"/>
 	</field>
 	<field name="ID_CEN" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="ID_CEN"/>
 		<property name="com.jaspersoft.studio.field.label" value="ID_CEN"/>
+		<property name="com.jaspersoft.studio.field.name" value="ID_CEN"/>
 	</field>
 	<field name="BANDERA_PAI" class="java.io.InputStream">
-		<property name="com.jaspersoft.studio.field.name" value="BANDERA_PAI"/>
 		<property name="com.jaspersoft.studio.field.label" value="BANDERA_PAI"/>
+		<property name="com.jaspersoft.studio.field.name" value="BANDERA_PAI"/>
 	</field>
 	<field name="NOMBRE_PAI" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_PAI"/>
 		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_PAI"/>
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_PAI"/>
 	</field>
 	<field name="NOMBRE_CEN" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_CEN"/>
 		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_CEN"/>
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_CEN"/>
 	</field>
 	<field name="UBICACION.DIRECCION_TEXTUAL" class="java.lang.String">
-		<property name="com.jaspersoft.studio.field.name" value="UBICACION.DIRECCION_TEXTUAL"/>
 		<property name="com.jaspersoft.studio.field.label" value="UBICACION.DIRECCION_TEXTUAL"/>
+		<property name="com.jaspersoft.studio.field.name" value="UBICACION.DIRECCION_TEXTUAL"/>
 	</field>
 	<field name="C.UBICACION.GETLATITUD()" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="C.UBICACION.GETLATITUD()"/>
 		<property name="com.jaspersoft.studio.field.label" value="C.UBICACION.GETLATITUD()"/>
+		<property name="com.jaspersoft.studio.field.name" value="C.UBICACION.GETLATITUD()"/>
 	</field>
 	<field name="C.UBICACION.GETLONGITUD()" class="java.math.BigDecimal">
-		<property name="com.jaspersoft.studio.field.name" value="C.UBICACION.GETLONGITUD()"/>
 		<property name="com.jaspersoft.studio.field.label" value="C.UBICACION.GETLONGITUD()"/>
+		<property name="com.jaspersoft.studio.field.name" value="C.UBICACION.GETLONGITUD()"/>
 	</field>
 	<background>
 		<band splitType="Stretch"/>
@@ -45,7 +45,7 @@
 		<band height="185" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="210" height="170" uuid="c06a06a2-df0a-41ec-9e96-3a5408d6d084"/>
-				<imageExpression><![CDATA["C:/Users/Usuario/Documents/Universidad/7mo sem/Bases de datos 2/proyecto/BasesDeDatosII/Imagenes/covax.png"]]></imageExpression>
+				<imageExpression><![CDATA["D:/Documentos/UCAB/Semestre Abr-Ago 2020-2021/Sistemas de Bases de Datos II/Proyecto/Proyecto Source/Imagenes/covax.png"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="230" y="60" width="293" height="76" uuid="f7936d37-0cc7-4e2c-9ff2-03d9ccde1685"/>
@@ -104,7 +104,7 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="202" splitType="Stretch">
+		<band height="240" splitType="Stretch">
 			<frame>
 				<reportElement x="2" y="0" width="552" height="50" uuid="4a91e556-55c0-4933-a4c5-88183c701afe"/>
 				<subreport isUsingCache="true">
@@ -116,7 +116,7 @@
 						<subreportParameterExpression><![CDATA[$F{ID_CEN}]]></subreportParameterExpression>
 					</subreportParameter>
 					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-					<subreportExpression><![CDATA["reporte_7_subreporte1.jasper"]]></subreportExpression>
+					<subreportExpression><![CDATA["reporte7_subreporte1.jasper"]]></subreportExpression>
 				</subreport>
 				<textField>
 					<reportElement x="300" y="0" width="130" height="50" uuid="6b362700-f76c-49e0-83aa-ce2430a91eb5">
@@ -147,8 +147,8 @@
 			<frame>
 				<reportElement x="2" y="60" width="420" height="142" uuid="2806d6a7-4f41-423b-8679-b3dc836bd981"/>
 				<componentElement>
-					<reportElement x="0" y="0" width="420" height="140" uuid="bad75ce5-adc8-4bd8-ad15-4b3d9f37cd98"/>
-					<c:map xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<reportElement x="20" y="0" width="400" height="150" uuid="4c79bcc8-907d-42b6-910c-f44b50c12661"/>
+					<c:map xmlns:c="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" onErrorType="Icon">
 						<c:latitudeExpression><![CDATA[$F{C.UBICACION.GETLATITUD()}]]></c:latitudeExpression>
 						<c:longitudeExpression><![CDATA[$F{C.UBICACION.GETLONGITUD()}]]></c:longitudeExpression>
 						<c:zoomExpression><![CDATA[8]]></c:zoomExpression>

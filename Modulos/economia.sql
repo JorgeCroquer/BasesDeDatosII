@@ -86,11 +86,11 @@ BEGIN
     SELECT COUNT(id_cen) INTO cantidad_centros FROM CENTRO_VAC WHERE pais_cv = pais_p; --Guardamos la cantida de centros que hay en ese pais        
     For v in (SELECT * FROM DISTRIBUCION WHERE n_orden_dis = orden_p.id_ord) --Distribuimos las vacuna entre los centros de vacunacion de ese pais
     LOOP
+        cantidad_asignada := TRUNC((v.cantidad_dis/cantidad_centros));
+        cantidad_sobrante:= MOD(v.cantidad_dis,cantidad_centros);
         SELECT dosis_vac INTO dosis_vacuna FROM VACUNA WHERE id_vac = v.vacuna_dis;
         For c in (SELECT * FROM CENTRO_VAC WHERE pais_cv = pais_p) --Asignamos primero una cantidad igual a cada centro
         LOOP            
-            cantidad_asignada := TRUNC((v.cantidad_dis/cantidad_centros));
-            cantidad_sobrante:= MOD(v.cantidad_dis,cantidad_centros);
             BEGIN --ESTO ES COMO TRY
                 SELECT cantidad_pri_inv INTO existe_inventario FROM INVENTARIO_VAC WHERE centro_vac_inv = c.id_cen AND vacuna_inv = v.vacuna_dis;
                 EXCEPTION WHEN no_data_found THEN --ESTO ES EL CATCH
@@ -100,7 +100,7 @@ BEGIN
             END;
             IF(existe_inventario IS NULL) THEN
                 IF( dosis_vacuna = 2) THEN
-                    INSERT INTO INVENTARIO_VAC VALUES(c.id_cen,v.vacuna_dis, cantidad_asignada, cantidad_asignada);
+                    INSERT INTO INVENTARIO_VAC VALUES(c.id_cen,v.vacuna_dis, cantidad_asignada, cantidad_asignada); --Aqui se duplican las vacunas de 2 dosis
                 ELSE
                     INSERT INTO INVENTARIO_VAC VALUES(c.id_cen, v.vacuna_dis, cantidad_asignada, NULL);
                 END IF;    
@@ -191,7 +191,7 @@ BEGIN
     SELECT distribuidora_vd
     INTO proveedor_escogido
     FROM VACUNA_DISTRIBUIDORA
-    WHERE vacuna_vd = vacuna_a_solicitar;--Busca el proveedor correspondiente
+    WHERE vacuna_vd = vacuna_a_solicitar AND distribuidora_vd <> get_covax_id;--Busca el proveedor correspondiente
 
     SELECT precio_vac
     INTO precio_vacuna
@@ -221,10 +221,10 @@ BEGIN
     IF (vacuna_aprobada() = TRUE) THEN
         FOR p IN (SELECT * FROM PAIS)
         LOOP
-            DBMS_OUTPUT.PUT_LINE('El pais: '||p.nombre_pai||' hará lo siguiente:');
             orden_pen:= orden_pendiente(p.id_pai, fecha_actual);
             IF (orden_pen.id_ord IS NOT NULL) THEN --Chequeamos si hay orden pendiente
-                IF(fecha_actual >= orden_pen.f_entrega_ord) THEN --Chequeamos si ya llegó la orden
+                IF(rango_fecha(fecha_actual, orden_pen.f_entrega_ord)) THEN --Chequeamos si ya llegó la orden
+                    DBMS_OUTPUT.PUT_LINE(p.nombre_pai||' hará lo siguiente:');
                     UPDATE ORDEN SET estatus_ord = 'ENTREGADA' WHERE id_ord = orden_pen.id_ord; --Actualizamos la orden a entregada
                     distribuir_vacunas(orden_pen,p.id_pai); --distribuimos las vacunas entre los diferentes centros de vacunacion
                     DBMS_OUTPUT.PUT_LINE('Orden recibida.Distribuyendo vacunas...');
@@ -240,9 +240,9 @@ BEGIN
             ELSE 
                 IF(meta_superada(p.id_pai) = FALSE) THEN --Se superó la meta de vacunación?
                     IF(hora_de_ordenar(p.id_pai) = TRUE) THEN -- Ya toca volver a pedir?
+                        DBMS_OUTPUT.PUT_LINE(p.nombre_pai||' hará lo siguiente:');
                         SELECT covax_pai INTO covax_p FROM pais WHERE id_pai = p.id_pai;
                         IF(covax_p = 'Y') THEN --pertenece a covax?
-                            DBMS_OUTPUT.PUT_LINE('Realizando orden a covax');
                             aprobado_covax := solicitar_orden_covax(p.id_pai,fecha_actual);
                             IF(aprobado_covax = FALSE) THEN
                                 DBMS_OUTPUT.PUT_LINE('Covax rechazó la orden, realizando orden a otro provedor');

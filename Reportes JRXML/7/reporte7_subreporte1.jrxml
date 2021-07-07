@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<!-- Created with Jaspersoft Studio version 6.12.0.final using JasperReports Library version 6.12.1-ac0eebdb29e4c0985457bab279a6db744d661530  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_7_subreporte1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="938b3025-869a-4c43-92c4-16c696965a4e">
-	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BD2"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
 	<parameter name="pais_p_sub" class="java.math.BigDecimal"/>
 	<parameter name="centro_p_sub" class="java.math.BigDecimal"/>
 	<queryString language="plsql">
