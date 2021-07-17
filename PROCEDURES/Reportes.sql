@@ -229,18 +229,63 @@ BEGIN
   GROUP BY  nombre_ge, edad_inferior, edad_superior;                
 END;
 
---Reporte 7 - subreporte 2
-CREATE OR REPLACE PROCEDURE reporte_7_subreporte_2(rep_cursor OUT sys_refcursor, pais_p number, centro_p number) IS
+
+--Reporte 12
+CREATE OR REPLACE PROCEDURE reporte_12(rep_cursor OUT sys_refcursor, pais_p varchar, meta_p number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT nombre_ge, edad_inferior, edad_superior, (SUM(cantidad_pri_jv)/ge.cant_hab_pge.cant_total)*100 as porcentaje_vacunado
+   FOR 
+   SELECT p.bandera_pai, r.nombre_pai, r.meta_vac_pai, r.porcentaje_vacunado
+   FROM(
+      SELECT id_pai, nombre_pai, meta_vac_pai,TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
+      FROM pais
+      JOIN jornada_vac ON pais_jv = id_pai
+      WHERE nombre_pai LIKE nvl(pais_p, nombre_pai)
+      AND meta_vac_pai >= nvl(meta_p,meta_vac_pai)
+      GROUP BY nombre_pai, meta_vac_pai, id_pai) r
+   JOIN pais p ON p.id_pai = r.id_pai ;
+END;
+
+
+--Hice esta funcion que calcula la cantidad total de vacunas de un pais porque necesitaba repetir el calculo
+--varias veces en el reporte y habría quedado muy grande
+CREATE OR REPLACE FUNCTION cant_vacunas(pais_id pais.id_pai%TYPE) RETURN NUMBER AS
+    cantidad_vacunas NUMBER;
+BEGIN
+   SELECT SUM(cantidad_pri_inv + cantidad_seg_inv)
+   INTO cantidad_vacunas
    FROM pais
-   JOIN centro_vac ON id_pai = pais_cv
-   JOIN pais_ge ge ON pais_pge = id_pai
-   JOIN jornada_vac ON grupo_etario_jv = grupo_etario_pge AND pais_jv = pais_pge
-   JOIN grupo_etario ON grupo_etario_pge = id_ge
-   WHERE id_pai = pais_p
-   AND id_cen = centro_p
-   GROUP BY 1,2,3
-   HAVING fecha_jv = MAX(fecha_jv);
+   JOIN centro_vac ON pais_cv = id_pai
+   JOIN inventario_vac ON centro_vac_inv = id_cen 
+   WHERE id_pai = pais_id;
+   RETURN cantidad_vacunas;
+END;
+
+--Reporte 13
+CREATE OR REPLACE PROCEDURE reporte_13(rep_cursor OUT sys_refcursor, pais_p varchar) IS
+BEGIN
+   OPEN rep_cursor
+   FOR 
+   SELECT p.bandera_pai, r.nombre_pai, p_jeringas, p_guantes, p_alcohol, p_algodon
+   FROM (SELECT id_pai, nombre_pai, TRUNC((SUM(cant_jeringas_sum)/cant_vacunas(id_pai))*100,2) as p_jeringas,
+      TRUNC((SUM(cant_par_guantes_sum)*10/cant_vacunas(id_pai))*100,2) as p_guantes,
+      TRUNC((SUM(cant_algodon_sum)/cant_vacunas(id_pai))*100,2) as p_algodon,
+      TRUNC((SUM(cant_alcohol_sum)/cant_vacunas(id_pai))*100,2) as p_alcohol
+      FROM pais
+      JOIN centro_vac c ON pais_cv = id_pai
+      JOIN suministros ON centro_vac_sum = c.id_cen
+      WHERE fecha_sum = (SELECT MAX(fecha_sum) FROM suministros WHERE centro_vac_sum = c.id_cen)
+      AND nombre_pai LIKE nvl(pais_p, nombre_pai)
+      GROUP BY nombre_pai, id_pai) r
+   JOIN pais p ON p.id_pai = r.id_pai;
+END;
+
+--Reporte 14
+CREATE OR REPLACE PROCEDURE reporte_13(rep_cursor OUT sys_refcursor, vacuna_p varchar) IS
+BEGIN
+   OPEN rep_cursor
+   FOR 
+   SELECT nombre_vac, temperatura_vac, instrucciones_vac
+   FROM VACUNA
+   WHERE nombre_vac = nvl(vacuna_p, nombre_vac);
 END;

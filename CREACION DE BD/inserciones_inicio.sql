@@ -8,8 +8,8 @@ INSERT INTO ESTATUS VALUES(DEFAULT,'FASE IV', 'Se crece la población en la que 
 --VACUNAS
 INSERT INTO VACUNA VALUES (DEFAULT,'Comirnaty',0,95,16*2,2,'Y',-4,'No agitar.',f_fases(NULL,NULL,NULL,NULL)); --La Pfizer
 INSERT INTO VACUNA VALUES (DEFAULT,'Janssen',0,96,9,1,'Y',-15,'No exponer a la luz directa del sol.',f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'Johnson and Johnson',0,91.6,9,1,'Y',-8,'No debe almacenarse congelada.',f_fases(NULL,NULL,NULL,NULL));
-INSERT INTO VACUNA VALUES (DEFAULT,'AstraZeneca',0,92,3*2,2,'Y',-8,'No conservar en congelador.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'Johnson and Johnson',0,91.6,9,1,'Y',-8,'Conservar entre 2 y 4 grados despues de ser descongelada.',f_fases(NULL,NULL,NULL,NULL));
+INSERT INTO VACUNA VALUES (DEFAULT,'AstraZeneca',0,92,3*2,2,'Y',-8,'No aplicarse a personas con fiebre.',f_fases(NULL,NULL,NULL,NULL));
 INSERT INTO VACUNA VALUES (DEFAULT,'Moderna',0,91.6,21*2,2,'Y',-20,'No volver a congelar despues de descongelada.',f_fases(NULL,NULL,NULL,NULL));
 INSERT INTO VACUNA VALUES (DEFAULT,'CoronaVac',0,91.6,25*2,2,'Y',-8,'No exponer a la luz directa del sol.',f_fases(NULL,NULL,NULL,NULL)); --Sinovac
 INSERT INTO VACUNA VALUES (DEFAULT,'Sputnik V',0,91.6,9*2,2,'N',-18,'Usar despues de las 2 horas de descongelación.',f_fases(NULL,NULL,NULL,NULL));
