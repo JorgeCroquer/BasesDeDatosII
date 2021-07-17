@@ -51,7 +51,7 @@ BEGIN
             RETURN(TRUE);
         END IF;
     ELSE
-        IF(porcentaje_restante_p >= 80) THEN
+        IF(porcentaje_restante_p = 100) THEN
             SELECT *
             INTO orden_a_aprobar
             FROM orden

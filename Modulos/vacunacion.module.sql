@@ -191,7 +191,7 @@ BEGIN
         SELECT SUM(cantidad_seg_jv) INTO segundas_dosis
         FROM JORNADA_VAC
         WHERE centro_vac_jv = centro.id_cen AND fecha_jv = fecha_actual;
-        DBMS_OUTPUT.PUT_LINE('segundas_dosis_aplicadas -> ' || segundas_dosis);
+        --DBMS_OUTPUT.PUT_LINE('segundas_dosis_aplicadas -> ' || segundas_dosis);
         SELECT CASE
                     WHEN existencia < cv.capacidad_cen - segundas_dosis  THEN existencia
                     ELSE cv.capacidad_cen - segundas_dosis
