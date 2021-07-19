@@ -230,6 +230,16 @@ BEGIN
 END;
 
 
+--Reporte 10 (avance)
+SELECT pai.bandera_pai,
+       pai.nombre_pai,
+       (SELECT ROUND(SUM(pge.cant_hab_pge.cant_infectados)/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai) AS porcentaje_infectados,
+       (SELECT ROUND(SUM(pge.cant_hab_pge.cant_recuperados)/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai) AS porcentaje_recuperados,
+       (SELECT ROUND((SUM(pge.cant_hab_pge.cant_total)-SUM(pge.cant_hab_pge.cant_infectados)-SUM(pge.cant_hab_pge.cant_recuperados))/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai) AS porcentaje_sanos, 
+       
+FROM PAIS pai;
+
+
 --Reporte 12
 CREATE OR REPLACE PROCEDURE reporte_12(rep_cursor OUT sys_refcursor, pais_p varchar, meta_p number) IS
 BEGIN

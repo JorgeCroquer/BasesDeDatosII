@@ -158,7 +158,7 @@ BEGIN
     WHERE id_dist <> get_covax_id; --Cuenta cuantos proveedores hay, Excepto covax que es el 10
  
     poblacion:=get_poblacion(pais_p,'TOTAL');
-    vacunas_a_ordenar:= TRUNC(get_poblacion(pais_p,'TOTAL')/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
+    vacunas_a_ordenar:= TRUNC(poblacion/cantidad_de_proveedores); --Divide la población entre la cantidad de proveedores
     
     --Si la cantidad de vacunas a ordenar es menor que la cantidad de vacunas que se gastan en un mes(Lo que tardan en llegar las vacunas) 
     --en ese pais la cantidad de vacunas a ordenar se calcula en base a su capacidad total.

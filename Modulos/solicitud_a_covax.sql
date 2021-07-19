@@ -1,37 +1,3 @@
-CREATE OR REPLACE FUNCTION todos_20 RETURN BOOLEAN AS
-porcentaje_equivalente NUMBER;
-BEGIN
-    FOR p IN(SELECT id_pai, SUM(cantidad_dis) as cantidad_vac
-            FROM PAIS
-            JOIN ORDEN ON pais_ord = id_pai
-            JOIN DISTRIBUCION ON n_orden_dis = id_ord
-            GROUP BY id_pai)
-    LOOP
-        porcentaje_equivalente := TRUNC(p.cantidad_vac/get_poblacion(p.id_pai,'TOTAL')*100,2);
-        IF(porcentaje_equivalente < 20)THEN
-            RETURN (FALSE);
-        END IF;
-    END LOOP;
-    RETURN (TRUE);
-END;
-
---Calcula el porcentaje de la población al que aun no se le ha asegurado una vacuna
-CREATE OR REPLACE FUNCTION porcentaje_restante(pais_p NUMBER) RETURN NUMBER AS --Podría sustituir a "meta superada" en el moódulo de economía
-porcentaje_equivalente NUMBER;
-cantidad_vac NUMBER;
-BEGIN
-    SELECT SUM(cantidad_dis)
-    INTO cantidad_vac
-    FROM PAIS
-    JOIN ORDEN ON pais_ord = id_pai
-    JOIN DISTRIBUCION ON n_orden_dis = id_ord
-    WHERE id_pai = pais_p;
-    porcentaje_equivalente := TRUNC((100-(cantidad_vac/get_poblacion(pais_p,'TOTAL'))*100)),2);
-    RETURN porcentaje_equivalente;
-END;
-
-
-
 create or replace NONEDITIONABLE FUNCTION solicitar_orden_covax(pais_p NUMBER, fecha_actual DATE) RETURN BOOLEAN AS
 orden_a_aprobar ORDEN%rowtype;
 pago_restante NUMBER;
@@ -51,7 +17,8 @@ BEGIN
             RETURN(TRUE);
         END IF;
     ELSE
-        IF(porcentaje_restante_p = 100) THEN
+        IF(porcentaje_restante_p > 80) THEN
+            DBMS_OUTPUT.PUT_LINE('PAIS_P '||pais_p);
             SELECT *
             INTO orden_a_aprobar
             FROM orden
