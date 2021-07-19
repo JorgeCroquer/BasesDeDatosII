@@ -297,5 +297,5 @@ BEGIN
    FOR 
    SELECT nombre_vac, temperatura_vac, instrucciones_vac
    FROM VACUNA
-   WHERE nombre_vac = nvl(vacuna_p, nombre_vac);
+   WHERE nombre_vac LIKE nvl(vacuna_p, nombre_vac);
 END;

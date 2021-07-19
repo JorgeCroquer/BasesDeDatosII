@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_14" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="14946157-d343-47fe-9b3f-c54c4b2ec7ed">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BD2"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="2ed00a71-7cb2-4680-b82f-a5475d8b53d8">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="BD2"/>
+		<parameter name="vacuna_t" class="java.lang.String"/>
+		<queryString language="plsql">
+			<![CDATA[{call reporte_14($P{ORACLE_REF_CURSOR},$P{vacuna_t})}]]>
+		</queryString>
+		<field name="NOMBRE_VAC" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="NOMBRE_VAC"/>
+			<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
+		</field>
+		<field name="TEMPERATURA_VAC" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="TEMPERATURA_VAC"/>
+			<property name="com.jaspersoft.studio.field.label" value="TEMPERATURA_VAC"/>
+		</field>
+		<field name="INSTRUCCIONES_VAC" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="INSTRUCCIONES_VAC"/>
+			<property name="com.jaspersoft.studio.field.label" value="INSTRUCCIONES_VAC"/>
+		</field>
+	</subDataset>
+	<parameter name="vacuna_p" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_14($P{ORACLE_REF_CURSOR},$P{vacuna_p})}]]>
+	</queryString>
+	<field name="NOMBRE_VAC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_VAC"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
+	</field>
+	<field name="TEMPERATURA_VAC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="TEMPERATURA_VAC"/>
+		<property name="com.jaspersoft.studio.field.label" value="TEMPERATURA_VAC"/>
+	</field>
+	<field name="INSTRUCCIONES_VAC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="INSTRUCCIONES_VAC"/>
+		<property name="com.jaspersoft.studio.field.label" value="INSTRUCCIONES_VAC"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="204" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="260" height="200" uuid="5b6c8aef-47ce-491d-a996-30edd811f1bd"/>
+				<imageExpression><![CDATA["C:/Users/Usuario/Documents/Universidad/7mo sem/Bases de datos 2/proyecto/BasesDeDatosII/Imagenes/covax.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="280" y="150" width="50" height="30" uuid="a6b8014a-d0a0-4cd0-b5a1-f80c4fe89b50"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Vacuna:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="130" width="100" height="20" uuid="356bcfab-5313-46b1-bd51-5bd8f773378c"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Filtrado Por:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="50" width="270" height="50" uuid="1f2a1c4e-ea49-4b2e-8f04-8b37890136c1"/>
+				<textElement textAlignment="Center">
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Reporte de condiciones de almacenamiento por vacuna]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="330" y="150" width="100" height="30" uuid="e3deb88d-b326-45fc-9037-99532ce9fd86"/>
+				<textElement verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{vacuna_p}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="125" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT} == 1]]></printWhenExpression>
+			<componentElement>
+				<reportElement x="0" y="0" width="550" height="80" uuid="7ee4098c-2236-42bd-ad16-f3e5c161c0d5">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="c9a4e82f-108d-41aa-b003-e9713e766f6b">
+						<datasetParameter name="vacuna_t">
+							<datasetParameterExpression><![CDATA[$P{vacuna_p}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="184" uuid="3c0d91fa-b95d-46c3-b7c2-993a796f7601">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="184" height="30" uuid="0fa3510a-f630-471b-8d94-13dceefd3030"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<text><![CDATA[Nombre de la vacuna]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="184" height="30" uuid="c0008afa-f1cb-4548-b07e-18b9533c52fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_VAC}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="183" uuid="fc57a406-d3fe-48d8-930b-79bb01655032">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="183" height="30" uuid="d30ecd59-9001-4600-a15e-e60c38140c1a"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<text><![CDATA[Temperatura de almacenamiento]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="183" height="30" uuid="bb1a3a4f-ae1d-4928-b93e-eeb3298d3b53"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA["Celsius ( "+$F{TEMPERATURA_VAC}+" ºC )"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="183" uuid="2e720a5b-bc92-4987-84a4-e1f7d16eab18">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="30" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="183" height="30" uuid="e337e777-92ba-419f-9773-2a1e5f2456c2"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font size="11"/>
+								</textElement>
+								<text><![CDATA[Instrucciones especiales]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="30">
+							<textField>
+								<reportElement x="0" y="0" width="183" height="30" uuid="d8fea346-7ce0-4c2b-8a65-2525c662bf92"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{INSTRUCCIONES_VAC}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="230" y="0" width="100" height="30" uuid="fde98999-24aa-4736-ad0f-5013fcca4647"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
