@@ -230,15 +230,36 @@ BEGIN
 END;
 
 
---Reporte 10 (avance)
-SELECT pai.bandera_pai,
+--Reporte 10 
+create or replace NONEDITIONABLE PROCEDURE reporte_10(rep_cursor OUT sys_refcursor, pais_p varchar) IS
+BEGIN
+   OPEN rep_cursor
+   FOR 
+    SELECT pai.bandera_pai,
        pai.nombre_pai,
-       (SELECT ROUND(SUM(pge.cant_hab_pge.cant_infectados)/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai) AS porcentaje_infectados,
-       (SELECT ROUND(SUM(pge.cant_hab_pge.cant_recuperados)/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai) AS porcentaje_recuperados,
-       (SELECT ROUND((SUM(pge.cant_hab_pge.cant_total)-SUM(pge.cant_hab_pge.cant_infectados)-SUM(pge.cant_hab_pge.cant_recuperados))/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai) AS porcentaje_sanos, 
-       
-FROM PAIS pai;
+       (SELECT ROUND(SUM(pge.cant_hab_pge.cant_infectados)/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai)*100 AS porcentaje_infectados,
+       (SELECT ROUND(SUM(pge.cant_hab_pge.cant_recuperados)/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai)*100 AS porcentaje_recuperados,
+       (SELECT ROUND((SUM(pge.cant_hab_pge.cant_total)-SUM(pge.cant_hab_pge.cant_infectados)-SUM(pge.cant_hab_pge.cant_recuperados))/SUM(pge.cant_hab_pge.cant_total),3) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai)*100 AS porcentaje_sanos, 
+       ROUND((SELECT SUM(jv.cantidad_seg_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS porcentaje_vacunados,
+       100-ROUND((SELECT SUM(jv.cantidad_seg_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS porcentaje_vacunados_restante,
+       ROUND((SELECT SUM(cantidad_seg_inv) FROM INVENTARIO_VAC JOIN CENTRO_VAC ON id_cen = centro_vac_inv WHERE pais_cv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS provisiones_porcentuales_disponibles,
+       ((100-ROUND((SELECT SUM(jv.cantidad_seg_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100)-(ROUND((SELECT SUM(cantidad_seg_inv) FROM INVENTARIO_VAC JOIN CENTRO_VAC ON id_cen = centro_vac_inv WHERE pais_cv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100)) AS diferencia_porcentual
+    FROM PAIS pai
+    WHERE pai.nombre_pai LIKE NVL(pais_p,pai.nombre_pai);
+END;
 
+
+--Reporte 11
+create or replace NONEDITIONABLE PROCEDURE reporte_11(rep_cursor OUT sys_refcursor, pais_p varchar) IS
+BEGIN
+   OPEN rep_cursor
+   FOR 
+    SELECT pai.bandera_pai, pai.nombre_pai,
+       ROUND((SELECT SUM(jv.cantidad_pri_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS porcentaje_pri_vacunados,
+       ROUND((SELECT SUM(jv.cantidad_seg_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS porcentaje_seg_vacunados
+    FROM PAIS pai
+    WHERE pai.nombre_pai LIKE NVL(pais_p,pai.nombre_pai);
+END;
 
 --Reporte 12
 CREATE OR REPLACE PROCEDURE reporte_12(rep_cursor OUT sys_refcursor, pais_p varchar, meta_p number) IS
@@ -247,7 +268,7 @@ BEGIN
    FOR 
    SELECT p.bandera_pai, r.nombre_pai, r.meta_vac_pai, r.porcentaje_vacunado
    FROM(
-      SELECT id_pai, nombre_pai, meta_vac_pai,TRUNC((SUM(cantidad_pri_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
+      SELECT id_pai, nombre_pai, meta_vac_pai,TRUNC((SUM(cantidad_seg_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
       FROM pais
       JOIN jornada_vac ON pais_jv = id_pai
       WHERE nombre_pai LIKE nvl(pais_p, nombre_pai)
