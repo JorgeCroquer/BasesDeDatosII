@@ -1,3 +1,43 @@
+create or replace NONEDITIONABLE FUNCTION todos_20 RETURN BOOLEAN AS
+porcentaje_equivalente NUMBER;
+BEGIN
+    FOR p IN(SELECT id_pai, SUM(cantidad_dis) as cantidad_vac
+            FROM PAIS
+            JOIN ORDEN ON pais_ord = id_pai
+            JOIN DISTRIBUCION ON n_orden_dis = id_ord
+            GROUP BY id_pai)
+    LOOP
+        porcentaje_equivalente := TRUNC(p.cantidad_vac/get_poblacion(p.id_pai,'TOTAL')*100,2);
+        IF(porcentaje_equivalente < 20)THEN
+            RETURN (FALSE);
+        END IF;
+    END LOOP;
+    RETURN (TRUE);
+END;
+
+create or replace NONEDITIONABLE FUNCTION porcentaje_restante(pais_p NUMBER) RETURN NUMBER AS --Podría sustituir a "meta superada" en el moódulo de economía
+porcentaje_equivalente NUMBER;
+cantidad_vac NUMBER;
+poblacion NUMBER:= 0;
+BEGIN
+    SELECT SUM(cantidad_dis)
+    INTO cantidad_vac
+    FROM PAIS
+    JOIN ORDEN ON pais_ord = id_pai
+    JOIN DISTRIBUCION ON n_orden_dis = id_ord
+    WHERE id_pai = pais_p;
+    poblacion := get_poblacion(pais_p,'TOTAL');
+    porcentaje_equivalente := (100-(cantidad_vac/poblacion)*100);
+    BEGIN
+        porcentaje_equivalente := ROUND(porcentaje_equivalente);
+        EXCEPTION WHEN INVALID_CURSOR THEN
+            porcentaje_equivalente := (100-(cantidad_vac/poblacion)*100);
+    END;
+    
+    RETURN porcentaje_equivalente;
+END;
+
+
 create or replace NONEDITIONABLE FUNCTION solicitar_orden_covax(pais_p NUMBER, fecha_actual DATE) RETURN BOOLEAN AS
 orden_a_aprobar ORDEN%rowtype;
 pago_restante NUMBER;
