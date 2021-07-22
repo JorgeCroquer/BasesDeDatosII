@@ -209,28 +209,7 @@ BEGIN
         FROM SUMINISTROS
         WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
 
-        --PRUEBAS
-        SELECT cant_jeringas_sum INTO cant_jeringas_sum
-        FROM SUMINISTROS
-        WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        --DBMS_OUTPUT.PUT_LINE('jeringas -> ' || cant_jeringas_sum);
 
-        SELECT cant_alcohol_sum INTO cant_alcohol_sum
-        FROM SUMINISTROS
-        WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        --DBMS_OUTPUT.PUT_LINE('alcohol -> ' || cant_alcohol_sum);
-
-        SELECT cant_algodon_sum INTO cant_algodon_sum
-        FROM SUMINISTROS
-        WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        --DBMS_OUTPUT.PUT_LINE('algodon -> ' || cant_algodon_sum);
-
-        SELECT cant_par_guantes_sum INTO cant_par_guantes_sum
-        FROM SUMINISTROS
-        WHERE centro_vac_sum = centro.id_cen AND fecha_sum = fecha_actual;
-        --DBMS_OUTPUT.PUT_LINE('guantes -> ' || cant_par_guantes_sum);
-
-        --Fin de pruebas
 
         --Chequea si habia falta de insumos para pedir mas
         IF (nuevas_primeras_dosis < check_insumos) THEN
@@ -245,8 +224,17 @@ BEGIN
             nuevas_primeras_dosis := centro.capacidad_cen*0.5;
         END IF;
 
-        --DBMS_OUTPUT.PUT_LINE('nuevas primeras dosis -> ' || nuevas_primeras_dosis);
 
+        IF (nuevas_primeras_dosis < 1) THEN
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('ALERTA nuevas primeras dosis -> ' || nuevas_primeras_dosis);
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('');
+            DBMS_OUTPUT.PUT_LINE('DALE PAL SIGUIENTE MI LOCO');
+            exit;
+        END IF;
 
 
         --Guarda el porcentaje de ancianos vacunados

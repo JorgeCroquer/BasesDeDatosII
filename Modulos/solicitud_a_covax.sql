@@ -18,7 +18,7 @@ BEGIN
         END IF;
     ELSE
         IF(porcentaje_restante_p > 80) THEN
-            DBMS_OUTPUT.PUT_LINE('PAIS_P '||pais_p);
+
             SELECT *
             INTO orden_a_aprobar
             FROM orden

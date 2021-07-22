@@ -6,6 +6,7 @@ create or replace NONEDITIONABLE PROCEDURE contagios(fecha_actual DATE) IS
     porcentaje_infectados NUMBER;
     multiplicador NUMBER := 1;
     tasa_r_real NUMBER;
+    aleatorio NUMBER := 0; 
     CURSOR paises IS --Guarda cada registro de PAIS_GE
             SELECT pai.id_pai, pai.tasa_repro_pai, paige.cant_hab_pge, paige.grupo_etario_pge, ge.mortalidad 
             FROM PAIS pai JOIN PAIS_GE paige ON pai.id_pai = paige.pais_pge
@@ -66,7 +67,13 @@ BEGIN
         IF(tasa_r_real = 0) THEN 
             nuevos_infectados := 0; --Evitamos el random value
         ELSE
-            nuevos_infectados := infectados_actuales*tasa_r_real/3 + TRUNC(DBMS_RANDOM.VALUE(-2,2));
+            BEGIN 
+                aleatorio := TRUNC(DBMS_RANDOM.VALUE(-2,2));
+                EXCEPTION WHEN INVALID_CURSOR THEN
+                    aleatorio:= 0;
+            END;
+
+            nuevos_infectados := infectados_actuales*tasa_r_real/3 + aleatorio;
         END IF;
 
         --DBMS_OUTPUT.PUT_LINE('nuevos infectados -> ' || nuevos_infectados);
@@ -92,9 +99,9 @@ BEGIN
             SELECT ge.mortalidad INTO mortalidad
             FROM GRUPO_ETARIO ge 
             WHERE ge.id_ge = pais.grupo_etario_pge;
-                
+
            infectados_actuales := mortales.hab.cant_infectados-(mortales.hab.cant_recuperados+mortales.hab.cant_fallecidos);
-        
+
         --DBMS_OUTPUT.PUT_LINE('mortalidad -> ' || mortalidad);
             nuevos_muertos := ROUND(infectados_actuales*mortalidad);
             nuevos_recuperados := infectados_actuales-nuevos_muertos;

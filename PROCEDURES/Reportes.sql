@@ -312,7 +312,7 @@ BEGIN
 END;
 
 --Reporte 14
-CREATE OR REPLACE PROCEDURE reporte_13(rep_cursor OUT sys_refcursor, vacuna_p varchar) IS
+CREATE OR REPLACE PROCEDURE reporte_14(rep_cursor OUT sys_refcursor, vacuna_p varchar) IS
 BEGIN
    OPEN rep_cursor
    FOR 
