@@ -245,7 +245,8 @@ BEGIN
        ROUND((SELECT SUM(cantidad_seg_inv) FROM INVENTARIO_VAC JOIN CENTRO_VAC ON id_cen = centro_vac_inv WHERE pais_cv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS provisiones_porcentuales_disponibles,
        ((100-ROUND((SELECT SUM(jv.cantidad_seg_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100)-(ROUND((SELECT SUM(cantidad_seg_inv) FROM INVENTARIO_VAC JOIN CENTRO_VAC ON id_cen = centro_vac_inv WHERE pais_cv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100)) AS diferencia_porcentual
     FROM PAIS pai
-    WHERE pai.nombre_pai LIKE NVL(pais_p,pai.nombre_pai);
+    WHERE pai.nombre_pai LIKE NVL(pais_p,pai.nombre_pai)
+    ORDER BY id_pai;
 END;
 
 
@@ -258,7 +259,8 @@ BEGIN
        ROUND((SELECT SUM(jv.cantidad_pri_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS porcentaje_pri_vacunados,
        ROUND((SELECT SUM(jv.cantidad_seg_jv) FROM JORNADA_VAC jv WHERE jv.pais_jv = pai.id_pai)/(SELECT SUM(pge.cant_hab_pge.cant_total) FROM PAIS_GE pge WHERE pge.pais_pge = pai.id_pai),3)*100 AS porcentaje_seg_vacunados
     FROM PAIS pai
-    WHERE pai.nombre_pai LIKE NVL(pais_p,pai.nombre_pai);
+    WHERE pai.nombre_pai LIKE NVL(pais_p,pai.nombre_pai)
+    ORDER BY id_pai;
 END;
 
 --Reporte 12
@@ -274,7 +276,8 @@ BEGIN
       WHERE nombre_pai LIKE nvl(pais_p, nombre_pai)
       AND meta_vac_pai >= nvl(meta_p,meta_vac_pai)
       GROUP BY nombre_pai, meta_vac_pai, id_pai) r
-   JOIN pais p ON p.id_pai = r.id_pai ;
+   JOIN pais p ON p.id_pai = r.id_pai 
+   ORDER BY p.id_pai;
 END;
 
 
@@ -308,7 +311,8 @@ BEGIN
       WHERE fecha_sum = (SELECT MAX(fecha_sum) FROM suministros WHERE centro_vac_sum = c.id_cen)
       AND nombre_pai LIKE nvl(pais_p, nombre_pai)
       GROUP BY nombre_pai, id_pai) r
-   JOIN pais p ON p.id_pai = r.id_pai;
+   JOIN pais p ON p.id_pai = r.id_pai
+   ORDER BY p.id_pai;
 END;
 
 --Reporte 14
