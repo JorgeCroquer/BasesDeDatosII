@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte11_bd2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7e81dfca-9344-447b-bdc7-216ea1b06773">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
+	<style name="Table_TH" mode="Opaque" backcolor="#D7C9AA">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_CH" mode="Opaque" backcolor="#66C4D6">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Dataset1" uuid="d09ca0a1-95b5-41ae-a624-3e1e96e0f4df">
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Oracle"/>
+		<parameter name="nombre_pais" class="java.lang.String">
+			<parameterDescription><![CDATA[Nombre de la vacuna]]></parameterDescription>
+		</parameter>
+		<queryString language="plsql">
+			<![CDATA[{call reporte_11($P{ORACLE_REF_CURSOR}, $P{nombre_pais})}]]>
+		</queryString>
+		<field name="BANDERA_PAI" class="java.io.InputStream">
+			<property name="com.jaspersoft.studio.field.name" value="BANDERA_PAI"/>
+			<property name="com.jaspersoft.studio.field.label" value="BANDERA_PAI"/>
+		</field>
+		<field name="NOMBRE_PAI" class="java.lang.String">
+			<property name="com.jaspersoft.studio.field.name" value="NOMBRE_PAI"/>
+			<property name="com.jaspersoft.studio.field.label" value="NOMBRE_PAI"/>
+		</field>
+		<field name="PORCENTAJE_PRI_VACUNADOS" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PORCENTAJE_PRI_VACUNADOS"/>
+			<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_PRI_VACUNADOS"/>
+		</field>
+		<field name="PORCENTAJE_SEG_VACUNADOS" class="java.math.BigDecimal">
+			<property name="com.jaspersoft.studio.field.name" value="PORCENTAJE_SEG_VACUNADOS"/>
+			<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_SEG_VACUNADOS"/>
+		</field>
+	</subDataset>
+	<parameter name="nombre_pais" class="java.lang.String">
+		<parameterDescription><![CDATA[Nombre de la vacuna]]></parameterDescription>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_11($P{ORACLE_REF_CURSOR}, $P{nombre_pais})}]]>
+	</queryString>
+	<field name="BANDERA_PAI" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.name" value="BANDERA_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="BANDERA_PAI"/>
+	</field>
+	<field name="NOMBRE_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_PAI"/>
+	</field>
+	<field name="PORCENTAJE_PRI_VACUNADOS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PORCENTAJE_PRI_VACUNADOS"/>
+		<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_PRI_VACUNADOS"/>
+	</field>
+	<field name="PORCENTAJE_SEG_VACUNADOS" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PORCENTAJE_SEG_VACUNADOS"/>
+		<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_SEG_VACUNADOS"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="263" splitType="Stretch">
+			<staticText>
+				<reportElement x="227" y="30" width="293" height="130" uuid="bed004e4-924c-4da0-9fc9-bd6303fbf650"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25"/>
+				</textElement>
+				<text><![CDATA[Reporte de porcentaje de población por países a los que se le ha suministrado la primera y segunda dosis de la vacuna]]></text>
+			</staticText>
+			<image>
+				<reportElement x="0" y="0" width="210" height="200" uuid="e94e0cbe-f29d-44b8-8ce3-9d7137a19157"/>
+				<imageExpression><![CDATA["D:/Documentos/UCAB/Semestre Abr-Ago 2020-2021/Sistemas de Bases de Datos II/Proyecto/Proyecto Source/Imagenes/covax.png"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="266" y="210" width="200" height="30" uuid="50466c2e-556e-43d7-b31b-f80cbe44f8f5"/>
+				<textFieldExpression><![CDATA["Nombre de país: " + $P{nombre_pais}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="263" y="179" width="64" height="21" uuid="3e062487-ff7f-4e01-ac18-1c2607ca79c6"/>
+				<text><![CDATA[Filtrado por: ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="138" splitType="Stretch">
+			<printWhenExpression><![CDATA[$V{REPORT_COUNT} == 1]]></printWhenExpression>
+			<componentElement>
+				<reportElement x="0" y="0" width="541" height="120" uuid="fd9ff401-d519-4dd1-af0d-0b69c7e9ecbc">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
+					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
+					<property name="com.jaspersoft.studio.table.style.detail" value="Table_TD"/>
+					<property name="com.jaspersoft.studio.components.autoresize.proportional" value="true"/>
+				</reportElement>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="Dataset1" uuid="706fc411-60b3-4145-aaa5-a73975464a72">
+						<datasetParameter name="ORACLE_REF_CURSOR">
+							<datasetParameterExpression><![CDATA[$P{ORACLE_REF_CURSOR}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="nombre_pais">
+							<datasetParameterExpression><![CDATA[$P{nombre_pais}]]></datasetParameterExpression>
+						</datasetParameter>
+						<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					</datasetRun>
+					<jr:column width="124" uuid="17fc6f41-e4fb-4803-b7a9-c970cc935e28">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column1"/>
+						<jr:columnHeader style="Table_CH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="124" height="60" uuid="dd4e8bac-d0bf-4f10-b950-427df09a9b0e"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Bandera]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<property name="com.jaspersoft.studio.unit.height" value="px"/>
+							<image hAlign="Center" vAlign="Middle">
+								<reportElement x="0" y="0" width="124" height="50" uuid="38b6cdfd-4783-4442-a024-4c712c7a3138"/>
+								<imageExpression><![CDATA[$F{BANDERA_PAI}]]></imageExpression>
+							</image>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="155" uuid="5e1e0098-018c-4ee9-84f0-54e53e3e4f9d">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column2"/>
+						<jr:columnHeader style="Table_CH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="155" height="60" uuid="299f2e2b-5979-4f10-a592-c045be07c2a4"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Pais]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement x="0" y="0" width="155" height="50" uuid="c1208fa9-eb5e-419f-be74-bf52b5b4ce54"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{NOMBRE_PAI}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="131" uuid="eab77bf9-0aca-4760-9778-e45dd667ab8b">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column3"/>
+						<jr:columnHeader style="Table_CH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="131" height="60" uuid="cb79f921-dd1d-41ed-9544-9b88d1e7d644"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Porcentaje de población que se le suministró la primera dosis]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<property name="com.jaspersoft.studio.unit.width" value="px"/>
+							<textField>
+								<reportElement x="0" y="0" width="131" height="50" uuid="90d052b9-5500-4aa9-be42-95db109360fa"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{PORCENTAJE_PRI_VACUNADOS}+"%"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="131" uuid="673da07c-035a-416f-b9d6-07bb88117bab">
+						<property name="com.jaspersoft.studio.components.table.model.column.name" value="Column4"/>
+						<jr:columnHeader style="Table_CH" height="60" rowSpan="1">
+							<staticText>
+								<reportElement x="0" y="0" width="131" height="60" uuid="fe0d241e-8e58-427e-8f4d-d65cba59effc"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<text><![CDATA[Porcentaje de población que se le suministró la segunda dosis]]></text>
+							</staticText>
+						</jr:columnHeader>
+						<jr:detailCell style="Table_TD" height="50">
+							<textField>
+								<reportElement x="0" y="0" width="131" height="50" uuid="e7da9084-7470-4a74-b063-f4ee98dd163f"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle"/>
+								<textFieldExpression><![CDATA[$F{PORCENTAJE_SEG_VACUNADOS}+"%"]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="227" y="12" width="100" height="30" uuid="da1ea22e-be4e-4006-9a25-32c7b127a11e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

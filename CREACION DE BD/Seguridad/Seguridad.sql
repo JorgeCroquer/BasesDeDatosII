@@ -10,6 +10,7 @@ GRANT CREATE SESSION TO public;
 GRANT SELECT, INSERT, UPDATE, DELETE ON inventario_vac TO encargado_centros;
 GRANT SELECT, INSERT, UPDATE, DELETE ON jornada_vac TO encargado_centros;
 GRANT SELECT, INSERT, UPDATE, DELETE ON inventario_vac TO encargado_centros;
+GRANT SELECT, INSERT, UPDATE, DELETE ON jv_efec TO encargado_centros;
 GRANT SELECT, INSERT, UPDATE, DELETE ON suministros TO encargado_centros;
 GRANT SELECT ON pais TO encargado_centros;
 GRANT SELECT ON centro_vac TO encargado_centros;
@@ -37,6 +38,15 @@ GRANT SELECT ON suministros TO Cliente;
 GRANT SELECT ON vacuna TO Cliente;
 GRANT SELECT ON efecto_secundario TO Cliente;
 GRANT SELECT ON vac_efec TO Cliente;
+
+GRANT EXECUTE ON JORGE.UBICACION TO encargado_centros;
+GRANT EXECUTE ON JORGE.F_FASES TO encargado_centros;
+GRANT EXECUTE ON JORGE.UBICACION TO encargado_nacional;
+GRANT EXECUTE ON JORGE.F_FASES TO encargado_nacional;
+GRANT EXECUTE ON JORGE.UBICACION TO encargado_vacunas;
+GRANT EXECUTE ON JORGE.F_FASES TO encargado_vacunas;
+GRANT EXECUTE ON JORGE.UBICACION TO cliente;
+GRANT EXECUTE ON JORGE.F_FASES TO cliente;
 
 CREATE USER Encargado_centros_1 IDENTIFIED BY BASES;
 CREATE USER Encargado_nacional_1 IDENTIFIED BY BASES;
