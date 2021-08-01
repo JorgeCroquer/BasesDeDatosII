@@ -229,6 +229,30 @@ BEGIN
   GROUP BY  nombre_ge, edad_inferior, edad_superior;                
 END;
 
+--Reporte 8 
+
+
+
+--Reporte 9 
+create or replace NONEDITIONABLE PROCEDURE reporte_9(rep_cursor OUT sys_refcursor, pais_n varchar) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT id_pai, bandera_pai, nombre_pai
+   FROM pais
+   WHERE nombre_pai LIKE nvl(pais_n, nombre_pai);        
+END;
+
+create or replace NONEDITIONABLE PROCEDURE reporte_9_subreporte_1(rep_cursor OUT sys_refcursor, pais_id number) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT nombre_vac, TRUNC(SUM(iv.cantidad_pri_inv + nvl(iv.cantidad_seg_inv,0)),0)*100/get_poblacion(pais_id,'TOTAL')
+   FROM pais
+   JOIN centro_vac cv ON pais_cv = id_pai
+   JOIN inventario_vac iv ON centro_vac_inv = cv.id_cen
+   JOIN vacuna ON id_vac = vacuna_inv
+   WHERE id_pai = 1 
+   group by nombre_vac;
+END;
 
 --Reporte 10 
 create or replace NONEDITIONABLE PROCEDURE reporte_10(rep_cursor OUT sys_refcursor, pais_p varchar) IS
