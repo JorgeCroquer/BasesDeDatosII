@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE registro_orden_covax(pais_id pais.id_pai%TYPE, fecha_actual DATE, porcentaje_pob NUMBER, tipo INTEGER) IS
+create or replace NONEDITIONABLE PROCEDURE registro_orden_covax(pais_id pais.id_pai%TYPE, fecha_actual DATE, porcentaje_pob NUMBER, tipo INTEGER) IS
 
     c_vacunas SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;
@@ -23,7 +23,7 @@ BEGIN
         LOOP 
             if NOT(esta_restringida(pais_id, r_vacuna.id_vac)) THEN
                 INSERT INTO DISTRIBUCION VALUES (n_orden, r_vacuna.id_vac, cantidad_vac); --Se realiza el pedido de todas las vacunas COVAX no restringidas para el pais en partes iguales
-                        
+
                 UPDATE VACUNA_DISTRIBUIDORA 
                 SET cantidad_vd = cantidad_vd - cantidad_vac                                 --Se restan las vacunas de covax
                 WHERE (distribuidora_vd = distribuidora_id AND vacuna_vd = r_vacuna.id_vac);

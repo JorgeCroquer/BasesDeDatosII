@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE cambio_estatus(fecha_actual DATE) AS
+create or replace NONEDITIONABLE PROCEDURE cambio_estatus(fecha_actual DATE) AS
 
     c_vacunas SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;
@@ -8,7 +8,7 @@ BEGIN
     FETCH c_vacunas INTO r_vacuna;
     WHILE c_vacunas%FOUND 
         LOOP 
-            
+
             if (r_vacuna.estatus_vac = 0 ) THEN
                 if (rango_fecha(fecha_actual, r_vacuna.fechas_vac.fecha_f1)) THEN
                     UPDATE VACUNA 

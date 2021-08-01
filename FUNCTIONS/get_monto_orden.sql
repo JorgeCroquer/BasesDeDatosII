@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_monto_orden(n_orden orden.id_ord%TYPE, covax NUMBER) RETURN NUMBER AS
+create or replace NONEDITIONABLE FUNCTION get_monto_orden(n_orden orden.id_ord%TYPE, covax NUMBER) RETURN NUMBER AS
 
     c_distribucion SYS_REFCURSOR;
     r_distribucion distribucion%ROWTYPE;

@@ -1,8 +1,8 @@
-CREATE OR REPLACE FUNCTION get_cantidad_vacunas(n_orden orden.id_ord%TYPE) RETURN NUMBER AS
+create or replace NONEDITIONABLE FUNCTION get_cantidad_vacunas(n_orden orden.id_ord%TYPE) RETURN NUMBER AS
 
     cant_vacunas NUMBER;
 BEGIN
-    
+
         SELECT SUM(pedido.cantidad_dis) 
         INTO cant_vacunas 
         FROM DISTRIBUCION pedido

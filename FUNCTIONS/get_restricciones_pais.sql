@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_restricciones_pais(pais_id pais.id_pai%TYPE) RETURN SYS_REFCURSOR AS
+create or replace NONEDITIONABLE FUNCTION get_restricciones_pais(pais_id pais.id_pai%TYPE) RETURN SYS_REFCURSOR AS
 
     c_restricciones SYS_REFCURSOR;
 BEGIN

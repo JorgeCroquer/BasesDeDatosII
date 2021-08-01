@@ -30,7 +30,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('SIMULACION COVID-19');
 
     --Inicio
-    
+
     --asignacion de fechas para vacunas
     fechas_sputnik := F_FASES(
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
@@ -38,7 +38,7 @@ BEGIN
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 8)),TO_CHAR(ADD_MONTHS(fecha_actual, 10))))),
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 12)),TO_CHAR(ADD_MONTHS(fecha_actual, 14)))))
     );
-   
+
     fechas_pfizer := F_FASES(
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 1)),TO_CHAR(ADD_MONTHS(fecha_actual, 2))))),
         TO_DATE(TO_CHAR(F_FASES.generarFecha(TO_CHAR(ADD_MONTHS(fecha_actual, 4)),TO_CHAR(ADD_MONTHS(fecha_actual, 6))))),
@@ -133,8 +133,8 @@ BEGIN
             vacunacion(fecha_actual);
             modulo_economia(fecha_actual);
             END if;
-            
-            reporte_semanal_mundial;
+
+            --reporte_semanal_mundial;
             --Sumamos 7 dias (1 semana) a la fecha actual
             fecha_actual := fecha_actual + 7;
 

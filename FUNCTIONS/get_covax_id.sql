@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_covax_id RETURN distribuidora.id_dist%TYPE AS
+create or replace NONEDITIONABLE FUNCTION get_covax_id RETURN distribuidora.id_dist%TYPE AS
 
     covax_id distribuidora.id_dist%TYPE;
 BEGIN

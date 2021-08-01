@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE disparador_eventos(fecha_actual DATE) IS
+create or replace NONEDITIONABLE PROCEDURE disparador_eventos(fecha_actual DATE) IS
     
     CURSOR eventos IS
         SELECT * FROM EVENTOS_ALEATORIOS;
@@ -14,30 +14,30 @@ BEGIN
         IF (evento.habilitado_eve = 'Y') THEN
 
             IF (evento.fecha_ocurrencia_eve IS NOT NULL) THEN 
-            
+
                 IF(evento.fecha_ocurrencia_eve NOT BETWEEN fecha_actual AND fecha_actual+6) THEN
-                
+
                     CONTINUE; --Salta al siguiente evento
-                
+
                 END IF;
-            
+
             ELSE 
                 numero := TRUNC(DBMS_RANDOM.VALUE(1,100));
-                
+
                 IF (numero <= evento.probabilidad_eve) THEN
-                    
+
 
                     IF (evento.tipo_eve = 'CAMBIO_FECHA') THEN
 
                         --Modifica la fecha de la vacuna 
                         DBMS_OUTPUT.PUT_LINE('');
                         EXIT;
-                        
+
                     ELSIF (evento.tipo_eve = 'CUARENTENA') THEN
-                        
+
                         UPDATE PAIS p SET tasa_repro_pai = 0.9 + TRUNC(DBMS_RANDOM.VALUE(-0.07,0.07),2)
                         WHERE p.id_pai = evento.pais_eve;
-                        
+
 
                     ELSE
 
@@ -58,19 +58,19 @@ BEGIN
                         --Se inhabilita el evento
                         UPDATE EVENTOS_ALEATORIOS eve SET eve.habilitado_eve = 'N'
                         WHERE eve.id_eve = evento.id_eve;
-                        
-                        
+
+
 
 
                 ELSE CONTINUE; --Salta al siguiente evento  
                 END IF;
-                
+
 
             END IF;
 
-            
 
-            
+
+
 
         END IF;
 

@@ -1,4 +1,4 @@
-CREATE OR REPLACE PROCEDURE asignacion_vacunas_covax IS
+create or replace NONEDITIONABLE PROCEDURE asignacion_vacunas_covax IS
 
     c_vacunas SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;
@@ -12,7 +12,7 @@ BEGIN
     FETCH c_vacunas INTO r_vacuna;
     WHILE c_vacunas%FOUND
         LOOP 
-            
+
 
             SELECT cantidad_vd INTO cant_vac_covax FROM VACUNA_DISTRIBUIDORA
             WHERE (vacuna_vd = r_vacuna.id_vac AND distribuidora_vd <> covax_id);

@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_n_orden(pais_id pais.id_pai%TYPE, distribuidora_id distribuidora.id_dist%TYPE, fecha_actual DATE) RETURN orden.id_ord%TYPE AS
+create or replace NONEDITIONABLE FUNCTION get_n_orden(pais_id pais.id_pai%TYPE, distribuidora_id distribuidora.id_dist%TYPE, fecha_actual DATE) RETURN orden.id_ord%TYPE AS
 
     n_orden orden.id_ord%TYPE;
 BEGIN

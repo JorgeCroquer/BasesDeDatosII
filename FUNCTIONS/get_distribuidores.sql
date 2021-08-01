@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION get_distribuidores(vacuna_id vacuna.id_vac%type) RETURN SYS_REFCURSOR AS
+create or replace NONEDITIONABLE FUNCTION get_distribuidores(vacuna_id vacuna.id_vac%type) RETURN SYS_REFCURSOR AS
 
     c_dist_vacuna SYS_REFCURSOR;
 BEGIN

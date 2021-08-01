@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION all_vacunas_f2 RETURN BOOLEAN AS 
+create or replace NONEDITIONABLE FUNCTION all_vacunas_f2 RETURN BOOLEAN AS 
 
     c_vacunas SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;

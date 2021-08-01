@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION fin_farmaceuticas RETURN BOOLEAN AS 
+create or replace NONEDITIONABLE FUNCTION fin_farmaceuticas RETURN BOOLEAN AS 
 
     c_vacunas SYS_REFCURSOR;
     r_vacuna vacuna%ROWTYPE;
@@ -10,7 +10,7 @@ BEGIN
     FETCH c_vacunas INTO r_vacuna;
     WHILE c_vacunas%FOUND
         LOOP 
-            
+
                 if (r_vacuna.estatus_vac <> 4) THEN     --SI CONSIGUE VACUNAS QUE AUN NO HAN LLEGADO A FASE IV SUMA 1
                     cont := cont + 1;
                 END if;
