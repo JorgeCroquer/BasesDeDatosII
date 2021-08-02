@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte9_subr" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="753351d1-c4e2-4dcd-a2fe-147cb3dcc9d4">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Simulacion_Vacunacion"/>
+	<parameter name="id_pais" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_9_subreporte_1($P{ORACLE_REF_CURSOR},$P{id_pais})}]]>
+	</queryString>
+	<field name="NOMBRE_VAC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_VAC"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
+	</field>
+	<field name="TRUNC(TRUNC(SUM(IV.CANTIDAD_PRI_INV+NVL(IV.CANTIDAD_SEG_INV,0)),0)*100/GET_POBLACION(:B1,&apos;TOTAL&apos;),0)" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name">
+			<![CDATA[TRUNC(TRUNC(SUM(IV.CANTIDAD_PRI_INV+NVL(IV.CANTIDAD_SEG_INV,0)),0)*100/GET_POBLACION(:B1,'TOTAL'),0)]]>
+		</property>
+		<property name="com.jaspersoft.studio.field.label">
+			<![CDATA[TRUNC(TRUNC(SUM(IV.CANTIDAD_PRI_INV+NVL(IV.CANTIDAD_SEG_INV,0)),0)*100/GET_POBLACION(:B1,'TOTAL'),0)]]>
+		</property>
+	</field>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="200" height="30" uuid="945ec531-c6b7-4e3c-9ba2-f6bc4debac5d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_VAC}+" - "+$F{TRUNC(TRUNC(SUM(IV.CANTIDAD_PRI_INV+NVL(IV.CANTIDAD_SEG_INV,0)),0)*100/GET_POBLACION(:B1,'TOTAL'),0)}+"%"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
