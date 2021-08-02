@@ -3,9 +3,9 @@ CREATE OR REPLACE PROCEDURE reporte_8(rep_cursor OUT sys_refcursor, vacuna_p var
 BEGIN
    OPEN rep_cursor
    FOR 
-   SELECT p.bandera_pai, r.nombre_pai, r.nombre_vac , r.porcentaje_vacunado, r.procentaje_efsec_detectado
+   SELECT p.bandera_pai, r.nombre_pai, r.nombre_vac , r.porcentaje_vacunado, r.procentaje_efsec_detectado, r.id_pai, r.id_vac
    FROM(
-      SELECT id_pai, nombre_pai, nombre_vac,TRUNC((SUM(cantidad_seg_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado,
+      SELECT id_pai, id_vac, nombre_pai, nombre_vac,TRUNC((SUM(cantidad_seg_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado,
       CASE 
          WHEN SUM(cantidad_seg_jv) != 0 THEN TRUNC((SUM(cantidad_efsec_jv)/SUM(cantidad_seg_jv))*100,2) 
          ELSE 0
@@ -15,7 +15,7 @@ BEGIN
       JOIN vacuna ON vacuna_jv = id_vac
       JOIN jv_efec ON vacuna_jve = id_vac
       WHERE nombre_vac LIKE nvl(vacuna_p,nombre_vac)
-      GROUP BY nombre_pai, nombre_vac, id_pai) r
+      GROUP BY nombre_pai, nombre_vac, id_pai, id_vac) r
    JOIN pais p ON p.id_pai = r.id_pai 
    ORDER BY p.id_pai;
 END;
