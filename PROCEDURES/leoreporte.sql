@@ -5,8 +5,7 @@ BEGIN
    FOR 
    SELECT p.bandera_pai, r.nombre_pai, r.nombre_vac , r.porcentaje_vacunado, r.procentaje_efsec_detectado
    FROM(
-      SELECT id_pai, nombre_pai, nombre_vac,TRUNC((SUM(cantidad_seg_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado
-      ,
+      SELECT id_pai, nombre_pai, nombre_vac,TRUNC((SUM(cantidad_seg_jv)/get_poblacion(id_pai,'TOTAL'))*100,2) as porcentaje_vacunado,
       CASE 
          WHEN SUM(cantidad_seg_jv) != 0 THEN TRUNC((SUM(cantidad_efsec_jv)/SUM(cantidad_seg_jv))*100,2) 
          ELSE 0
@@ -23,16 +22,14 @@ BEGIN
 END;
 
 --Reporte 8 subreporte 1
-CREATE OR REPLACE PROCEDURE reporte_8_subreporte_1(rep_cursor OUT sys_refcursor, pais_p varchar, vacuna_p number, pais_p number) IS
+CREATE OR REPLACE PROCEDURE reporte_8_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, vacuna_p number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT id_pai, id_vac, DISCTINCT(nombre_efe)
-      FROM pais
-      JOIN jornada_vac ON pais_jv = id_pai
-      JOIN vacuna ON vacuna_jv = id_vac
+   FOR SELECT pais_jve, vacuna_jve, DISTINCT(nombre_efe)
       JOIN jv_efec ON vacuna_jve = id_vac
       JOIN efecto_secundario ON id_efe = efecto_secundario_jve
-      WHERE id_pai = pais_p
-      AND id_vac = vacuna_p
-      GROUP BY id_pai, id_vac;
+      WHERE pais_jve = pais_p
+      AND vacuna_jve = vacuna_p
+      GROUP BY pais_jve, vacuna_jve;
 END;
+
