@@ -26,7 +26,7 @@ CREATE OR REPLACE PROCEDURE reporte_8_subreporte_1(rep_cursor OUT sys_refcursor,
 BEGIN
    OPEN rep_cursor
    FOR SELECT pais_jve, vacuna_jve, DISTINCT(nombre_efe)
-      JOIN jv_efec ON vacuna_jve = id_vac
+      FROM jv_efec 
       JOIN efecto_secundario ON id_efe = efecto_secundario_jve
       WHERE pais_jve = pais_p
       AND vacuna_jve = vacuna_p
