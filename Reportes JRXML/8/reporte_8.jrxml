@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_8" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="173ec017-a943-4c26-bc7b-0403711655b8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Simulacion_Vacunacion"/>
+	<parameter name="vacuna_n" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_8($P{ORACLE_REF_CURSOR},$P{vacuna_n})}]]>
+	</queryString>
+	<field name="BANDERA_PAI" class="java.io.InputStream">
+		<property name="com.jaspersoft.studio.field.name" value="BANDERA_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="BANDERA_PAI"/>
+	</field>
+	<field name="NOMBRE_PAI" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_PAI"/>
+	</field>
+	<field name="NOMBRE_VAC" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_VAC"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_VAC"/>
+	</field>
+	<field name="PORCENTAJE_VACUNADO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PORCENTAJE_VACUNADO"/>
+		<property name="com.jaspersoft.studio.field.label" value="PORCENTAJE_VACUNADO"/>
+	</field>
+	<field name="PROCENTAJE_EFSEC_DETECTADO" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PROCENTAJE_EFSEC_DETECTADO"/>
+		<property name="com.jaspersoft.studio.field.label" value="PROCENTAJE_EFSEC_DETECTADO"/>
+	</field>
+	<field name="ID_PAI" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_PAI"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_PAI"/>
+	</field>
+	<field name="ID_VAC" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="ID_VAC"/>
+		<property name="com.jaspersoft.studio.field.label" value="ID_VAC"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="170" splitType="Stretch">
+			<staticText>
+				<reportElement x="229" y="15" width="325" height="140" uuid="43d5ffd8-491f-4af7-816b-9e1a92e3a6fc"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="25"/>
+				</textElement>
+				<text><![CDATA[Reporte de los Efectos Secundarios Identificados por la aplicacion de las vacunas contra el COVID-19]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="0" width="210" height="170" uuid="13e286ce-8f69-4027-ab27-b940b935498c"/>
+				<imageExpression><![CDATA["D:/Documentos/UCAB/Semestre Abr-Ago 2020-2021/Sistemas de Bases de Datos II/Proyecto/Proyecto Source/Imagenes/oms.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="39" splitType="Stretch">
+			<staticText>
+				<reportElement x="6" y="4" width="94" height="30" uuid="03e15760-6d1c-446c-8d0c-b0df230c7e88">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee48cd5f-5fd3-4645-a214-76c8fe7f746c"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Bandera del país]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="4" width="110" height="30" uuid="56c63e02-cc73-420d-9da2-b8dbab062514">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee48cd5f-5fd3-4645-a214-76c8fe7f746c"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Nombre del país]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="4" width="106" height="30" uuid="e81872e0-69e6-4302-bded-5a352ae2d702">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee48cd5f-5fd3-4645-a214-76c8fe7f746c"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Vacuna aplicada]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="460" y="4" width="94" height="30" uuid="a57c5dc1-f4e4-4b15-a23f-4454bdacceb5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee48cd5f-5fd3-4645-a214-76c8fe7f746c"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="11"/>
+				</textElement>
+				<text><![CDATA[Descripcion de los E-S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="316" y="4" width="72" height="30" uuid="c373ad7d-c19e-49a4-978e-9e0be048ef72">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee48cd5f-5fd3-4645-a214-76c8fe7f746c"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[% de aplicacion sobre la poblacion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="4" width="72" height="30" uuid="0ce057dd-7246-41d4-913d-5057900b9db4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ee48cd5f-5fd3-4645-a214-76c8fe7f746c"/>
+				</reportElement>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[% de identificacion de E-S sobre la poblacion vacunada]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="62" splitType="Stretch">
+			<image>
+				<reportElement x="28" y="5" width="50" height="50" uuid="5e131723-1db4-4faa-a34c-caf7a0a85eec"/>
+				<imageExpression><![CDATA[$F{BANDERA_PAI}]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="100" y="-5" width="110" height="64" uuid="b9d4b4f4-bbc1-44bd-baff-ea8a6797830a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="44bc2830-5f69-49c4-8240-89ee4dbe6e3d"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_PAI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="-5" width="106" height="64" uuid="e4e54441-8e2b-4388-ab30-f37edf1d15d0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="891aa0d7-91d2-4df6-8a90-758a1f98fc26"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE_VAC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="316" y="-5" width="72" height="64" uuid="42c99e8a-eb8b-457c-9f42-6dfc9ba268f7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e5a88ff3-80b1-4dc0-b47b-68360c465655"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PORCENTAJE_VACUNADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="388" y="-5" width="72" height="64" uuid="9c9d1d69-8575-4e6a-b89e-1a9a17343a5d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c7a275dd-d7d5-43a3-ad07-f40ef4452a2b"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PROCENTAJE_EFSEC_DETECTADO}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="460" y="-5" width="94" height="64" uuid="f68a30b0-73e8-44db-8294-598bec7a0d66"/>
+				<subreportParameter name="id_pais">
+					<subreportParameterExpression><![CDATA[$F{ID_PAI}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="id_vacuna">
+					<subreportParameterExpression><![CDATA[$F{ID_VAC}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reporte8_subreporte.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="180" y="0" width="100" height="30" uuid="382e0059-78a5-4504-ae6d-23f169bf4eeb"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="280" y="0" width="100" height="30" uuid="e13d0848-ba6c-47bf-a794-f8df3554e303"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

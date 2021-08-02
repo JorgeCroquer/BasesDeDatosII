@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte8_subreporte" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ba785c4a-4474-4ce9-afb9-11ad4c3a985c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Simulacion_Vacunacion"/>
+	<parameter name="id_pais" class="java.lang.String"/>
+	<parameter name="id_vacuna" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call reporte_8_subreporte_1($P{ORACLE_REF_CURSOR},$P{id_pais},$P{id_vacuna})}]]>
+	</queryString>
+	<field name="PAIS_JVE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="PAIS_JVE"/>
+		<property name="com.jaspersoft.studio.field.label" value="PAIS_JVE"/>
+	</field>
+	<field name="VACUNA_JVE" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="VACUNA_JVE"/>
+		<property name="com.jaspersoft.studio.field.label" value="VACUNA_JVE"/>
+	</field>
+	<field name="NOMBRE_EFE" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="NOMBRE_EFE"/>
+		<property name="com.jaspersoft.studio.field.label" value="NOMBRE_EFE"/>
+	</field>
+	<detail>
+		<band height="62" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="62" uuid="b8c39d16-14df-49d6-ae51-d933ea2ae3e7"/>
+				<textFieldExpression><![CDATA["● "+$F{NOMBRE_EFE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
