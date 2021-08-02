@@ -230,8 +230,28 @@ BEGIN
 END;
 
 --Reporte 8 
+create or replace NONEDITIONABLE PROCEDURE reporte_8(rep_cursor OUT sys_refcursor, vacuna_n varchar) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT bandera_pai, nombre_pai, nombre_vac, TRUNC(TRUNC(SUM(cantidad_pri_jv),0)*100/get_poblacion(id_pai,'TOTAL'),0), TRUNC(TRUNC(SUM(cantidad_efsec_jv),0)*100/SUM(cantidad_pri_jv),0)
+   FROM vacuna
+   JOIN jornada_vac ON vacuna_jv = id_vac
+   JOIN pais ON id_pai = pais_jv
+   JOIN centro_vac ON pais_vc = id_pai
+   JOIN jv_efec ON centro_vac_jve = centro_vac_jv
+   JOIN pais ON id_pai = pais_jv
+   WHERE nombre_vac LIKE nvl(vacuna_n, nombre_vac);       
+END;
 
-
+create or replace NONEDITIONABLE PROCEDURE reporte_8_subreporte_1(rep_cursor OUT sys_refcursor, vacuna_id number) IS
+BEGIN
+   OPEN rep_cursor
+   FOR SELECT ef.nombre_efe
+   FROM vacuna
+   JOIN jv_efec ON vacuna_jve = vacuna_id 
+   JOIN efecto_secundario ef ON id_efe = efecto_secundario_jve
+   WHERE id_vac = vacuna_id;
+END;
 
 --Reporte 9 
 create or replace NONEDITIONABLE PROCEDURE reporte_9(rep_cursor OUT sys_refcursor, pais_n varchar) IS
@@ -245,12 +265,12 @@ END;
 create or replace NONEDITIONABLE PROCEDURE reporte_9_subreporte_1(rep_cursor OUT sys_refcursor, pais_id number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT nombre_vac, TRUNC(SUM(iv.cantidad_pri_inv + nvl(iv.cantidad_seg_inv,0)),0)*100/get_poblacion(pais_id,'TOTAL')
+   FOR SELECT nombre_vac, TRUNC(TRUNC(SUM(iv.cantidad_pri_inv + nvl(iv.cantidad_seg_inv,0)),0)*100/get_poblacion(pais_id,'TOTAL'),0)
    FROM pais
    JOIN centro_vac cv ON pais_cv = id_pai
    JOIN inventario_vac iv ON centro_vac_inv = cv.id_cen
    JOIN vacuna ON id_vac = vacuna_inv
-   WHERE id_pai = 1 
+   WHERE id_pai = pais_id 
    group by nombre_vac;
 END;
 
