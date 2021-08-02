@@ -25,11 +25,10 @@ END;
 CREATE OR REPLACE PROCEDURE reporte_8_subreporte_1(rep_cursor OUT sys_refcursor, pais_p number, vacuna_p number) IS
 BEGIN
    OPEN rep_cursor
-   FOR SELECT pais_jve, vacuna_jve, DISTINCT(nombre_efe)
+   FOR SELECT DISTINCT pais_jve, vacuna_jve, nombre_efe
       FROM jv_efec 
       JOIN efecto_secundario ON id_efe = efecto_secundario_jve
       WHERE pais_jve = pais_p
-      AND vacuna_jve = vacuna_p
-      GROUP BY pais_jve, vacuna_jve;
+      AND vacuna_jve = vacuna_p;
 END;
 
